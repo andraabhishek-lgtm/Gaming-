@@ -52,20 +52,22 @@
 
     /* ── LAYOUT ── */
     .main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh;min-width:0}
-    .topbar{height:62px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 22px;gap:14px;position:sticky;top:0;z-index:50;flex-shrink:0}
-    .topbar-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;flex:1}
+    .topbar{width:100%;height:62px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 22px;gap:14px;position:sticky;top:0;z-index:50;flex-shrink:0}
+    .topbar-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;flex:1;min-width:0}
     .topbar-title span{color:var(--purple)}
     .tb-search{display:flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--border);border-radius:9px;padding:7px 13px;width:200px}
     .tb-search input{background:none;border:none;outline:none;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;width:100%}
     .tb-search input::placeholder{color:var(--muted)}
-    .tb-actions{display:flex;align-items:center;gap:9px}
+    .tb-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px;margin-left:auto;flex-shrink:0}
     .tb-live{display:flex;align-items:center;gap:5px;font-size:10px;font-family:'Orbitron',sans-serif;color:var(--purple);letter-spacing:.1em}
     .tb-live-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);animation:pulse 1.4s infinite}
     @keyframes pulse{0%,100%{box-shadow:0 0 4px var(--purple)}50%{box-shadow:0 0 14px var(--purple)}}
     .tb-btn{width:36px;height:36px;border-radius:8px;background:var(--glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--muted);transition:all .18s;text-decoration:none;position:relative}
     .tb-btn:hover{background:var(--card);color:var(--text)}
     .tb-notif-dot{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 5px var(--red)}
-    .tb-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:700;font-size:12px;border:2px solid rgba(168,85,247,.35);cursor:pointer}
+    .tb-user{display:flex;align-items:center;justify-content:flex-end;gap:8px;min-width:0}
+    .tb-email{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:700;color:rgba(240,240,245,.72)}
+    .tb-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:700;font-size:12px;border:2px solid rgba(168,85,247,.35);cursor:pointer;flex-shrink:0}
     .tb-hamburger{display:none;width:36px;height:36px;border-radius:8px;background:var(--glass);border:1px solid var(--border);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;flex-direction:column;gap:5px;padding:9px}
     .tb-hamburger span{display:block;width:100%;height:2px;background:var(--text);border-radius:2px}
     .page{padding:22px;flex:1}
@@ -203,17 +205,22 @@
     .match-detail-table tr:last-child td{border-bottom:none}
     .match-detail-table tr:hover td{background:var(--glass)}
     .result-badge{font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 9px;border-radius:6px}
-    .upcoming-card{background:var(--card);border:1px solid rgba(168,85,247,.2);border-radius:14px;padding:16px 20px;margin-bottom:12px;display:flex;align-items:center;gap:16px;transition:all .2s}
-    .upcoming-card:hover{border-color:rgba(168,85,247,.4);transform:translateX(3px)}
-    .uc-countdown{text-align:center;min-width:72px;flex-shrink:0}
+    .upcoming-card{width:100%;background:var(--card);border:1px solid rgba(168,85,247,.2);border-radius:14px;padding:14px 16px;margin-bottom:12px;display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:14px;transition:border-color .2s,transform .2s}
+    .upcoming-card:hover{border-color:rgba(168,85,247,.4);transform:translateY(-1px)}
+    .uc-countdown{width:64px;min-width:64px;text-align:center;padding:9px 6px;border-radius:12px;background:rgba(168,85,247,.09);border:1px solid rgba(168,85,247,.18);flex-shrink:0}
     .uc-countdown .days{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:var(--purple);line-height:1}
-    .uc-countdown .dlbl{font-size:9px;color:var(--muted);letter-spacing:.1em}
-    .uc-divider{width:1px;height:48px;background:var(--border);flex-shrink:0}
-    .uc-info{flex:1;min-width:0}
-    .uc-opp{font-weight:700;font-size:15px;margin-bottom:4px}
-    .uc-meta{font-size:12px;color:var(--muted)}
-    .uc-type-badge{font-size:9px;font-family:'Orbitron',sans-serif;padding:2px 7px;border-radius:5px;font-weight:700;margin-left:7px}
+    .uc-countdown .dlbl{font-size:9px;color:var(--muted);letter-spacing:.1em;white-space:nowrap}
+    .uc-divider{display:none}
+    .uc-info{min-width:0;display:flex;flex-direction:column;gap:4px}
+    .uc-game-icon{grid-row:1 / span 3;width:34px;height:34px;border-radius:10px;background:var(--glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .uc-vs{font-size:10px;font-family:'Orbitron',sans-serif;color:#fff;font-weight:900;letter-spacing:.08em;line-height:1}
+    .uc-team-row{display:flex;align-items:center;gap:7px;min-width:0}
+    .uc-team{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:15px;font-weight:800;color:#fff}
+    .uc-opp{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:15px;font-weight:800;color:#fff}
+    .uc-meta{font-size:12px;color:var(--muted);line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .uc-type-badge{display:inline-flex;align-items:center;max-width:92px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:9px;font-family:'Orbitron',sans-serif;padding:2px 7px;border-radius:5px;font-weight:700;flex-shrink:0}
     .uc-actions{display:flex;gap:8px;flex-shrink:0}
+    .uc-actions button{white-space:nowrap;justify-content:center}
 
     /* ── SCRIMS ── */
     .scrim-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
@@ -279,8 +286,9 @@
 
     /* ── RESPONSIVE ── */
     @media(max-width:1200px){.stats-grid,.roster-perf-grid,.scrim-stats-grid{grid-template-columns:repeat(2,1fr)}.rs-form{grid-template-columns:1fr 1fr}}
-    @media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.tb-hamburger{display:flex}.ov-grid,.ov-bottom,.map-perf-grid{grid-template-columns:1fr}.team-stats{display:none}.rs-form{grid-template-columns:1fr}}
-    @media(max-width:600px){.stats-grid,.roster-perf-grid,.scrim-stats-grid{grid-template-columns:1fr 1fr}.tb-search{display:none}.page{padding:14px}.cal-grid{display:none}}
+    @media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.topbar{width:100%;height:64px;padding:0 16px}.tb-hamburger{display:flex}.topbar-title{flex:0 1 auto;line-height:1.25}.tb-search{display:none}.tb-actions{margin-left:auto}.ov-grid,.ov-bottom,.map-perf-grid{grid-template-columns:1fr}.team-stats{display:none}.rs-form{grid-template-columns:1fr}}
+    @media(max-width:600px){.stats-grid,.roster-perf-grid,.scrim-stats-grid{grid-template-columns:1fr 1fr}.page{padding:14px}.cal-grid{display:none}.upcoming-card{grid-template-columns:58px minmax(0,1fr) 72px;gap:10px;padding:12px}.uc-countdown{width:58px;min-width:58px;padding:8px 4px}.uc-countdown .days{font-size:20px}.uc-game-icon{width:28px;height:28px;border-radius:8px;font-size:15px}.uc-team,.uc-opp{font-size:14px}.uc-meta{font-size:11px}.uc-actions{width:72px;flex-direction:column;gap:6px}.uc-actions button{width:100%;min-width:0;padding:7px 6px!important;font-size:9px!important;letter-spacing:0}}
+    @media(max-width:420px){.topbar{padding:0 12px;gap:10px}.topbar-title{font-size:13px}.tb-actions{gap:7px}.tb-live{display:none}.tb-email{display:none}.tb-btn,.tb-avatar,.tb-hamburger{width:36px;height:36px}.upcoming-card{grid-template-columns:52px minmax(0,1fr) 64px;gap:8px;padding:10px}.uc-countdown{width:52px;min-width:52px}.uc-countdown .days{font-size:18px}.uc-countdown .dlbl{font-size:8px}.uc-game-icon{width:24px;height:24px;font-size:14px}.uc-team,.uc-opp{font-size:13px}.uc-type-badge{max-width:74px;font-size:8px;padding:2px 5px}.uc-meta{font-size:10px}.uc-actions{width:64px}.uc-actions button{padding:6px 4px!important;font-size:8px!important}}
   </style>
 </head>
 <body>
@@ -326,7 +334,10 @@
       <div class="tb-live"><div class="tb-live-dot"></div>ONLINE</div>
       <a class="tb-btn" href="#">🔔<div class="tb-notif-dot"></div></a>
       <a class="tb-btn" href="#">💬</a>
-      <div class="tb-avatar">SB</div>
+      <div class="tb-user">
+        <span class="tb-email js-team-email">captain@stormbreakers.gg</span>
+        <div class="tb-avatar js-team-initials">SB</div>
+      </div>
     </div>
   </header>
 
@@ -810,7 +821,6 @@
 
       <div class="upcoming-card">
         <div class="uc-countdown"><div class="days">1</div><div class="dlbl">DAY</div></div>
-        <div class="uc-divider"></div>
         <div class="uc-info">
           <div class="uc-opp">🔫 vs NightRaiders <span class="uc-type-badge" style="background:rgba(230,57,70,.15);color:var(--red);border:1px solid rgba(230,57,70,.25)">RANKED</span></div>
           <div class="uc-meta">📅 May 20, 2026 &nbsp;·&nbsp; 🕗 8:00 PM IST &nbsp;·&nbsp; 🗺️ Valorant — Split</div>
@@ -823,7 +833,6 @@
 
       <div class="upcoming-card">
         <div class="uc-countdown"><div class="days">3</div><div class="dlbl">DAYS</div></div>
-        <div class="uc-divider"></div>
         <div class="uc-info">
           <div class="uc-opp">🧩 vs EchoForce <span class="uc-type-badge" style="background:rgba(245,158,11,.15);color:var(--gold);border:1px solid rgba(245,158,11,.25)">TOURNAMENT</span></div>
           <div class="uc-meta">📅 May 22, 2026 &nbsp;·&nbsp; 🕕 6:00 PM IST &nbsp;·&nbsp; 🗺️ Valorant — Lotus</div>
@@ -836,7 +845,6 @@
 
       <div class="upcoming-card">
         <div class="uc-countdown"><div class="days">5</div><div class="dlbl">DAYS</div></div>
-        <div class="uc-divider"></div>
         <div class="uc-info">
           <div class="uc-opp">⚡ vs ProGamingX <span class="uc-type-badge" style="background:rgba(168,85,247,.15);color:var(--purple);border:1px solid rgba(168,85,247,.25)">SCRIM</span></div>
           <div class="uc-meta">📅 May 24, 2026 &nbsp;·&nbsp; 🕙 10:00 AM IST &nbsp;·&nbsp; 🗺️ CS2 — Mirage</div>
@@ -1185,9 +1193,36 @@
 </div>
 
 <script>
+  function hydrateTeamIdentity() {
+    const email = localStorage.getItem('gamingStacklyEmail') || 'captain@stormbreakers.gg';
+    const storedName = localStorage.getItem('gamingStacklyName') || '';
+    const rawName = storedName || email.split('@')[0] || 'Team';
+    const cleanName = rawName
+      .replace(/[._-]+/g, ' ')
+      .replace(/[^a-zA-Z0-9 ]/g, '')
+      .trim() || 'Team';
+    const initials = cleanName
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map(part => part.charAt(0))
+      .join('')
+      .toUpperCase() || 'TM';
+
+    document.querySelectorAll('.js-team-email').forEach(el => {
+      el.textContent = email;
+      el.title = email;
+    });
+    document.querySelectorAll('.js-team-initials').forEach(el => {
+      el.textContent = initials;
+      el.title = email;
+    });
+  }
+
   /* ── Sidebar ── */
   function openSidebar(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
   function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }
+  hydrateTeamIdentity();
 
   /* ── Toast ── */
   let _toastTimer;

@@ -83,8 +83,9 @@
     /* ── WELCOME BANNER ── */
     .welcome{background:linear-gradient(120deg,rgba(230,57,70,.14) 0%,rgba(168,85,247,.07) 55%,transparent 100%);border:1px solid rgba(230,57,70,.22);border-radius:18px;padding:24px 28px;margin-bottom:22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;position:relative;overflow:hidden}
     .welcome::after{content:'⚡';position:absolute;right:100px;top:50%;transform:translateY(-50%);font-size:90px;opacity:.04;pointer-events:none}
-    .welcome h1{font-family:'Orbitron',sans-serif;font-size:clamp(16px,2.5vw,22px);font-weight:900;margin-bottom:4px}
+    .welcome h1{font-family:'Orbitron',sans-serif;font-size:clamp(16px,2.5vw,22px);font-weight:900;margin-bottom:4px;line-height:1.35}
     .welcome h1 span{color:var(--red)}
+    .player-name-inline{display:inline-block;max-width:min(58vw,360px);vertical-align:bottom;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .welcome p{color:var(--muted);font-size:13px}
     .welcome-stats{display:flex;gap:14px;flex-wrap:wrap}
     .w-stat{text-align:center;padding:9px 16px;background:var(--glass);border:1px solid var(--border);border-radius:10px}
@@ -328,9 +329,9 @@
     <div class="sb-logo-text">Gaming <span>Stackly</span></div>
   </a>
   <div class="sb-user">
-    <div class="sb-avatar">FX</div>
+    <div class="sb-avatar js-player-initials">PL</div>
     <div class="sb-user-info">
-      <div class="sb-user-name">Fxhgjhh</div>
+      <div class="sb-user-name js-player-name">Player</div>
       <div class="sb-user-rank">⚔️ Diamond II</div>
     </div>
     <div class="sb-online"></div>
@@ -364,7 +365,7 @@
       <div class="tb-live"><div class="tb-live-dot"></div>LIVE</div>
       <a class="tb-btn" href="#">🔔<div class="tb-notif-dot"></div></a>
       <a class="tb-btn" href="#">💬</a>
-      <div class="tb-avatar">FX</div>
+      <div class="tb-avatar js-player-initials">PL</div>
     </div>
   </header>
 
@@ -374,7 +375,7 @@
     <!-- Welcome -->
     <div class="welcome">
       <div>
-        <h1>Welcome Back, <span>Fxhgjhh</span> 👋</h1>
+        <h1>Welcome Back, <span class="player-name-inline js-player-name">Player</span> 👋</h1>
         <p>Here's your live gaming performance overview.</p>
       </div>
       <div class="welcome-stats">
@@ -1096,8 +1097,47 @@
 </div>
 
 <script>
+  function getStoredPlayer() {
+    var email = localStorage.getItem('gamingStacklyEmail') || '';
+    var storedName = localStorage.getItem('gamingStacklyName') || '';
+    var rawName = storedName || (email ? email.split('@')[0] : 'Player');
+    var cleanName = rawName
+      .replace(/[._-]+/g, ' ')
+      .replace(/[^a-zA-Z0-9 ]/g, '')
+      .trim() || 'Player';
+    var displayName = cleanName.replace(/\b\w/g, function (char) {
+      return char.toUpperCase();
+    });
+    var initials = displayName
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map(function (part) { return part.charAt(0); })
+      .join('')
+      .toUpperCase() || 'PL';
+
+    return {
+      email: email,
+      name: displayName,
+      initials: initials
+    };
+  }
+
+  function hydratePlayerIdentity() {
+    var player = getStoredPlayer();
+    document.querySelectorAll('.js-player-name').forEach(function (el) {
+      el.textContent = player.name;
+      el.title = player.email || player.name;
+    });
+    document.querySelectorAll('.js-player-initials').forEach(function (el) {
+      el.textContent = player.initials;
+      el.title = player.email || player.name;
+    });
+  }
+
   function openSidebar(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
   function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }
+  hydratePlayerIdentity();
 </script>
 </body>
 </html>

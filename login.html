@@ -867,6 +867,17 @@
 
     /* Redirect to role-specific dashboard */
     var activeRole = document.querySelector('.role-tab.active').getAttribute('data-role');
+    var emailName = emailVal.split('@')[0]
+      .replace(/[._-]+/g, ' ')
+      .replace(/[^a-zA-Z0-9 ]/g, '')
+      .trim();
+    var displayName = emailName || 'Player';
+    displayName = displayName.replace(/\b\w/g, function (char) { return char.toUpperCase(); });
+
+    localStorage.setItem('gamingStacklyEmail', emailVal);
+    localStorage.setItem('gamingStacklyRole', activeRole);
+    localStorage.setItem('gamingStacklyName', displayName);
+
     var dashboardMap = {
       player: 'player-dashboard.html',
       team:   'team-dashboard.html',

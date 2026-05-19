@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gaming Stackly | Unified Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            stackred: '#E50914',
+            stackdark: '#07070b',
+            stackpanel: '#101018',
+            stackline: '#242437',
+            neonpurple: '#a855f7'
+          },
+          fontFamily: {
+            display: ['Orbitron', 'ui-sans-serif', 'system-ui'],
+            body: ['Rajdhani', 'ui-sans-serif', 'system-ui']
+          },
+          boxShadow: {
+            redglow: '0 0 28px rgba(229, 9, 20, 0.28)',
+            purpleglow: '0 0 28px rgba(168, 85, 247, 0.22)'
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at top left, rgba(229,9,20,.12), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(168,85,247,.12), transparent 32rem),
+        #07070b;
+      color: #f8fafc;
+      font-family: Rajdhani, ui-sans-serif, system-ui;
+    }
+    .brand-gradient {
+      background: linear-gradient(90deg, #E50914 0%, #a855f7 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .app-screen { display: none; }
+    .app-screen.active { display: block; }
+    .dashboard-view { display: none; }
+    .dashboard-view.active { display: block; }
+    .role-tab.active {
+      border-color: rgba(229, 9, 20, .9);
+      background: rgba(229, 9, 20, .14);
+      color: #fff;
+      box-shadow: inset 0 0 0 1px rgba(229, 9, 20, .2);
+    }
+    .sidebar-link.active {
+      border-color: rgba(229, 9, 20, .8);
+      background: rgba(229, 9, 20, .12);
+      color: #fff;
+    }
+    .no-scrollbar::-webkit-scrollbar { width: 0; height: 0; }
+    .no-scrollbar { scrollbar-width: none; }
+  </style>
+</head>
+<body class="font-body">
+  <button type="button" onclick="logout()" class="fixed left-4 top-4 z-30 hidden rounded-full border border-white/10 bg-black/40 px-3 py-2 text-xs font-bold text-white backdrop-blur md:hidden">
+    Login
+  </button>
+
+  <div id="loginScreen" class="app-screen active min-h-screen px-4 py-6 sm:px-6">
+    <main class="mx-auto flex min-h-[calc(100vh-48px)] w-full max-w-6xl items-center justify-center">
+      <section class="grid w-full gap-8 lg:grid-cols-[1fr_420px] lg:items-center">
+        <div class="hidden lg:block">
+          <button type="button" onclick="logout()" class="mb-9 inline-flex items-center gap-3">
+            <span class="relative flex h-12 w-12 items-center justify-center rounded-xl border border-stackred/50 bg-[#101018] shadow-redglow">
+              <i data-lucide="shield" class="h-8 w-8 text-stackred"></i>
+              <i data-lucide="zap" class="absolute h-4 w-4 text-white"></i>
+            </span>
+            <span class="font-display text-2xl font-black tracking-wide">
+              <span class="text-white">Gaming</span>
+              <span class="brand-gradient">Stackly</span>
+            </span>
+          </button>
+          <p class="mb-4 font-display text-xs font-bold uppercase tracking-[0.32em] text-stackred">Competitive esports operations</p>
+          <h1 class="max-w-2xl font-display text-5xl font-black leading-tight text-white xl:text-6xl">One command center for players, teams, and admins.</h1>
+          <p class="mt-5 max-w-xl text-lg font-semibold leading-8 text-slate-300">Track tournaments, roster health, user access, live operations, and performance metrics from a unified responsive interface.</p>
+          <div class="mt-8 grid max-w-2xl grid-cols-3 gap-3">
+            <div class="rounded-lg border border-white/10 bg-white/[0.04] p-4">
+              <p class="font-display text-2xl font-black text-white">128</p>
+              <p class="mt-1 text-sm font-bold text-slate-400">Active teams</p>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-white/[0.04] p-4">
+              <p class="font-display text-2xl font-black text-stackred">42</p>
+              <p class="mt-1 text-sm font-bold text-slate-400">Live events</p>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-white/[0.04] p-4">
+              <p class="font-display text-2xl font-black text-neonpurple">99.8%</p>
+              <p class="mt-1 text-sm font-bold text-slate-400">Uptime</p>
+            </div>
+          </div>
+        </div>
+
+        <form id="loginForm" class="w-full rounded-xl border border-white/10 bg-[#101018]/95 p-5 shadow-2xl shadow-black/40 sm:p-7" onsubmit="handleLogin(event)">
+          <button type="button" onclick="logout()" class="mx-auto mb-7 flex items-center justify-center gap-3">
+            <span class="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-stackred/50 bg-black/40 shadow-redglow">
+              <i data-lucide="shield" class="h-8 w-8 text-stackred"></i>
+              <i data-lucide="zap" class="absolute h-4 w-4 text-white"></i>
+            </span>
+            <span class="font-display text-xl font-black tracking-wide">
+              <span class="text-white">Gaming</span>
+              <span class="brand-gradient">Stackly</span>
+            </span>
+          </button>
+
+          <div class="mb-6 text-center">
+            <h2 class="font-display text-2xl font-black text-white">Access Portal</h2>
+            <p class="mt-2 text-sm font-semibold text-slate-400">Choose a role and enter your credentials.</p>
+          </div>
+
+          <div class="mb-5 grid grid-cols-3 gap-2 rounded-lg border border-white/10 bg-black/30 p-1">
+            <button type="button" data-role="player" class="role-tab active rounded-md border border-transparent px-2 py-2 text-sm font-bold text-slate-300 transition" onclick="setRole('player')">Player</button>
+            <button type="button" data-role="team" class="role-tab rounded-md border border-transparent px-2 py-2 text-sm font-bold text-slate-300 transition" onclick="setRole('team')">Team</button>
+            <button type="button" data-role="admin" class="role-tab rounded-md border border-transparent px-2 py-2 text-sm font-bold text-slate-300 transition" onclick="setRole('admin')">Admin</button>
+          </div>
+
+          <label for="emailInput" class="mb-2 block text-sm font-bold uppercase tracking-[0.16em] text-slate-400">Email</label>
+          <div class="mb-4 flex items-center gap-3 rounded-lg border border-white/10 bg-black/30 px-3 py-3 focus-within:border-stackred/70">
+            <i data-lucide="mail" class="h-5 w-5 shrink-0 text-slate-500"></i>
+            <input id="emailInput" type="email" required value="player@gamingstackly.com" class="w-full bg-transparent text-base font-semibold text-white placeholder:text-slate-600" placeholder="you@gamingstackly.com">
+          </div>
+
+          <label for="passwordInput" class="mb-2 block text-sm font-bold uppercase tracking-[0.16em] text-slate-400">Password</label>
+          <div class="mb-6 flex items-center gap-3 rounded-lg border border-white/10 bg-black/30 px-3 py-3 focus-within:border-stackred/70">
+            <i data-lucide="lock" class="h-5 w-5 shrink-0 text-slate-500"></i>
+            <input id="passwordInput" type="password" required value="stackly123" class="w-full bg-transparent text-base font-semibold text-white placeholder:text-slate-600" placeholder="Enter password">
+            <button type="button" onclick="togglePassword()" class="rounded-md p-1 text-slate-400 hover:bg-white/10 hover:text-white" aria-label="Toggle password visibility">
+              <i id="passwordIcon" data-lucide="eye" class="h-5 w-5"></i>
+            </button>
+          </div>
+
+          <button type="submit" class="flex w-full items-center justify-center gap-2 rounded-lg bg-stackred px-4 py-3 font-display text-sm font-black uppercase tracking-[0.18em] text-white shadow-redglow transition hover:bg-red-700">
+            <i data-lucide="log-in" class="h-5 w-5"></i>
+            Login
+          </button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <div id="dashboardShell" class="app-screen h-screen overflow-hidden bg-stackdark text-white">
+    <header class="fixed inset-x-0 top-0 z-40 flex h-16 items-center justify-between border-b border-white/10 bg-[#090910]/95 px-3 backdrop-blur md:px-5">
+      <div class="flex min-w-0 items-center gap-2 sm:gap-4">
+        <button type="button" onclick="toggleMobileMenu()" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-white md:hidden" aria-label="Open navigation">
+          <i data-lucide="menu" class="h-5 w-5"></i>
+        </button>
+        <button type="button" onclick="logout()" class="flex min-w-0 items-center gap-2 sm:gap-3">
+          <span class="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-stackred/50 bg-black/40 shadow-redglow">
+            <i data-lucide="shield" class="h-7 w-7 text-stackred"></i>
+            <i data-lucide="zap" class="absolute h-3.5 w-3.5 text-white"></i>
+          </span>
+          <span class="hidden min-w-0 font-display text-lg font-black tracking-wide sm:block sm:text-xl">
+            <span class="text-white">Gaming</span>
+            <span class="brand-gradient">Stackly</span>
+          </span>
+        </button>
+      </div>
+
+      <div class="flex min-w-0 items-center justify-end gap-2">
+        <span id="activeRolePill" class="hidden rounded-full border border-stackred/40 bg-stackred/10 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-stackred sm:inline-flex">Player</span>
+        <div class="flex min-w-0 items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-2 py-2">
+          <i data-lucide="user-round" class="h-4 w-4 shrink-0 text-slate-400"></i>
+          <span id="activeEmail" class="block max-w-[110px] truncate text-sm font-bold text-slate-200 sm:max-w-[220px] md:max-w-[320px]">player@gamingstackly.com</span>
+        </div>
+      </div>
+    </header>
+
+    <div id="mobileOverlay" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm md:hidden" onclick="toggleMobileMenu(false)">
+      <aside class="h-full w-64 border-r border-white/10 bg-[#101018] p-4 shadow-2xl" onclick="event.stopPropagation()">
+        <div class="mb-6 flex items-center justify-between">
+          <button type="button" onclick="logout()" class="flex items-center gap-2">
+            <span class="relative flex h-9 w-9 items-center justify-center rounded-lg border border-stackred/50 bg-black/40">
+              <i data-lucide="shield" class="h-6 w-6 text-stackred"></i>
+              <i data-lucide="zap" class="absolute h-3 w-3 text-white"></i>
+            </span>
+            <span class="font-display text-base font-black"><span>Gaming</span><span class="brand-gradient">Stackly</span></span>
+          </button>
+          <button type="button" onclick="toggleMobileMenu(false)" class="rounded-lg p-2 text-slate-400 hover:bg-white/10 hover:text-white" aria-label="Close navigation">
+            <i data-lucide="x" class="h-5 w-5"></i>
+          </button>
+        </div>
+        <nav id="mobileNav" class="space-y-2"></nav>
+      </aside>
+    </div>
+
+    <div class="grid pt-16 md:grid-cols-[260px_1fr]">
+      <aside class="hidden h-[calc(100vh-64px)] border-r border-white/10 bg-[#101018] p-4 md:block">
+        <nav id="desktopNav" class="space-y-2"></nav>
+      </aside>
+
+      <main class="h-[calc(100vh-64px)] w-full overflow-y-auto p-4 sm:p-5 lg:p-7">
+        <section id="playerView" class="dashboard-view">
+          <div class="mb-5 rounded-xl border border-white/10 bg-gradient-to-r from-stackred/20 via-white/[0.04] to-neonpurple/20 p-5 sm:p-7">
+            <p class="font-display text-xs font-black uppercase tracking-[0.25em] text-stackred">Player Dashboard</p>
+            <h1 class="mt-3 font-display text-2xl font-black text-white sm:text-4xl">Welcome back, NightRift.</h1>
+            <p class="mt-2 max-w-3xl text-base font-semibold leading-7 text-slate-300">Your next race lobby opens soon. Review your recent form and lock in for active tournaments.</p>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-bold uppercase tracking-[0.16em] text-slate-400">Win Rate</p>
+                <i data-lucide="trophy" class="h-5 w-5 text-stackred"></i>
+              </div>
+              <p class="mt-4 font-display text-4xl font-black text-white">68%</p>
+              <p class="mt-2 text-sm font-semibold text-emerald-400">+8.2% over last 10 matches</p>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-bold uppercase tracking-[0.16em] text-slate-400">Rank Points</p>
+                <i data-lucide="gauge" class="h-5 w-5 text-neonpurple"></i>
+              </div>
+              <p class="mt-4 font-display text-4xl font-black text-white">8,420</p>
+              <p class="mt-2 text-sm font-semibold text-slate-400">Diamond II division</p>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-bold uppercase tracking-[0.16em] text-slate-400">Podiums</p>
+                <i data-lucide="medal" class="h-5 w-5 text-amber-400"></i>
+              </div>
+              <p class="mt-4 font-display text-4xl font-black text-white">24</p>
+              <p class="mt-2 text-sm font-semibold text-slate-400">Season total</p>
+            </article>
+          </div>
+
+          <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <div class="mb-4 flex items-center justify-between gap-3">
+                <h2 class="font-display text-lg font-black text-white">Neon Drift Cup</h2>
+                <span class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-black text-emerald-400">OPEN</span>
+              </div>
+              <p class="text-sm font-semibold leading-6 text-slate-400">Solo qualifiers with 16-player finals bracket.</p>
+              <div class="mt-5 grid grid-cols-2 gap-3 text-sm font-bold">
+                <span class="rounded-lg bg-black/30 p-3 text-slate-300">Prize: $12K</span>
+                <span class="rounded-lg bg-black/30 p-3 text-slate-300">Starts: 20:00</span>
+              </div>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <div class="mb-4 flex items-center justify-between gap-3">
+                <h2 class="font-display text-lg font-black text-white">Velocity Arena</h2>
+                <span class="rounded-full bg-stackred/10 px-3 py-1 text-xs font-black text-stackred">LIVE</span>
+              </div>
+              <p class="text-sm font-semibold leading-6 text-slate-400">Leaderboard challenge with rolling track modifiers.</p>
+              <div class="mt-5 grid grid-cols-2 gap-3 text-sm font-bold">
+                <span class="rounded-lg bg-black/30 p-3 text-slate-300">Rank: #7</span>
+                <span class="rounded-lg bg-black/30 p-3 text-slate-300">Laps: 18</span>
+              </div>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <div class="mb-4 flex items-center justify-between gap-3">
+                <h2 class="font-display text-lg font-black text-white">Apex Rally</h2>
+                <span class="rounded-full bg-neonpurple/10 px-3 py-1 text-xs font-black text-purple-300">INVITED</span>
+              </div>
+              <p class="text-sm font-semibold leading-6 text-slate-400">Team invite pending captain confirmation.</p>
+              <div class="mt-5 grid grid-cols-2 gap-3 text-sm font-bold">
+                <span class="rounded-lg bg-black/30 p-3 text-slate-300">Team: Nova</span>
+                <span class="rounded-lg bg-black/30 p-3 text-slate-300">ETA: 1 day</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="teamView" class="dashboard-view">
+          <div class="mb-5 rounded-xl border border-white/10 bg-gradient-to-r from-neonpurple/20 via-white/[0.04] to-stackred/20 p-5 sm:p-7">
+            <p class="font-display text-xs font-black uppercase tracking-[0.25em] text-neonpurple">Team Dashboard</p>
+            <div class="mt-3 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h1 class="font-display text-2xl font-black text-white sm:text-4xl">Nova Circuit</h1>
+                <p class="mt-2 max-w-3xl text-base font-semibold leading-7 text-slate-300">Roster readiness, roles, and tournament commitments for the current season.</p>
+              </div>
+              <button class="w-full rounded-lg bg-stackred px-4 py-3 font-display text-sm font-black uppercase tracking-[0.16em] text-white shadow-redglow sm:w-auto">Invite Player</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <p class="text-sm font-bold uppercase tracking-[0.16em] text-slate-400">Team Rating</p>
+              <p class="mt-4 font-display text-4xl font-black text-white">92.4</p>
+              <p class="mt-2 text-sm font-semibold text-emerald-400">Elite tier qualification active</p>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <p class="text-sm font-bold uppercase tracking-[0.16em] text-slate-400">Roster Slots</p>
+              <p class="mt-4 font-display text-4xl font-black text-white">5/6</p>
+              <p class="mt-2 text-sm font-semibold text-slate-400">One substitute slot available</p>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <p class="text-sm font-bold uppercase tracking-[0.16em] text-slate-400">Scrim Record</p>
+              <p class="mt-4 font-display text-4xl font-black text-white">14-3</p>
+              <p class="mt-2 text-sm font-semibold text-slate-400">Last 30 days</p>
+            </article>
+          </div>
+
+          <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <div class="flex items-center gap-4">
+                <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-stackred/15 font-display text-lg font-black text-stackred">NR</div>
+                <div class="min-w-0">
+                  <h2 class="truncate font-display text-lg font-black text-white">NightRift</h2>
+                  <p class="text-sm font-bold text-slate-400">Captain / Entry</p>
+                </div>
+              </div>
+              <p class="mt-5 text-sm font-semibold leading-6 text-slate-400">Controls pace, first-corner pressure, and final lap calls.</p>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <div class="flex items-center gap-4">
+                <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-neonpurple/15 font-display text-lg font-black text-purple-300">VX</div>
+                <div class="min-w-0">
+                  <h2 class="truncate font-display text-lg font-black text-white">Vexline</h2>
+                  <p class="text-sm font-bold text-slate-400">Strategist</p>
+                </div>
+              </div>
+              <p class="mt-5 text-sm font-semibold leading-6 text-slate-400">Reads lobby behavior and selects fuel strategy windows.</p>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <div class="flex items-center gap-4">
+                <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-500/15 font-display text-lg font-black text-cyan-300">MK</div>
+                <div class="min-w-0">
+                  <h2 class="truncate font-display text-lg font-black text-white">Mako</h2>
+                  <p class="text-sm font-bold text-slate-400">Anchor</p>
+                </div>
+              </div>
+              <p class="mt-5 text-sm font-semibold leading-6 text-slate-400">Defensive racer with high consistency under pressure.</p>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <div class="flex items-center gap-4">
+                <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-amber-500/15 font-display text-lg font-black text-amber-300">KL</div>
+                <div class="min-w-0">
+                  <h2 class="truncate font-display text-lg font-black text-white">Kilo</h2>
+                  <p class="text-sm font-bold text-slate-400">Support</p>
+                </div>
+              </div>
+              <p class="mt-5 text-sm font-semibold leading-6 text-slate-400">Draft control and clean race recovery specialist.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="adminView" class="dashboard-view">
+          <div class="mb-5 rounded-xl border border-white/10 bg-stackpanel p-5 sm:p-7">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div class="min-w-0">
+                <p class="font-display text-xs font-black uppercase tracking-[0.25em] text-stackred">Admin Control Panel</p>
+                <h1 class="mt-3 font-display text-2xl font-black text-white sm:text-4xl">Platform Operations</h1>
+                <p class="mt-2 max-w-3xl text-base font-semibold leading-7 text-slate-300">Monitor health, tournaments, payouts, and user management.</p>
+              </div>
+              <button class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-stackred px-4 py-3 font-display text-sm font-black uppercase tracking-[0.16em] text-white shadow-redglow sm:w-auto">
+                <i data-lucide="plus" class="h-5 w-5"></i>
+                New Tournament
+              </button>
+            </div>
+            <div class="mt-6">
+              <div class="mb-2 flex items-center justify-between text-sm font-bold text-slate-300">
+                <span>System Health</span>
+                <span>99.8%</span>
+              </div>
+              <div class="h-3 w-full overflow-hidden rounded-full bg-black/40">
+                <div class="h-full w-[99%] rounded-full bg-gradient-to-r from-emerald-500 via-stackred to-neonpurple"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <p class="text-sm font-bold uppercase tracking-[0.16em] text-slate-400">Total Users</p>
+              <p class="mt-4 font-display text-4xl font-black text-white">24,810</p>
+              <p class="mt-2 text-sm font-semibold text-emerald-400">+1,204 this week</p>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <p class="text-sm font-bold uppercase tracking-[0.16em] text-slate-400">Active Events</p>
+              <p class="mt-4 font-display text-4xl font-black text-white">42</p>
+              <p class="mt-2 text-sm font-semibold text-slate-400">8 require moderation</p>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <p class="text-sm font-bold uppercase tracking-[0.16em] text-slate-400">Revenue</p>
+              <p class="mt-4 font-display text-4xl font-black text-white">$182K</p>
+              <p class="mt-2 text-sm font-semibold text-emerald-400">+14.6% MRR</p>
+            </article>
+          </div>
+
+          <div class="mt-6 rounded-xl border border-white/10 bg-stackpanel p-4 sm:p-5">
+            <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <h2 class="font-display text-xl font-black text-white">User Management</h2>
+              <button class="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-sm font-bold text-slate-200 hover:bg-white/10 sm:w-auto">
+                <i data-lucide="download" class="h-4 w-4"></i>
+                Export
+              </button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[720px] text-left">
+                <thead class="border-b border-white/10 text-xs font-black uppercase tracking-[0.18em] text-slate-500">
+                  <tr>
+                    <th class="px-3 py-3">User</th>
+                    <th class="px-3 py-3">Role</th>
+                    <th class="px-3 py-3">Status</th>
+                    <th class="px-3 py-3">Joined</th>
+                    <th class="px-3 py-3 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-white/10 text-sm font-semibold text-slate-300">
+                  <tr>
+                    <td class="px-3 py-4 text-white">night@gamingstackly.com</td>
+                    <td class="px-3 py-4">Player</td>
+                    <td class="px-3 py-4"><span class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-black text-emerald-400">Active</span></td>
+                    <td class="px-3 py-4">May 12, 2026</td>
+                    <td class="px-3 py-4 text-right"><button class="rounded-md p-2 text-slate-400 hover:bg-white/10 hover:text-white"><i data-lucide="more-horizontal" class="h-4 w-4"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td class="px-3 py-4 text-white">captain@novacircuit.gg</td>
+                    <td class="px-3 py-4">Team</td>
+                    <td class="px-3 py-4"><span class="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-black text-amber-300">Review</span></td>
+                    <td class="px-3 py-4">May 10, 2026</td>
+                    <td class="px-3 py-4 text-right"><button class="rounded-md p-2 text-slate-400 hover:bg-white/10 hover:text-white"><i data-lucide="more-horizontal" class="h-4 w-4"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td class="px-3 py-4 text-white">ops@gamingstackly.com</td>
+                    <td class="px-3 py-4">Admin</td>
+                    <td class="px-3 py-4"><span class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-black text-emerald-400">Active</span></td>
+                    <td class="px-3 py-4">Apr 28, 2026</td>
+                    <td class="px-3 py-4 text-right"><button class="rounded-md p-2 text-slate-400 hover:bg-white/10 hover:text-white"><i data-lucide="more-horizontal" class="h-4 w-4"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="mockView" class="dashboard-view">
+          <div class="rounded-xl border border-white/10 bg-stackpanel p-5 sm:p-7">
+            <p id="mockEyebrow" class="font-display text-xs font-black uppercase tracking-[0.25em] text-stackred">Dashboard</p>
+            <h1 id="mockTitle" class="mt-3 font-display text-2xl font-black text-white sm:text-4xl">Overview</h1>
+            <p id="mockDescription" class="mt-3 max-w-3xl text-base font-semibold leading-7 text-slate-300">This mock view is wired through the sidebar state switcher.</p>
+          </div>
+          <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <i data-lucide="activity" class="h-6 w-6 text-stackred"></i>
+              <h2 class="mt-4 font-display text-lg font-black text-white">Activity</h2>
+              <p class="mt-2 text-sm font-semibold leading-6 text-slate-400">Recent updates and operational status appear here.</p>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <i data-lucide="calendar-days" class="h-6 w-6 text-neonpurple"></i>
+              <h2 class="mt-4 font-display text-lg font-black text-white">Schedule</h2>
+              <p class="mt-2 text-sm font-semibold leading-6 text-slate-400">Upcoming matches, scrims, and review windows.</p>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-stackpanel p-5">
+              <i data-lucide="message-square" class="h-6 w-6 text-cyan-300"></i>
+              <h2 class="mt-4 font-display text-lg font-black text-white">Comms</h2>
+              <p class="mt-2 text-sm font-semibold leading-6 text-slate-400">Team and platform notifications are grouped here.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const state = {
+      role: 'player',
+      email: 'player@gamingstackly.com',
+      currentView: 'player'
+    };
+
+    const navByRole = {
+      player: [
+        { id: 'player', label: 'Player Dashboard', icon: 'layout-dashboard' },
+        { id: 'tournaments', label: 'Tournaments', icon: 'trophy' },
+        { id: 'stats', label: 'Performance', icon: 'bar-chart-3' },
+        { id: 'messages', label: 'Messages', icon: 'message-square' }
+      ],
+      team: [
+        { id: 'team', label: 'Team Dashboard', icon: 'users' },
+        { id: 'roster', label: 'Roster', icon: 'id-card' },
+        { id: 'scrims', label: 'Scrims', icon: 'calendar-days' },
+        { id: 'analytics', label: 'Analytics', icon: 'line-chart' }
+      ],
+      admin: [
+        { id: 'admin', label: 'Admin Control', icon: 'shield-check' },
+        { id: 'users', label: 'Users', icon: 'users-round' },
+        { id: 'events', label: 'Events', icon: 'calendar-plus' },
+        { id: 'payments', label: 'Payments', icon: 'credit-card' }
+      ]
+    };
+
+    const mockCopy = {
+      tournaments: ['Tournaments', 'Active tournament registrations, brackets, and lobby assignments.'],
+      stats: ['Performance', 'Win rate trends, lap consistency, and season rank movement.'],
+      messages: ['Messages', 'Platform announcements and direct tournament notifications.'],
+      roster: ['Roster', 'Manage active players, role coverage, and substitute availability.'],
+      scrims: ['Scrims', 'Upcoming practice blocks, match notes, and opponent prep.'],
+      analytics: ['Analytics', 'Team rating trends, map splits, and consistency reports.'],
+      users: ['Users', 'Account reviews, moderation flags, and role permissions.'],
+      events: ['Events', 'Tournament creation queue, live operations, and referee notes.'],
+      payments: ['Payments', 'Entry fees, prize payouts, refunds, and finance checks.']
+    };
+
+    function setRole(role) {
+      state.role = role;
+      document.querySelectorAll('.role-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.role === role);
+      });
+
+      const emailInput = document.getElementById('emailInput');
+      const samples = {
+        player: 'player@gamingstackly.com',
+        team: 'captain@novacircuit.gg',
+        admin: 'admin@gamingstackly.com'
+      };
+      if (!emailInput.dataset.touched) emailInput.value = samples[role];
+    }
+
+    function togglePassword() {
+      const input = document.getElementById('passwordInput');
+      const icon = document.getElementById('passwordIcon');
+      input.type = input.type === 'password' ? 'text' : 'password';
+      icon.setAttribute('data-lucide', input.type === 'password' ? 'eye' : 'eye-off');
+      refreshIcons();
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      state.email = document.getElementById('emailInput').value.trim() || 'user@gamingstackly.com';
+      const defaultView = { player: 'player', team: 'team', admin: 'admin' }[state.role];
+      showDashboard(defaultView);
+    }
+
+    function logout() {
+      state.currentView = 'player';
+      document.getElementById('dashboardShell').classList.remove('active');
+      document.getElementById('loginScreen').classList.add('active');
+      toggleMobileMenu(false);
+      refreshIcons();
+    }
+
+    function showDashboard(viewId) {
+      document.getElementById('loginScreen').classList.remove('active');
+      document.getElementById('dashboardShell').classList.add('active');
+      document.getElementById('activeEmail').textContent = state.email;
+      document.getElementById('activeRolePill').textContent = state.role.charAt(0).toUpperCase() + state.role.slice(1);
+      state.currentView = viewId;
+      renderNav();
+      switchView(viewId);
+      refreshIcons();
+    }
+
+    function switchView(viewId) {
+      state.currentView = viewId;
+      document.querySelectorAll('.dashboard-view').forEach(view => view.classList.remove('active'));
+
+      if (viewId === 'player') {
+        document.getElementById('playerView').classList.add('active');
+      } else if (viewId === 'team') {
+        document.getElementById('teamView').classList.add('active');
+      } else if (viewId === 'admin') {
+        document.getElementById('adminView').classList.add('active');
+      } else {
+        const copy = mockCopy[viewId] || ['Overview', 'This mock view is wired through the sidebar state switcher.'];
+        document.getElementById('mockEyebrow').textContent = state.role + ' module';
+        document.getElementById('mockTitle').textContent = copy[0];
+        document.getElementById('mockDescription').textContent = copy[1];
+        document.getElementById('mockView').classList.add('active');
+      }
+
+      renderNav();
+      toggleMobileMenu(false);
+      refreshIcons();
+    }
+
+    function renderNav() {
+      const items = navByRole[state.role];
+      const markup = items.map(item => `
+        <button type="button" onclick="switchView('${item.id}')" class="sidebar-link ${state.currentView === item.id ? 'active' : ''} flex w-full items-center gap-3 rounded-lg border border-transparent px-3 py-3 text-left text-sm font-bold text-slate-400 transition hover:border-white/10 hover:bg-white/[0.04] hover:text-white">
+          <i data-lucide="${item.icon}" class="h-5 w-5 shrink-0"></i>
+          <span class="truncate">${item.label}</span>
+        </button>
+      `).join('');
+      document.getElementById('desktopNav').innerHTML = markup;
+      document.getElementById('mobileNav').innerHTML = markup;
+      refreshIcons();
+    }
+
+    function toggleMobileMenu(force) {
+      const drawer = document.getElementById('mobileOverlay');
+      const shouldOpen = typeof force === 'boolean' ? force : drawer.classList.contains('hidden');
+      drawer.classList.toggle('hidden', !shouldOpen);
+    }
+
+    function refreshIcons() {
+      if (window.lucide) lucide.createIcons();
+    }
+
+    document.getElementById('emailInput').addEventListener('input', event => {
+      event.currentTarget.dataset.touched = 'true';
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') toggleMobileMenu(false);
+    });
+
+    renderNav();
+    refreshIcons();
+  </script>
+</body>
+</html>

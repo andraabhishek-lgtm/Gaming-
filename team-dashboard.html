@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Team Dashboard — Gaming Stackly</title>
+  <link rel="icon" href="images/Logo.png" type="image/png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --red:#e63946;--red-dark:#b02132;--purple:#a855f7;--cyan:#06b6d4;
+      --gold:#f59e0b;--green:#22c55e;
+      --bg:#0a0a0f;--surface:#0f0f1a;--card:#12121e;
+      --border:rgba(255,255,255,0.08);--glass:rgba(255,255,255,0.05);
+      --text:#f0f0f5;--muted:rgba(240,240,245,0.48);
+      --sidebar:260px;--accent:#a855f7;--accent-glow:rgba(168,85,247,.35);
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;overflow-x:hidden}
+    ::-webkit-scrollbar{width:5px;height:5px}
+    ::-webkit-scrollbar-track{background:var(--surface)}
+    ::-webkit-scrollbar-thumb{background:var(--purple);border-radius:3px}
+
+    /* ── SIDEBAR ── */
+    .sidebar{width:var(--sidebar);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s ease}
+    .sb-logo{display:flex;align-items:center;gap:10px;padding:20px 20px 16px;border-bottom:1px solid var(--border);text-decoration:none}
+    .sb-logo img{width:34px;height:34px;object-fit:contain;border-radius:8px;flex-shrink:0}
+    .sb-logo-text{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:900;color:#fff;white-space:nowrap}
+    .sb-logo-text span{background:linear-gradient(90deg,#e63946,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .sb-user{display:flex;align-items:center;gap:12px;padding:15px 20px;border-bottom:1px solid var(--border)}
+    .sb-avatar{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:700;font-size:14px;flex-shrink:0;border:2px solid rgba(168,85,247,.35);box-shadow:0 0 12px var(--accent-glow)}
+    .sb-user-info{flex:1;min-width:0}
+    .sb-user-name{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sb-user-rank{font-size:11px;color:var(--purple);font-family:'Orbitron',sans-serif;letter-spacing:.08em}
+    .sb-online{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 7px var(--green);flex-shrink:0}
+    .sb-nav{flex:1;overflow-y:auto;padding:14px 0}
+    .sb-section{font-size:9px;font-family:'Orbitron',sans-serif;letter-spacing:.2em;color:var(--muted);padding:8px 20px 4px;text-transform:uppercase}
+    .sb-item{display:flex;align-items:center;gap:11px;padding:9px 20px;cursor:pointer;border-left:3px solid transparent;color:var(--muted);font-size:14px;font-weight:600;text-decoration:none;transition:all .18s}
+    .sb-item:hover{background:var(--glass);color:var(--text);border-left-color:rgba(168,85,247,.35)}
+    .sb-item.active{background:linear-gradient(90deg,rgba(168,85,247,.12),transparent);color:var(--text);border-left-color:var(--purple)}
+    .sb-icon{width:34px;height:34px;border-radius:8px;background:var(--glass);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:all .18s}
+    .sb-item.active .sb-icon{background:rgba(168,85,247,.18);box-shadow:0 0 10px var(--accent-glow)}
+    .sb-badge{margin-left:auto;background:var(--purple);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:9px;font-family:'Orbitron',sans-serif}
+    .sb-bottom{padding:15px 20px;border-top:1px solid var(--border)}
+    .sb-logout{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;transition:all .18s;text-decoration:none;background:none;border:none;width:100%}
+    .sb-logout:hover{background:rgba(230,57,70,.08);color:var(--red)}
+    .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:99}
+    .sb-overlay.open{display:block}
+
+    /* ── LAYOUT ── */
+    .main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh;min-width:0}
+    .topbar{height:62px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 22px;gap:14px;position:sticky;top:0;z-index:50;flex-shrink:0}
+    .topbar-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;flex:1}
+    .topbar-title span{color:var(--purple)}
+    .tb-search{display:flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--border);border-radius:9px;padding:7px 13px;width:200px}
+    .tb-search input{background:none;border:none;outline:none;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;width:100%}
+    .tb-search input::placeholder{color:var(--muted)}
+    .tb-actions{display:flex;align-items:center;gap:9px}
+    .tb-live{display:flex;align-items:center;gap:5px;font-size:10px;font-family:'Orbitron',sans-serif;color:var(--purple);letter-spacing:.1em}
+    .tb-live-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);animation:pulse 1.4s infinite}
+    @keyframes pulse{0%,100%{box-shadow:0 0 4px var(--purple)}50%{box-shadow:0 0 14px var(--purple)}}
+    .tb-btn{width:36px;height:36px;border-radius:8px;background:var(--glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--muted);transition:all .18s;text-decoration:none;position:relative}
+    .tb-btn:hover{background:var(--card);color:var(--text)}
+    .tb-notif-dot{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 5px var(--red)}
+    .tb-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:700;font-size:12px;border:2px solid rgba(168,85,247,.35);cursor:pointer}
+    .tb-hamburger{display:none;width:36px;height:36px;border-radius:8px;background:var(--glass);border:1px solid var(--border);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;flex-direction:column;gap:5px;padding:9px}
+    .tb-hamburger span{display:block;width:100%;height:2px;background:var(--text);border-radius:2px}
+    .page{padding:22px;flex:1}
+
+    /* ── SHARED COMPONENTS ── */
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+    .card-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 13px;border-bottom:1px solid var(--border)}
+    .card-title{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:.04em;display:flex;align-items:center;gap:7px}
+    .card-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);box-shadow:0 0 5px var(--purple)}
+    .card-action{font-size:12px;color:var(--purple);cursor:pointer;font-weight:600;text-decoration:none;transition:color .18s}
+    .card-action:hover{color:var(--red)}
+    .card-body{padding:16px 20px}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    .section-title{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:900;display:flex;align-items:center;gap:10px}
+    .section-title::before{content:'';width:4px;height:20px;border-radius:2px;background:linear-gradient(180deg,var(--purple),var(--cyan));flex-shrink:0}
+    .section-divider{height:1px;background:var(--border);margin:30px 0}
+    .btn-purple{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:linear-gradient(135deg,var(--purple),#7c3aed);border:none;border-radius:10px;color:#fff;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .btn-purple:hover{box-shadow:0 4px 18px rgba(168,85,247,.45);transform:translateY(-1px)}
+    .btn-outline{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:var(--glass);border:1px solid var(--border);border-radius:10px;color:rgba(240,240,245,.7);font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .btn-outline:hover{border-color:rgba(168,85,247,.4);color:var(--text)}
+
+    /* ── TEAM OVERVIEW ── */
+    .team-banner{background:linear-gradient(120deg,rgba(168,85,247,.14) 0%,rgba(6,182,212,.06) 55%,transparent 100%);border:1px solid rgba(168,85,247,.22);border-radius:18px;padding:24px 28px;margin-bottom:22px;display:flex;flex-wrap:wrap;align-items:center;gap:20px;position:relative;overflow:hidden}
+    .team-logo{width:80px;height:80px;border-radius:18px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:900;font-size:24px;box-shadow:0 0 28px var(--accent-glow);flex-shrink:0}
+    .team-info{flex:1;min-width:0}
+    .team-info h1{font-family:'Orbitron',sans-serif;font-size:clamp(18px,3vw,24px);font-weight:900;margin-bottom:4px}
+    .team-badge{display:inline-block;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;background:rgba(168,85,247,.18);color:var(--purple);border:1px solid rgba(168,85,247,.3);letter-spacing:.08em;margin-left:10px}
+    .team-info p{color:var(--muted);font-size:13px;margin-bottom:10px}
+    .team-tags{display:flex;flex-wrap:wrap;gap:7px}
+    .tag{padding:4px 10px;background:var(--glass);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;color:rgba(240,240,245,.6)}
+    .team-stats{display:flex;gap:14px;flex-shrink:0}
+    .ts{text-align:center;padding:10px 16px;background:var(--glass);border:1px solid var(--border);border-radius:10px}
+    .ts .v{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:700}
+    .ts .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s}
+    .stat-card:hover{border-color:rgba(168,85,247,.3);transform:translateY(-2px)}
+    .stat-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+    .stat-icon{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px}
+    .stat-change{font-size:11px;font-weight:700;padding:3px 7px;border-radius:6px;font-family:'Orbitron',sans-serif}
+    .stat-change.up{background:rgba(34,197,94,.14);color:var(--green)}
+    .stat-change.down{background:rgba(230,57,70,.14);color:var(--red)}
+    .stat-val{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;margin-bottom:4px}
+    .stat-lbl{font-size:12px;color:var(--muted);font-weight:600}
+    .ov-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:22px}
+    .roster-mini-item{display:flex;align-items:center;gap:12px;padding:11px;background:var(--glass);border:1px solid var(--border);border-radius:11px;margin-bottom:9px;transition:all .18s}
+    .roster-mini-item:last-child{margin-bottom:0}
+    .roster-mini-item:hover{border-color:rgba(168,85,247,.3)}
+    .r-avatar{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:700;font-size:13px;flex-shrink:0;position:relative}
+    .r-dot{position:absolute;bottom:-2px;right:-2px;width:12px;height:12px;border-radius:50%;border:2px solid var(--card)}
+    .r-info{flex:1;min-width:0}
+    .r-name{font-weight:700;font-size:14px}
+    .r-role{font-size:12px;color:var(--muted)}
+    .r-stats{text-align:right;flex-shrink:0}
+    .r-rank{font-size:12px;font-weight:600;color:rgba(240,240,245,.6)}
+    .r-kda{font-size:10px;font-family:'Orbitron',sans-serif;color:var(--gold)}
+    .sched-mini{display:flex;align-items:center;gap:12px;padding:11px;background:var(--glass);border:1px solid var(--border);border-radius:11px;margin-bottom:9px;transition:all .18s}
+    .sched-mini:last-child{margin-bottom:0}
+    .sched-mini:not(.past):hover{border-color:rgba(230,57,70,.3);cursor:pointer}
+    .sched-mini.past{opacity:.65}
+    .s-game{width:42px;height:42px;border-radius:10px;background:var(--glass);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+    .s-info{flex:1;min-width:0}
+    .s-opp{font-weight:700;font-size:14px}
+    .s-meta{font-size:11px;color:var(--muted);margin-top:3px}
+    .s-type{font-size:10px;color:rgba(240,240,245,.3);margin-top:2px}
+    .s-status{font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;flex-shrink:0}
+    .soon{background:rgba(245,158,11,.14);color:var(--gold)}
+    .won{background:rgba(34,197,94,.14);color:var(--green)}
+    .lost{background:rgba(230,57,70,.14);color:var(--red)}
+    .ov-bottom{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+    .scrim-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+    .scrim-row:last-child{border-bottom:none}
+
+    /* ── ROSTER MANAGEMENT ── */
+    .roster-perf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+    .rp-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;transition:all .2s}
+    .rp-card:hover{border-color:rgba(168,85,247,.35);transform:translateY(-2px)}
+    .rp-top{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+    .rp-avatar{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:900;font-size:16px;flex-shrink:0;position:relative}
+    .rp-avatar .online-ring{position:absolute;bottom:-3px;right:-3px;width:14px;height:14px;border-radius:50%;border:2px solid var(--card)}
+    .rp-name{font-weight:700;font-size:15px;margin-bottom:2px}
+    .rp-role-tag{display:inline-block;font-size:10px;font-family:'Orbitron',sans-serif;padding:2px 7px;border-radius:5px;background:rgba(168,85,247,.15);color:var(--purple);border:1px solid rgba(168,85,247,.25);margin-bottom:4px}
+    .rp-rank-line{font-size:12px;color:var(--muted)}
+    .rp-bars{display:flex;flex-direction:column;gap:8px}
+    .rp-bar-row{display:flex;align-items:center;gap:8px}
+    .rp-bar-label{font-size:11px;color:var(--muted);width:52px;flex-shrink:0}
+    .rp-bar-track{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+    .rp-bar-fill{height:100%;border-radius:3px}
+    .rp-bar-val{font-size:11px;font-family:'Orbitron',sans-serif;font-weight:700;width:36px;text-align:right;flex-shrink:0}
+    .rp-footer{display:flex;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+    .rp-stat{text-align:center}
+    .rp-stat .v{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700}
+    .rp-stat .l{font-size:10px;color:var(--muted)}
+    .rp-status-badge{font-size:9px;font-family:'Orbitron',sans-serif;padding:2px 7px;border-radius:5px;font-weight:700}
+    .status-active{background:rgba(34,197,94,.14);color:var(--green);border:1px solid rgba(34,197,94,.25)}
+    .status-away{background:rgba(245,158,11,.14);color:var(--gold);border:1px solid rgba(245,158,11,.25)}
+    .status-inactive{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)}
+    .avail-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}
+    .avail-day-head{font-size:9px;font-family:'Orbitron',sans-serif;color:var(--muted);text-align:center;padding:4px 0;letter-spacing:.05em}
+    .avail-cell{height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+    .av-yes{background:rgba(34,197,94,.14);color:var(--green)}
+    .av-no{background:rgba(230,57,70,.1);color:rgba(230,57,70,.5)}
+    .av-maybe{background:rgba(245,158,11,.12);color:var(--gold)}
+    .tryout-card{background:var(--glass);border:1px solid rgba(168,85,247,.2);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px}
+    .tryout-avatar{width:46px;height:46px;border-radius:11px;background:linear-gradient(135deg,#1e1e2e,#2d2d44);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .tryout-info{flex:1;min-width:0}
+    .tryout-name{font-weight:700;font-size:14px;margin-bottom:2px}
+    .tryout-meta{font-size:12px;color:var(--muted)}
+    .tryout-actions{display:flex;gap:7px;flex-shrink:0}
+    .ta-btn{padding:6px 13px;border-radius:8px;font-size:11px;font-weight:700;font-family:'Orbitron',sans-serif;cursor:pointer;border:none;transition:all .18s}
+    .ta-accept{background:rgba(34,197,94,.18);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+    .ta-accept:hover{background:rgba(34,197,94,.3)}
+    .ta-reject{background:rgba(230,57,70,.12);color:var(--red);border:1px solid rgba(230,57,70,.25)}
+    .ta-reject:hover{background:rgba(230,57,70,.22)}
+
+    /* ── SCHEDULE ── */
+    .sched-filter-tabs{display:flex;gap:6px;margin-bottom:20px}
+    .sft{padding:7px 16px;border-radius:9px;font-size:12px;font-weight:700;font-family:'Orbitron',sans-serif;cursor:pointer;border:1px solid var(--border);background:var(--glass);color:var(--muted);transition:all .18s;letter-spacing:.04em}
+    .sft.active,.sft:hover{background:rgba(168,85,247,.15);border-color:rgba(168,85,247,.35);color:var(--purple)}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:24px}
+    .cal-head{font-size:10px;font-family:'Orbitron',sans-serif;color:var(--muted);text-align:center;padding:7px 0;letter-spacing:.08em}
+    .cal-cell{min-height:52px;border-radius:8px;background:var(--glass);border:1px solid var(--border);padding:5px;cursor:pointer;transition:all .18s;position:relative}
+    .cal-cell:hover{border-color:rgba(168,85,247,.3)}
+    .cal-cell.today{border-color:rgba(168,85,247,.5);background:rgba(168,85,247,.08)}
+    .cal-cell.has-event{border-color:rgba(168,85,247,.25)}
+    .cal-num{font-size:10px;font-family:'Orbitron',sans-serif;color:var(--muted);margin-bottom:3px}
+    .cal-cell.today .cal-num{color:var(--purple);font-weight:700}
+    .cal-event{font-size:8px;padding:2px 4px;border-radius:3px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ce-match{background:rgba(230,57,70,.2);color:var(--red)}
+    .ce-scrim{background:rgba(168,85,247,.2);color:var(--purple)}
+    .ce-tourn{background:rgba(245,158,11,.2);color:var(--gold)}
+    .match-detail-table{width:100%;border-collapse:collapse}
+    .match-detail-table th{font-size:10px;font-family:'Orbitron',sans-serif;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);font-weight:700;letter-spacing:.08em;white-space:nowrap}
+    .match-detail-table td{font-size:13px;font-weight:600;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04)}
+    .match-detail-table tr:last-child td{border-bottom:none}
+    .match-detail-table tr:hover td{background:var(--glass)}
+    .result-badge{font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 9px;border-radius:6px}
+    .upcoming-card{background:var(--card);border:1px solid rgba(168,85,247,.2);border-radius:14px;padding:16px 20px;margin-bottom:12px;display:flex;align-items:center;gap:16px;transition:all .2s}
+    .upcoming-card:hover{border-color:rgba(168,85,247,.4);transform:translateX(3px)}
+    .uc-countdown{text-align:center;min-width:72px;flex-shrink:0}
+    .uc-countdown .days{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:var(--purple);line-height:1}
+    .uc-countdown .dlbl{font-size:9px;color:var(--muted);letter-spacing:.1em}
+    .uc-divider{width:1px;height:48px;background:var(--border);flex-shrink:0}
+    .uc-info{flex:1;min-width:0}
+    .uc-opp{font-weight:700;font-size:15px;margin-bottom:4px}
+    .uc-meta{font-size:12px;color:var(--muted)}
+    .uc-type-badge{font-size:9px;font-family:'Orbitron',sans-serif;padding:2px 7px;border-radius:5px;font-weight:700;margin-left:7px}
+    .uc-actions{display:flex;gap:8px;flex-shrink:0}
+
+    /* ── SCRIMS ── */
+    .scrim-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+    .scrim-stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center}
+    .sc-val{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:900;margin-bottom:4px}
+    .sc-lbl{font-size:11px;color:var(--muted);font-weight:600}
+    .request-scrim-card{background:linear-gradient(120deg,rgba(168,85,247,.12),rgba(6,182,212,.06));border:1px solid rgba(168,85,247,.22);border-radius:16px;padding:22px;margin-bottom:22px}
+    .rs-form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end;margin-top:16px}
+    .rs-field label{font-size:11px;font-family:'Orbitron',sans-serif;color:var(--muted);display:block;margin-bottom:6px;letter-spacing:.06em}
+    .rs-field input,.rs-field select{width:100%;background:var(--card);border:1px solid var(--border);border-radius:9px;padding:9px 13px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;outline:none;transition:border-color .18s}
+    .rs-field input:focus,.rs-field select:focus{border-color:rgba(168,85,247,.45)}
+    .rs-field select option{background:var(--card)}
+    .scrim-log-table{width:100%;border-collapse:collapse}
+    .scrim-log-table th{font-size:10px;font-family:'Orbitron',sans-serif;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);font-weight:700;letter-spacing:.08em;white-space:nowrap}
+    .scrim-log-table td{font-size:13px;font-weight:600;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04)}
+    .scrim-log-table tr:last-child td{border-bottom:none}
+    .scrim-log-table tr:hover td{background:var(--glass)}
+    .map-perf-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+    .map-perf-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px}
+    .mp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .mp-name{font-weight:700;font-size:14px}
+    .mp-record{font-size:11px;color:var(--muted)}
+    .mp-wr-bar-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:8px}
+    .mp-wr-bar-fill{height:100%;border-radius:3px}
+    .mp-stats-row{display:flex;gap:16px}
+    .mp-stat{flex:1;text-align:center}
+    .mp-stat .v{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700}
+    .mp-stat .l{font-size:10px;color:var(--muted)}
+    .vod-card{background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;align-items:center;gap:14px;margin-bottom:10px;cursor:pointer;transition:all .18s}
+    .vod-card:hover{border-color:rgba(168,85,247,.35)}
+    .vod-thumb{width:64px;height:40px;border-radius:7px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+    .vod-info{flex:1;min-width:0}
+    .vod-title{font-weight:700;font-size:13px;margin-bottom:2px}
+    .vod-meta{font-size:11px;color:var(--muted)}
+    .vod-tag{font-size:9px;font-family:'Orbitron',sans-serif;padding:2px 7px;border-radius:5px;font-weight:700;margin-left:7px;background:rgba(168,85,247,.15);color:var(--purple);border:1px solid rgba(168,85,247,.25)}
+
+    /* ── TOAST ── */
+    .gs-toast{position:fixed;bottom:28px;right:28px;background:#1c1c2e;border:1px solid rgba(168,85,247,.4);border-radius:13px;padding:13px 18px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;color:var(--text);z-index:9999;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,.6);transform:translateY(80px);opacity:0;transition:all .32s cubic-bezier(.34,1.56,.64,1);min-width:260px;max-width:380px;pointer-events:none}
+    .gs-toast.show{transform:translateY(0);opacity:1}
+    .gs-toast-icon{font-size:20px;flex-shrink:0;line-height:1}
+
+    /* ── LINEUP MODAL ── */
+    .lineup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .25s}
+    .lineup-overlay.open{opacity:1}
+    .lineup-modal{background:#13131f;border:1px solid rgba(168,85,247,.3);border-radius:20px;width:100%;max-width:480px;overflow:hidden;transform:translateY(30px) scale(.97);transition:transform .28s cubic-bezier(.34,1.56,.64,1)}
+    .lineup-overlay.open .lineup-modal{transform:translateY(0) scale(1)}
+    .lm-head{padding:20px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .lm-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900}
+    .lm-close{width:30px;height:30px;border-radius:8px;background:var(--glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--muted);transition:all .18s}
+    .lm-close:hover{background:rgba(230,57,70,.12);color:var(--red)}
+    .lm-match-info{padding:14px 22px;background:rgba(168,85,247,.06);border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)}
+    .lm-match-info b{color:var(--text)}
+    .lm-body{padding:16px 22px}
+    .lm-player{display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--glass);border:1px solid var(--border);border-radius:11px;margin-bottom:8px;transition:border-color .18s}
+    .lm-player:hover{border-color:rgba(168,85,247,.35)}
+    .lm-player:last-child{margin-bottom:0}
+    .lm-av{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:700;font-size:12px;flex-shrink:0}
+    .lm-info{flex:1;min-width:0}
+    .lm-name{font-weight:700;font-size:14px}
+    .lm-role{font-size:11px;color:var(--muted)}
+    .lm-kda{font-size:11px;font-family:'Orbitron',sans-serif;color:var(--gold);flex-shrink:0}
+    .lm-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;gap:10px}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1200px){.stats-grid,.roster-perf-grid,.scrim-stats-grid{grid-template-columns:repeat(2,1fr)}.rs-form{grid-template-columns:1fr 1fr}}
+    @media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.tb-hamburger{display:flex}.ov-grid,.ov-bottom,.map-perf-grid{grid-template-columns:1fr}.team-stats{display:none}.rs-form{grid-template-columns:1fr}}
+    @media(max-width:600px){.stats-grid,.roster-perf-grid,.scrim-stats-grid{grid-template-columns:1fr 1fr}.tb-search{display:none}.page{padding:14px}.cal-grid{display:none}}
+  </style>
+</head>
+<body>
+
+<div class="sb-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <a href="index.html" class="sb-logo">
+    <img src="images/Logo.png" alt="Gaming Stackly"/>
+    <div class="sb-logo-text">Gaming <span>Stackly</span></div>
+  </a>
+  <div class="sb-user">
+    <div class="sb-avatar">SB</div>
+    <div class="sb-user-info">
+      <div class="sb-user-name">StormBreakers</div>
+      <div class="sb-user-rank">🛡️ Elite Team</div>
+    </div>
+    <div class="sb-online"></div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">Team Menu</div>
+    <a class="sb-item active" href="#team-overview"><div class="sb-icon">🛡️</div>Team Overview</a>
+    <a class="sb-item" href="#roster"><div class="sb-icon">👥</div>Roster Management<span class="sb-badge">5</span></a>
+    <a class="sb-item" href="#schedule"><div class="sb-icon">📅</div>Schedule</a>
+    <a class="sb-item" href="#scrims"><div class="sb-icon">⚔️</div>Scrims<span class="sb-badge">3</span></a>
+  </nav>
+  <div class="sb-bottom">
+    <a class="sb-logout" href="login.html">🚪 &nbsp;Logout</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <header class="topbar">
+    <div class="tb-hamburger" id="hamburger" onclick="openSidebar()"><span></span><span></span><span></span></div>
+    <div class="topbar-title">Team <span>Dashboard</span></div>
+    <div class="tb-search">
+      <span style="color:var(--muted);font-size:13px">🔍</span>
+      <input type="text" placeholder="Search players, matches..."/>
+    </div>
+    <div class="tb-actions">
+      <div class="tb-live"><div class="tb-live-dot"></div>ONLINE</div>
+      <a class="tb-btn" href="#">🔔<div class="tb-notif-dot"></div></a>
+      <a class="tb-btn" href="#">💬</a>
+      <div class="tb-avatar">SB</div>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- ═══════════════ TEAM OVERVIEW ═══════════════ -->
+    <div id="team-overview" style="scroll-margin-top:80px">
+
+      <div class="team-banner">
+        <div class="team-logo">SB</div>
+        <div class="team-info">
+          <h1>StormBreakers <span class="team-badge">ELITE TEAM</span></h1>
+          <p>Est. 2023 · Valorant & CS2 Specialists · 5 Active Members</p>
+          <div class="team-tags">
+            <span class="tag">Valorant</span>
+            <span class="tag">CS2</span>
+            <span class="tag">Apex Legends</span>
+          </div>
+        </div>
+        <div class="team-stats">
+          <div class="ts"><div class="v" style="color:var(--purple)">#38</div><div class="l">Team Rank</div></div>
+          <div class="ts"><div class="v" style="color:var(--green)">68%</div><div class="l">Win Rate</div></div>
+          <div class="ts"><div class="v" style="color:var(--gold)">$8,400</div><div class="l">Earnings</div></div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-top"><div class="stat-icon" style="background:rgba(168,85,247,.12)">🛡️</div><div class="stat-change up">+5</div></div>
+          <div class="stat-val" style="color:var(--purple)">#38</div>
+          <div class="stat-lbl">Team Ranking</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><div class="stat-icon" style="background:rgba(34,197,94,.12)">📈</div><div class="stat-change up">+4%</div></div>
+          <div class="stat-val" style="color:var(--green)">68%</div>
+          <div class="stat-lbl">Win Rate</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><div class="stat-icon" style="background:rgba(6,182,212,.12)">⚔️</div><div class="stat-change up">+12</div></div>
+          <div class="stat-val" style="color:var(--cyan)">284</div>
+          <div class="stat-lbl">Matches Played</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><div class="stat-icon" style="background:rgba(245,158,11,.12)">💰</div><div class="stat-change up">+$1.2k</div></div>
+          <div class="stat-val" style="color:var(--gold)">$8,400</div>
+          <div class="stat-lbl">Prize Earned</div>
+        </div>
+      </div>
+
+      <div class="ov-grid">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title"><div class="card-dot"></div>Active Roster</div>
+            <a class="card-action" href="#roster">Full Roster →</a>
+          </div>
+          <div class="card-body">
+            <div class="roster-mini-item">
+              <div class="r-avatar" style="background:linear-gradient(135deg,var(--red),#b01010)">FX<div class="r-dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div></div>
+              <div class="r-info"><div class="r-name">Fxhgjhh</div><div class="r-role">IGL / Fragger</div></div>
+              <div class="r-stats"><div class="r-rank">Diamond II</div><div class="r-kda">KDA 3.8</div></div>
+            </div>
+            <div class="roster-mini-item">
+              <div class="r-avatar" style="background:linear-gradient(135deg,var(--cyan),#0284c7)">SK<div class="r-dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div></div>
+              <div class="r-info"><div class="r-name">SkyKiller</div><div class="r-role">Support</div></div>
+              <div class="r-stats"><div class="r-rank">Diamond III</div><div class="r-kda">KDA 2.9</div></div>
+            </div>
+            <div class="roster-mini-item">
+              <div class="r-avatar" style="background:linear-gradient(135deg,var(--gold),#d97706)">ZR<div class="r-dot" style="background:rgba(240,240,245,.3)"></div></div>
+              <div class="r-info"><div class="r-name">ZeroRush</div><div class="r-role">Entry Fragger</div></div>
+              <div class="r-stats"><div class="r-rank">Platinum I</div><div class="r-kda">KDA 4.2</div></div>
+            </div>
+            <div class="roster-mini-item">
+              <div class="r-avatar" style="background:linear-gradient(135deg,var(--green),#15803d)">NX<div class="r-dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div></div>
+              <div class="r-info"><div class="r-name">NightXero</div><div class="r-role">Sniper / AWP</div></div>
+              <div class="r-stats"><div class="r-rank">Diamond I</div><div class="r-kda">KDA 5.1</div></div>
+            </div>
+            <div class="roster-mini-item">
+              <div class="r-avatar" style="background:linear-gradient(135deg,var(--purple),#7c3aed)">VX<div class="r-dot" style="background:rgba(240,240,245,.3)"></div></div>
+              <div class="r-info"><div class="r-name">VortexGG</div><div class="r-role">Lurker</div></div>
+              <div class="r-stats"><div class="r-rank">Platinum II</div><div class="r-kda">KDA 3.3</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title"><div class="card-dot"></div>Match Schedule</div>
+            <a class="card-action" href="#schedule">Full Calendar →</a>
+          </div>
+          <div class="card-body">
+            <div class="sched-mini">
+              <div class="s-game">🔫</div>
+              <div class="s-info"><div class="s-opp">vs NightRaiders</div><div class="s-meta">📅 May 20 · 🕗 8:00 PM</div><div class="s-type">Ranked Match</div></div>
+              <div class="s-status soon">SOON</div>
+            </div>
+            <div class="sched-mini">
+              <div class="s-game">🧩</div>
+              <div class="s-info"><div class="s-opp">vs EchoForce</div><div class="s-meta">📅 May 22 · 🕕 6:00 PM</div><div class="s-type">Tournament Round</div></div>
+              <div class="s-status soon">SOON</div>
+            </div>
+            <div class="sched-mini past">
+              <div class="s-game">⚡</div>
+              <div class="s-info"><div class="s-opp">vs BlazeFive</div><div class="s-meta">📅 May 18 · 🕘 9:00 PM</div><div class="s-type">Scrim</div></div>
+              <div class="s-status won">WON</div>
+            </div>
+            <div class="sched-mini past">
+              <div class="s-game">🎮</div>
+              <div class="s-info"><div class="s-opp">vs ShadowTeam</div><div class="s-meta">📅 May 17 · 🕖 7:30 PM</div><div class="s-type">Ranked Match</div></div>
+              <div class="s-status lost">LOST</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ov-bottom">
+        <div class="card">
+          <div class="card-head"><div class="card-title"><div class="card-dot"></div>Recent Scrims</div><a class="card-action" href="#scrims">All Scrims →</a></div>
+          <div class="card-body">
+            <div class="scrim-row">
+              <div style="flex:1"><div style="font-weight:700;font-size:13px">vs EchoForce</div><div style="font-size:11px;color:var(--muted)">Valorant · Ascent · 3 days ago</div></div>
+              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(34,197,94,.14);color:var(--green)">13–7 WIN</span>
+            </div>
+            <div class="scrim-row">
+              <div style="flex:1"><div style="font-weight:700;font-size:13px">vs ProGamingX</div><div style="font-size:11px;color:var(--muted)">CS2 · Mirage · 5 days ago</div></div>
+              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(230,57,70,.14);color:var(--red)">8–16 LOSS</span>
+            </div>
+            <div class="scrim-row">
+              <div style="flex:1"><div style="font-weight:700;font-size:13px">vs NightRaiders</div><div style="font-size:11px;color:var(--muted)">Valorant · Bind · 1 week ago</div></div>
+              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(34,197,94,.14);color:var(--green)">13–10 WIN</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title"><div class="card-dot"></div>Tournament History</div><a class="card-action" href="#">Browse →</a></div>
+          <div class="card-body">
+            <div class="scrim-row">
+              <div style="font-size:20px;margin-right:4px">🔫</div>
+              <div style="flex:1"><div style="font-weight:700;font-size:13px">Valorant Spring Cup</div><div style="font-size:11px;color:var(--muted)">Apr 2024 · 64 Teams</div></div>
+              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(245,158,11,.14);color:var(--gold)">🥈 2nd</span>
+            </div>
+            <div class="scrim-row">
+              <div style="font-size:20px;margin-right:4px">🧩</div>
+              <div style="flex:1"><div style="font-weight:700;font-size:13px">CS2 Winter Series</div><div style="font-size:11px;color:var(--muted)">Feb 2024 · 32 Teams</div></div>
+              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(34,197,94,.14);color:var(--green)">🥇 1st</span>
+            </div>
+            <div class="scrim-row">
+              <div style="font-size:20px;margin-right:4px">⚡</div>
+              <div style="flex:1"><div style="font-weight:700;font-size:13px">Apex Regional Cup</div><div style="font-size:11px;color:var(--muted)">Jan 2024 · 128 Teams</div></div>
+              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(168,85,247,.14);color:var(--purple)">Top 8</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /team-overview -->
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════ ROSTER MANAGEMENT ═══════════════ -->
+    <div id="roster" style="scroll-margin-top:80px;margin-top:10px">
+
+      <div class="section-head">
+        <div class="section-title">Roster Management</div>
+        <div style="display:flex;gap:10px">
+          <button class="btn-outline">📋 Export Roster</button>
+          <button class="btn-purple">+ Invite Player</button>
+        </div>
+      </div>
+
+      <!-- Player Performance Cards -->
+      <div style="margin-bottom:8px;font-size:11px;font-family:'Orbitron',sans-serif;color:var(--muted);letter-spacing:.1em">PLAYER PERFORMANCE</div>
+      <div class="roster-perf-grid">
+
+        <!-- Fxhgjhh -->
+        <div class="rp-card">
+          <div class="rp-top">
+            <div class="rp-avatar" style="background:linear-gradient(135deg,var(--red),#b01010)">
+              FX<div class="online-ring" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div>
+            </div>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <div class="rp-name">Fxhgjhh</div>
+                <span class="rp-status-badge status-active">ACTIVE</span>
+              </div>
+              <div class="rp-role-tag">IGL / FRAGGER</div>
+              <div class="rp-rank-line">Diamond II · 847 RR</div>
+            </div>
+          </div>
+          <div class="rp-bars">
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">KDA</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:76%;background:linear-gradient(90deg,var(--red),var(--purple))"></div></div>
+              <span class="rp-bar-val" style="color:var(--red)">3.8</span>
+            </div>
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">HS%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:68%;background:linear-gradient(90deg,var(--cyan),var(--purple))"></div></div>
+              <span class="rp-bar-val" style="color:var(--cyan)">68%</span>
+            </div>
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">Win%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:72%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">72%</span>
+            </div>
+          </div>
+          <div class="rp-footer">
+            <div class="rp-stat"><div class="v" style="color:var(--gold)">186</div><div class="l">Matches</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--cyan)">24.3</div><div class="l">Avg DMG</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--purple)">1.22</div><div class="l">KAST%</div></div>
+          </div>
+        </div>
+
+        <!-- SkyKiller -->
+        <div class="rp-card">
+          <div class="rp-top">
+            <div class="rp-avatar" style="background:linear-gradient(135deg,var(--cyan),#0284c7)">
+              SK<div class="online-ring" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div>
+            </div>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <div class="rp-name">SkyKiller</div>
+                <span class="rp-status-badge status-active">ACTIVE</span>
+              </div>
+              <div class="rp-role-tag">SUPPORT</div>
+              <div class="rp-rank-line">Diamond III · 712 RR</div>
+            </div>
+          </div>
+          <div class="rp-bars">
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">KDA</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:58%;background:linear-gradient(90deg,var(--cyan),var(--purple))"></div></div>
+              <span class="rp-bar-val" style="color:var(--cyan)">2.9</span>
+            </div>
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">HS%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:54%;background:linear-gradient(90deg,var(--cyan),var(--purple))"></div></div>
+              <span class="rp-bar-val" style="color:var(--cyan)">54%</span>
+            </div>
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">Win%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:69%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">69%</span>
+            </div>
+          </div>
+          <div class="rp-footer">
+            <div class="rp-stat"><div class="v" style="color:var(--gold)">171</div><div class="l">Matches</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--cyan)">18.7</div><div class="l">Avg DMG</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--purple)">1.18</div><div class="l">KAST%</div></div>
+          </div>
+        </div>
+
+        <!-- ZeroRush -->
+        <div class="rp-card">
+          <div class="rp-top">
+            <div class="rp-avatar" style="background:linear-gradient(135deg,var(--gold),#d97706)">
+              ZR<div class="online-ring" style="background:rgba(240,240,245,.3)"></div>
+            </div>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <div class="rp-name">ZeroRush</div>
+                <span class="rp-status-badge status-away">AWAY</span>
+              </div>
+              <div class="rp-role-tag" style="color:var(--gold);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.12)">ENTRY FRAGGER</div>
+              <div class="rp-rank-line">Platinum I · 622 RR</div>
+            </div>
+          </div>
+          <div class="rp-bars">
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">KDA</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:84%;background:linear-gradient(90deg,var(--gold),var(--red))"></div></div>
+              <span class="rp-bar-val" style="color:var(--gold)">4.2</span>
+            </div>
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">HS%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:73%;background:linear-gradient(90deg,var(--gold),var(--red))"></div></div>
+              <span class="rp-bar-val" style="color:var(--gold)">73%</span>
+            </div>
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">Win%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:64%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">64%</span>
+            </div>
+          </div>
+          <div class="rp-footer">
+            <div class="rp-stat"><div class="v" style="color:var(--gold)">158</div><div class="l">Matches</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--cyan)">27.1</div><div class="l">Avg DMG</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--purple)">1.09</div><div class="l">KAST%</div></div>
+          </div>
+        </div>
+
+        <!-- NightXero -->
+        <div class="rp-card">
+          <div class="rp-top">
+            <div class="rp-avatar" style="background:linear-gradient(135deg,var(--green),#15803d)">
+              NX<div class="online-ring" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div>
+            </div>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <div class="rp-name">NightXero</div>
+                <span class="rp-status-badge status-active">ACTIVE</span>
+              </div>
+              <div class="rp-role-tag" style="color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.12)">SNIPER / AWP</div>
+              <div class="rp-rank-line">Diamond I · 912 RR</div>
+            </div>
+          </div>
+          <div class="rp-bars">
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">KDA</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:100%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">5.1</span>
+            </div>
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">HS%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:81%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">81%</span>
+            </div>
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">Win%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:75%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">75%</span>
+            </div>
+          </div>
+          <div class="rp-footer">
+            <div class="rp-stat"><div class="v" style="color:var(--gold)">203</div><div class="l">Matches</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--cyan)">29.4</div><div class="l">Avg DMG</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--purple)">1.31</div><div class="l">KAST%</div></div>
+          </div>
+        </div>
+
+        <!-- VortexGG -->
+        <div class="rp-card">
+          <div class="rp-top">
+            <div class="rp-avatar" style="background:linear-gradient(135deg,var(--purple),#7c3aed)">
+              VX<div class="online-ring" style="background:rgba(240,240,245,.3)"></div>
+            </div>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <div class="rp-name">VortexGG</div>
+                <span class="rp-status-badge status-inactive">OFFLINE</span>
+              </div>
+              <div class="rp-role-tag">LURKER</div>
+              <div class="rp-rank-line">Platinum II · 558 RR</div>
+            </div>
+          </div>
+          <div class="rp-bars">
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">KDA</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:66%;background:linear-gradient(90deg,var(--purple),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--purple)">3.3</span>
+            </div>
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">HS%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:62%;background:linear-gradient(90deg,var(--purple),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--purple)">62%</span>
+            </div>
+            <div class="rp-bar-row">
+              <span class="rp-bar-label">Win%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:66%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">66%</span>
+            </div>
+          </div>
+          <div class="rp-footer">
+            <div class="rp-stat"><div class="v" style="color:var(--gold)">142</div><div class="l">Matches</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--cyan)">21.8</div><div class="l">Avg DMG</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--purple)">1.14</div><div class="l">KAST%</div></div>
+          </div>
+        </div>
+
+      </div><!-- /roster-perf-grid -->
+
+      <!-- Availability Grid -->
+      <div class="card" style="margin-bottom:22px">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>Weekly Availability</div>
+          <span style="font-size:11px;color:var(--muted)">May 19 – May 25, 2026</span>
+        </div>
+        <div class="card-body" style="overflow-x:auto">
+          <div style="min-width:480px">
+            <div class="avail-grid" style="grid-template-columns:100px repeat(7,1fr)">
+              <div class="avail-day-head"></div>
+              <div class="avail-day-head">MON</div><div class="avail-day-head">TUE</div><div class="avail-day-head">WED</div>
+              <div class="avail-day-head">THU</div><div class="avail-day-head">FRI</div><div class="avail-day-head">SAT</div><div class="avail-day-head">SUN</div>
+            </div>
+            <div class="avail-grid" style="grid-template-columns:100px repeat(7,1fr);margin-bottom:5px">
+              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">Fxhgjhh</div>
+              <div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-no">✗</div>
+              <div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-maybe">~</div>
+            </div>
+            <div class="avail-grid" style="grid-template-columns:100px repeat(7,1fr);margin-bottom:5px">
+              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">SkyKiller</div>
+              <div class="avail-cell av-yes">✓</div><div class="avail-cell av-no">✗</div><div class="avail-cell av-yes">✓</div>
+              <div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-maybe">~</div><div class="avail-cell av-yes">✓</div>
+            </div>
+            <div class="avail-grid" style="grid-template-columns:100px repeat(7,1fr);margin-bottom:5px">
+              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">ZeroRush</div>
+              <div class="avail-cell av-maybe">~</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div>
+              <div class="avail-cell av-no">✗</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div>
+            </div>
+            <div class="avail-grid" style="grid-template-columns:100px repeat(7,1fr);margin-bottom:5px">
+              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">NightXero</div>
+              <div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div>
+              <div class="avail-cell av-yes">✓</div><div class="avail-cell av-no">✗</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div>
+            </div>
+            <div class="avail-grid" style="grid-template-columns:100px repeat(7,1fr)">
+              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">VortexGG</div>
+              <div class="avail-cell av-no">✗</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div>
+              <div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-maybe">~</div>
+            </div>
+            <div style="display:flex;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">
+              <span style="font-size:11px;color:var(--green);font-weight:700">✓ Available</span>
+              <span style="font-size:11px;color:var(--muted);font-weight:700">~ Maybe</span>
+              <span style="font-size:11px;color:var(--red);font-weight:700">✗ Unavailable</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tryout Queue -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>Tryout Queue</div>
+          <span style="font-size:11px;color:var(--muted)">3 pending applications</span>
+        </div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+          <div class="tryout-card">
+            <div class="tryout-avatar">🎮</div>
+            <div class="tryout-info">
+              <div class="tryout-name">PhantomAce</div>
+              <div class="tryout-meta">Duelist · Diamond I · 4.6 KDA avg · 12 scrims played</div>
+            </div>
+            <div class="tryout-actions">
+              <button class="ta-btn ta-accept">✓ Accept</button>
+              <button class="ta-btn ta-reject">✗ Reject</button>
+            </div>
+          </div>
+          <div class="tryout-card">
+            <div class="tryout-avatar">⚡</div>
+            <div class="tryout-info">
+              <div class="tryout-name">BlitzStar99</div>
+              <div class="tryout-meta">Controller · Platinum I · 3.2 KDA avg · 8 scrims played</div>
+            </div>
+            <div class="tryout-actions">
+              <button class="ta-btn ta-accept">✓ Accept</button>
+              <button class="ta-btn ta-reject">✗ Reject</button>
+            </div>
+          </div>
+          <div class="tryout-card">
+            <div class="tryout-avatar">🔫</div>
+            <div class="tryout-info">
+              <div class="tryout-name">StealthOps</div>
+              <div class="tryout-meta">Initiator · Diamond III · 3.8 KDA avg · 5 scrims played</div>
+            </div>
+            <div class="tryout-actions">
+              <button class="ta-btn ta-accept">✓ Accept</button>
+              <button class="ta-btn ta-reject">✗ Reject</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /roster -->
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════ SCHEDULE ═══════════════ -->
+    <div id="schedule" style="scroll-margin-top:80px;margin-top:10px">
+
+      <div class="section-head">
+        <div class="section-title">Match Schedule</div>
+        <button class="btn-purple">+ Add Match</button>
+      </div>
+
+      <div class="sched-filter-tabs">
+        <div class="sft active">All</div>
+        <div class="sft">Ranked</div>
+        <div class="sft">Tournament</div>
+        <div class="sft">Scrims</div>
+      </div>
+
+      <!-- Upcoming highlighted matches -->
+      <div style="margin-bottom:8px;font-size:11px;font-family:'Orbitron',sans-serif;color:var(--muted);letter-spacing:.1em">UPCOMING MATCHES</div>
+
+      <div class="upcoming-card">
+        <div class="uc-countdown"><div class="days">1</div><div class="dlbl">DAY</div></div>
+        <div class="uc-divider"></div>
+        <div class="uc-info">
+          <div class="uc-opp">🔫 vs NightRaiders <span class="uc-type-badge" style="background:rgba(230,57,70,.15);color:var(--red);border:1px solid rgba(230,57,70,.25)">RANKED</span></div>
+          <div class="uc-meta">📅 May 20, 2026 &nbsp;·&nbsp; 🕗 8:00 PM IST &nbsp;·&nbsp; 🗺️ Valorant — Split</div>
+        </div>
+        <div class="uc-actions">
+          <button class="btn-outline" style="font-size:10px;padding:7px 13px">📋 Lineup</button>
+          <button class="btn-purple" style="font-size:10px;padding:7px 13px">🔔 Remind</button>
+        </div>
+      </div>
+
+      <div class="upcoming-card">
+        <div class="uc-countdown"><div class="days">3</div><div class="dlbl">DAYS</div></div>
+        <div class="uc-divider"></div>
+        <div class="uc-info">
+          <div class="uc-opp">🧩 vs EchoForce <span class="uc-type-badge" style="background:rgba(245,158,11,.15);color:var(--gold);border:1px solid rgba(245,158,11,.25)">TOURNAMENT</span></div>
+          <div class="uc-meta">📅 May 22, 2026 &nbsp;·&nbsp; 🕕 6:00 PM IST &nbsp;·&nbsp; 🗺️ Valorant — Lotus</div>
+        </div>
+        <div class="uc-actions">
+          <button class="btn-outline" style="font-size:10px;padding:7px 13px">📋 Lineup</button>
+          <button class="btn-purple" style="font-size:10px;padding:7px 13px">🔔 Remind</button>
+        </div>
+      </div>
+
+      <div class="upcoming-card">
+        <div class="uc-countdown"><div class="days">5</div><div class="dlbl">DAYS</div></div>
+        <div class="uc-divider"></div>
+        <div class="uc-info">
+          <div class="uc-opp">⚡ vs ProGamingX <span class="uc-type-badge" style="background:rgba(168,85,247,.15);color:var(--purple);border:1px solid rgba(168,85,247,.25)">SCRIM</span></div>
+          <div class="uc-meta">📅 May 24, 2026 &nbsp;·&nbsp; 🕙 10:00 AM IST &nbsp;·&nbsp; 🗺️ CS2 — Mirage</div>
+        </div>
+        <div class="uc-actions">
+          <button class="btn-outline" style="font-size:10px;padding:7px 13px">📋 Lineup</button>
+          <button class="btn-purple" style="font-size:10px;padding:7px 13px">🔔 Remind</button>
+        </div>
+      </div>
+
+      <!-- Mini Calendar -->
+      <div style="margin:24px 0 8px;font-size:11px;font-family:'Orbitron',sans-serif;color:var(--muted);letter-spacing:.1em">MAY 2026 CALENDAR</div>
+      <div class="card" style="margin-bottom:22px">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>May 2026</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-outline" style="font-size:11px;padding:5px 11px">← Prev</button>
+            <button class="btn-outline" style="font-size:11px;padding:5px 11px">Next →</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="cal-grid">
+            <div class="cal-head">SUN</div><div class="cal-head">MON</div><div class="cal-head">TUE</div>
+            <div class="cal-head">WED</div><div class="cal-head">THU</div><div class="cal-head">FRI</div><div class="cal-head">SAT</div>
+            <!-- week 1 -->
+            <div class="cal-cell" style="opacity:.4"><div class="cal-num">27</div></div>
+            <div class="cal-cell" style="opacity:.4"><div class="cal-num">28</div></div>
+            <div class="cal-cell" style="opacity:.4"><div class="cal-num">29</div></div>
+            <div class="cal-cell" style="opacity:.4"><div class="cal-num">30</div></div>
+            <div class="cal-cell"><div class="cal-num">1</div></div>
+            <div class="cal-cell"><div class="cal-num">2</div></div>
+            <div class="cal-cell"><div class="cal-num">3</div></div>
+            <!-- week 2 -->
+            <div class="cal-cell"><div class="cal-num">4</div></div>
+            <div class="cal-cell"><div class="cal-num">5</div></div>
+            <div class="cal-cell"><div class="cal-num">6</div></div>
+            <div class="cal-cell"><div class="cal-num">7</div></div>
+            <div class="cal-cell"><div class="cal-num">8</div></div>
+            <div class="cal-cell"><div class="cal-num">9</div></div>
+            <div class="cal-cell"><div class="cal-num">10</div></div>
+            <!-- week 3 -->
+            <div class="cal-cell"><div class="cal-num">11</div></div>
+            <div class="cal-cell"><div class="cal-num">12</div></div>
+            <div class="cal-cell"><div class="cal-num">13</div></div>
+            <div class="cal-cell"><div class="cal-num">14</div></div>
+            <div class="cal-cell"><div class="cal-num">15</div></div>
+            <div class="cal-cell"><div class="cal-num">16</div></div>
+            <div class="cal-cell has-event"><div class="cal-num">17</div><div class="cal-event ce-match">vs Shadow</div></div>
+            <!-- week 4 -->
+            <div class="cal-cell has-event"><div class="cal-num">18</div><div class="cal-event ce-scrim">Scrim</div></div>
+            <div class="cal-cell today"><div class="cal-num">19</div></div>
+            <div class="cal-cell has-event"><div class="cal-num">20</div><div class="cal-event ce-match">vs NightR.</div></div>
+            <div class="cal-cell"><div class="cal-num">21</div></div>
+            <div class="cal-cell has-event"><div class="cal-num">22</div><div class="cal-event ce-tourn">vs Echo</div></div>
+            <div class="cal-cell"><div class="cal-num">23</div></div>
+            <div class="cal-cell has-event"><div class="cal-num">24</div><div class="cal-event ce-scrim">CS2 Scrim</div></div>
+            <!-- week 5 -->
+            <div class="cal-cell"><div class="cal-num">25</div></div>
+            <div class="cal-cell"><div class="cal-num">26</div></div>
+            <div class="cal-cell"><div class="cal-num">27</div></div>
+            <div class="cal-cell has-event"><div class="cal-num">28</div><div class="cal-event ce-tourn">Playoffs</div></div>
+            <div class="cal-cell"><div class="cal-num">29</div></div>
+            <div class="cal-cell"><div class="cal-num">30</div></div>
+            <div class="cal-cell"><div class="cal-num">31</div></div>
+          </div>
+          <div style="display:flex;gap:16px;margin-top:4px">
+            <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><span style="width:10px;height:10px;border-radius:3px;background:rgba(230,57,70,.4);display:inline-block"></span>Ranked</span>
+            <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><span style="width:10px;height:10px;border-radius:3px;background:rgba(168,85,247,.4);display:inline-block"></span>Scrim</span>
+            <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><span style="width:10px;height:10px;border-radius:3px;background:rgba(245,158,11,.4);display:inline-block"></span>Tournament</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Past Match Results Table -->
+      <div style="margin-bottom:8px;font-size:11px;font-family:'Orbitron',sans-serif;color:var(--muted);letter-spacing:.1em">PAST MATCH RESULTS</div>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>Recent Match History</div>
+          <span style="font-size:11px;color:var(--muted)">Last 10 matches</span>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="match-detail-table">
+            <thead>
+              <tr><th>OPPONENT</th><th>GAME</th><th>MAP</th><th>TYPE</th><th>SCORE</th><th>RESULT</th><th>DATE</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>BlazeFive</td><td>Valorant</td><td>Ascent</td><td><span style="font-size:10px;padding:2px 7px;border-radius:5px;background:var(--glass);color:var(--muted)">Scrim</span></td><td style="font-family:'Orbitron',sans-serif;font-size:12px">13 – 7</td><td><span class="result-badge won">WIN</span></td><td style="color:var(--muted);font-size:12px">May 18</td></tr>
+              <tr><td>ShadowTeam</td><td>Valorant</td><td>Split</td><td><span style="font-size:10px;padding:2px 7px;border-radius:5px;background:var(--glass);color:var(--muted)">Ranked</span></td><td style="font-family:'Orbitron',sans-serif;font-size:12px">11 – 13</td><td><span class="result-badge lost">LOSS</span></td><td style="color:var(--muted);font-size:12px">May 17</td></tr>
+              <tr><td>EchoForce</td><td>Valorant</td><td>Lotus</td><td><span style="font-size:10px;padding:2px 7px;border-radius:5px;background:rgba(245,158,11,.12);color:var(--gold)">Tourney</span></td><td style="font-family:'Orbitron',sans-serif;font-size:12px">13 – 9</td><td><span class="result-badge won">WIN</span></td><td style="color:var(--muted);font-size:12px">May 14</td></tr>
+              <tr><td>NightRaiders</td><td>CS2</td><td>Inferno</td><td><span style="font-size:10px;padding:2px 7px;border-radius:5px;background:var(--glass);color:var(--muted)">Ranked</span></td><td style="font-family:'Orbitron',sans-serif;font-size:12px">16 – 12</td><td><span class="result-badge won">WIN</span></td><td style="color:var(--muted);font-size:12px">May 12</td></tr>
+              <tr><td>ProGamingX</td><td>CS2</td><td>Mirage</td><td><span style="font-size:10px;padding:2px 7px;border-radius:5px;background:var(--glass);color:var(--muted)">Scrim</span></td><td style="font-family:'Orbitron',sans-serif;font-size:12px">8 – 16</td><td><span class="result-badge lost">LOSS</span></td><td style="color:var(--muted);font-size:12px">May 10</td></tr>
+              <tr><td>GhostUnit</td><td>Valorant</td><td>Pearl</td><td><span style="font-size:10px;padding:2px 7px;border-radius:5px;background:rgba(245,158,11,.12);color:var(--gold)">Tourney</span></td><td style="font-family:'Orbitron',sans-serif;font-size:12px">13 – 5</td><td><span class="result-badge won">WIN</span></td><td style="color:var(--muted);font-size:12px">May 8</td></tr>
+              <tr><td>IronWolves</td><td>Valorant</td><td>Bind</td><td><span style="font-size:10px;padding:2px 7px;border-radius:5px;background:var(--glass);color:var(--muted)">Ranked</span></td><td style="font-family:'Orbitron',sans-serif;font-size:12px">13 – 10</td><td><span class="result-badge won">WIN</span></td><td style="color:var(--muted);font-size:12px">May 6</td></tr>
+              <tr><td>FrostByte</td><td>CS2</td><td>Nuke</td><td><span style="font-size:10px;padding:2px 7px;border-radius:5px;background:var(--glass);color:var(--muted)">Ranked</span></td><td style="font-family:'Orbitron',sans-serif;font-size:12px">10 – 16</td><td><span class="result-badge lost">LOSS</span></td><td style="color:var(--muted);font-size:12px">May 4</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /schedule -->
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════ SCRIMS ═══════════════ -->
+    <div id="scrims" style="scroll-margin-top:80px;margin-top:10px">
+
+      <div class="section-head">
+        <div class="section-title">Scrim Center</div>
+        <button class="btn-purple">⚔️ Request Scrim</button>
+      </div>
+
+      <!-- Scrim Stats -->
+      <div class="scrim-stats-grid">
+        <div class="scrim-stat-card">
+          <div class="sc-val" style="color:var(--purple)">47</div>
+          <div class="sc-lbl">Total Scrims</div>
+        </div>
+        <div class="scrim-stat-card">
+          <div class="sc-val" style="color:var(--green)">71%</div>
+          <div class="sc-lbl">Scrim Win Rate</div>
+        </div>
+        <div class="scrim-stat-card">
+          <div class="sc-val" style="color:var(--gold)">4.1</div>
+          <div class="sc-lbl">Avg Team KDA</div>
+        </div>
+        <div class="scrim-stat-card">
+          <div class="sc-val" style="color:var(--cyan)">8</div>
+          <div class="sc-lbl">This Month</div>
+        </div>
+      </div>
+
+      <!-- Request Scrim Form -->
+      <div class="request-scrim-card">
+        <div style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;margin-bottom:4px">Schedule a Scrim</div>
+        <div style="font-size:12px;color:var(--muted)">Send a scrim request to another team. They'll receive a notification to accept or propose changes.</div>
+        <div class="rs-form">
+          <div class="rs-field">
+            <label>Opponent Team</label>
+            <input type="text" placeholder="e.g. EchoForce"/>
+          </div>
+          <div class="rs-field">
+            <label>Game</label>
+            <select>
+              <option>Valorant</option>
+              <option>CS2</option>
+              <option>Apex Legends</option>
+            </select>
+          </div>
+          <div class="rs-field">
+            <label>Date & Time</label>
+            <input type="datetime-local"/>
+          </div>
+          <button class="btn-purple" style="margin-bottom:1px">Send Request</button>
+        </div>
+      </div>
+
+      <!-- Scrim Log Table -->
+      <div style="margin-bottom:8px;font-size:11px;font-family:'Orbitron',sans-serif;color:var(--muted);letter-spacing:.1em">SCRIM LOG</div>
+      <div class="card" style="margin-bottom:22px">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>Recent Scrims</div>
+          <span style="font-size:11px;color:var(--muted)">Last 8 scrims</span>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="scrim-log-table">
+            <thead>
+              <tr><th>OPPONENT</th><th>GAME</th><th>MAP</th><th>SCORE</th><th>TEAM KDA</th><th>AVG HS%</th><th>RESULT</th><th>DATE</th><th>VOD</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:700">EchoForce</td><td>Valorant</td><td>Ascent</td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px">13–7</td>
+                <td style="color:var(--gold);font-family:'Orbitron',sans-serif;font-size:12px">3.9</td>
+                <td style="color:var(--cyan)">71%</td>
+                <td><span class="result-badge won">WIN</span></td>
+                <td style="color:var(--muted);font-size:12px">May 16</td>
+                <td><span style="font-size:11px;color:var(--purple);cursor:pointer;font-weight:700">▶ Watch</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700">ProGamingX</td><td>CS2</td><td>Mirage</td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px">8–16</td>
+                <td style="color:var(--gold);font-family:'Orbitron',sans-serif;font-size:12px">2.1</td>
+                <td style="color:var(--cyan)">58%</td>
+                <td><span class="result-badge lost">LOSS</span></td>
+                <td style="color:var(--muted);font-size:12px">May 14</td>
+                <td><span style="font-size:11px;color:var(--purple);cursor:pointer;font-weight:700">▶ Watch</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700">NightRaiders</td><td>Valorant</td><td>Bind</td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px">13–10</td>
+                <td style="color:var(--gold);font-family:'Orbitron',sans-serif;font-size:12px">3.4</td>
+                <td style="color:var(--cyan)">66%</td>
+                <td><span class="result-badge won">WIN</span></td>
+                <td style="color:var(--muted);font-size:12px">May 12</td>
+                <td><span style="font-size:11px;color:var(--purple);cursor:pointer;font-weight:700">▶ Watch</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700">BlazeFive</td><td>Valorant</td><td>Ascent</td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px">13–7</td>
+                <td style="color:var(--gold);font-family:'Orbitron',sans-serif;font-size:12px">4.2</td>
+                <td style="color:var(--cyan)">74%</td>
+                <td><span class="result-badge won">WIN</span></td>
+                <td style="color:var(--muted);font-size:12px">May 10</td>
+                <td><span style="font-size:11px;color:var(--purple);cursor:pointer;font-weight:700">▶ Watch</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700">GhostUnit</td><td>CS2</td><td>Ancient</td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px">16–10</td>
+                <td style="color:var(--gold);font-family:'Orbitron',sans-serif;font-size:12px">3.7</td>
+                <td style="color:var(--cyan)">69%</td>
+                <td><span class="result-badge won">WIN</span></td>
+                <td style="color:var(--muted);font-size:12px">May 8</td>
+                <td><span style="font-size:11px;color:var(--purple);cursor:pointer;font-weight:700">▶ Watch</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700">FrostByte</td><td>Valorant</td><td>Pearl</td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px">9–13</td>
+                <td style="color:var(--gold);font-family:'Orbitron',sans-serif;font-size:12px">2.4</td>
+                <td style="color:var(--cyan)">55%</td>
+                <td><span class="result-badge lost">LOSS</span></td>
+                <td style="color:var(--muted);font-size:12px">May 5</td>
+                <td><span style="font-size:11px;color:var(--purple);cursor:pointer;font-weight:700">▶ Watch</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700">IronWolves</td><td>CS2</td><td>Overpass</td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px">16–14</td>
+                <td style="color:var(--gold);font-family:'Orbitron',sans-serif;font-size:12px">3.1</td>
+                <td style="color:var(--cyan)">63%</td>
+                <td><span class="result-badge won">WIN</span></td>
+                <td style="color:var(--muted);font-size:12px">May 3</td>
+                <td><span style="font-size:11px;color:var(--purple);cursor:pointer;font-weight:700">▶ Watch</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700">ShadowTeam</td><td>Valorant</td><td>Fracture</td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px">13–6</td>
+                <td style="color:var(--gold);font-family:'Orbitron',sans-serif;font-size:12px">4.8</td>
+                <td style="color:var(--cyan)">77%</td>
+                <td><span class="result-badge won">WIN</span></td>
+                <td style="color:var(--muted);font-size:12px">Apr 30</td>
+                <td><span style="font-size:11px;color:var(--purple);cursor:pointer;font-weight:700">▶ Watch</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Map Performance in Scrims -->
+      <div style="margin-bottom:8px;font-size:11px;font-family:'Orbitron',sans-serif;color:var(--muted);letter-spacing:.1em">MAP PERFORMANCE IN SCRIMS</div>
+      <div class="map-perf-grid">
+        <div class="map-perf-card">
+          <div class="mp-head">
+            <div><span style="font-size:16px;margin-right:6px">🗺️</span><span class="mp-name">Ascent</span></div>
+            <div class="mp-record">8W — 2L</div>
+          </div>
+          <div class="mp-wr-bar-track"><div class="mp-wr-bar-fill" style="width:80%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+          <div class="mp-stats-row">
+            <div class="mp-stat"><div class="v" style="color:var(--green)">80%</div><div class="l">Win Rate</div></div>
+            <div class="mp-stat"><div class="v" style="color:var(--gold)">4.1</div><div class="l">Avg KDA</div></div>
+            <div class="mp-stat"><div class="v" style="color:var(--cyan)">72%</div><div class="l">HS%</div></div>
+          </div>
+        </div>
+        <div class="map-perf-card">
+          <div class="mp-head">
+            <div><span style="font-size:16px;margin-right:6px">🗺️</span><span class="mp-name">Bind</span></div>
+            <div class="mp-record">6W — 3L</div>
+          </div>
+          <div class="mp-wr-bar-track"><div class="mp-wr-bar-fill" style="width:67%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+          <div class="mp-stats-row">
+            <div class="mp-stat"><div class="v" style="color:var(--green)">67%</div><div class="l">Win Rate</div></div>
+            <div class="mp-stat"><div class="v" style="color:var(--gold)">3.6</div><div class="l">Avg KDA</div></div>
+            <div class="mp-stat"><div class="v" style="color:var(--cyan)">66%</div><div class="l">HS%</div></div>
+          </div>
+        </div>
+        <div class="map-perf-card">
+          <div class="mp-head">
+            <div><span style="font-size:16px;margin-right:6px">🗺️</span><span class="mp-name">Mirage (CS2)</span></div>
+            <div class="mp-record">3W — 5L</div>
+          </div>
+          <div class="mp-wr-bar-track"><div class="mp-wr-bar-fill" style="width:38%;background:linear-gradient(90deg,var(--red),var(--gold))"></div></div>
+          <div class="mp-stats-row">
+            <div class="mp-stat"><div class="v" style="color:var(--red)">38%</div><div class="l">Win Rate</div></div>
+            <div class="mp-stat"><div class="v" style="color:var(--gold)">2.3</div><div class="l">Avg KDA</div></div>
+            <div class="mp-stat"><div class="v" style="color:var(--cyan)">59%</div><div class="l">HS%</div></div>
+          </div>
+        </div>
+        <div class="map-perf-card">
+          <div class="mp-head">
+            <div><span style="font-size:16px;margin-right:6px">🗺️</span><span class="mp-name">Lotus</span></div>
+            <div class="mp-record">5W — 2L</div>
+          </div>
+          <div class="mp-wr-bar-track"><div class="mp-wr-bar-fill" style="width:71%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+          <div class="mp-stats-row">
+            <div class="mp-stat"><div class="v" style="color:var(--green)">71%</div><div class="l">Win Rate</div></div>
+            <div class="mp-stat"><div class="v" style="color:var(--gold)">3.9</div><div class="l">Avg KDA</div></div>
+            <div class="mp-stat"><div class="v" style="color:var(--cyan)">68%</div><div class="l">HS%</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VOD Review -->
+      <div style="margin-bottom:8px;font-size:11px;font-family:'Orbitron',sans-serif;color:var(--muted);letter-spacing:.1em">VOD REVIEW LIBRARY</div>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>Scrim VODs</div>
+          <button class="btn-outline" style="font-size:10px;padding:5px 12px">+ Upload VOD</button>
+        </div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:0">
+          <div class="vod-card">
+            <div class="vod-thumb">▶️</div>
+            <div class="vod-info">
+              <div class="vod-title">vs EchoForce — Ascent Full Match <span class="vod-tag">WIN</span></div>
+              <div class="vod-meta">May 16 · 38 min · Valorant · Reviewed by Coach</div>
+            </div>
+            <button class="btn-outline" style="font-size:10px;padding:6px 13px;flex-shrink:0">▶ Watch</button>
+          </div>
+          <div class="vod-card">
+            <div class="vod-thumb">▶️</div>
+            <div class="vod-info">
+              <div class="vod-title">vs ProGamingX — Mirage Full Match <span class="vod-tag" style="background:rgba(230,57,70,.15);color:var(--red);border-color:rgba(230,57,70,.25)">LOSS</span></div>
+              <div class="vod-meta">May 14 · 42 min · CS2 · Annotated</div>
+            </div>
+            <button class="btn-outline" style="font-size:10px;padding:6px 13px;flex-shrink:0">▶ Watch</button>
+          </div>
+          <div class="vod-card">
+            <div class="vod-thumb">▶️</div>
+            <div class="vod-info">
+              <div class="vod-title">vs BlazeFive — Ascent Full Match <span class="vod-tag">WIN</span></div>
+              <div class="vod-meta">May 10 · 35 min · Valorant · Pending Review</div>
+            </div>
+            <button class="btn-outline" style="font-size:10px;padding:6px 13px;flex-shrink:0">▶ Watch</button>
+          </div>
+          <div class="vod-card">
+            <div class="vod-thumb">▶️</div>
+            <div class="vod-info">
+              <div class="vod-title">vs ShadowTeam — Fracture Full Match <span class="vod-tag">WIN</span></div>
+              <div class="vod-meta">Apr 30 · 29 min · Valorant · Reviewed</div>
+            </div>
+            <button class="btn-outline" style="font-size:10px;padding:6px 13px;flex-shrink:0">▶ Watch</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /scrims -->
+
+  </main>
+</div>
+
+<script>
+  /* ── Sidebar ── */
+  function openSidebar(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
+  function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }
+
+  /* ── Toast ── */
+  let _toastTimer;
+  function showToast(icon, msg, borderColor) {
+    const old = document.getElementById('_gsToast');
+    if(old){ clearTimeout(_toastTimer); old.remove(); }
+    const t = document.createElement('div');
+    t.id = '_gsToast';
+    t.className = 'gs-toast';
+    t.innerHTML = '<span class="gs-toast-icon">' + icon + '</span><span>' + msg + '</span>';
+    if(borderColor) t.style.borderColor = borderColor;
+    document.body.appendChild(t);
+    requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+    _toastTimer = setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 380); }, 3200);
+  }
+
+  /* ── Roster data ── */
+  const ROSTER = [
+    { init:'FX', name:'Fxhgjhh',   role:'IGL / Fragger',  rank:'Diamond II',  kda:'3.8', color:'linear-gradient(135deg,#e63946,#b01010)', status:'online' },
+    { init:'SK', name:'SkyKiller',  role:'Support',        rank:'Diamond III', kda:'2.9', color:'linear-gradient(135deg,#06b6d4,#0284c7)', status:'online' },
+    { init:'ZR', name:'ZeroRush',   role:'Entry Fragger',  rank:'Platinum I',  kda:'4.2', color:'linear-gradient(135deg,#f59e0b,#d97706)', status:'away'   },
+    { init:'NX', name:'NightXero',  role:'Sniper / AWP',   rank:'Diamond I',   kda:'5.1', color:'linear-gradient(135deg,#22c55e,#15803d)', status:'online' },
+    { init:'VX', name:'VortexGG',   role:'Lurker',         rank:'Platinum II', kda:'3.3', color:'linear-gradient(135deg,#a855f7,#7c3aed)', status:'offline'},
+  ];
+
+  /* ── Lineup modal ── */
+  function openLineup(matchTitle, matchMeta) {
+    const existing = document.getElementById('_lineupOverlay');
+    if(existing) existing.remove();
+
+    const statusDot = s => {
+      const c = s === 'online' ? '#22c55e' : s === 'away' ? '#f59e0b' : '#555';
+      return `<span style="width:7px;height:7px;border-radius:50%;background:${c};display:inline-block;margin-right:5px;box-shadow:${s==='online'?'0 0 5px '+c:'none'}"></span>`;
+    };
+
+    const players = ROSTER.map(p => `
+      <div class="lm-player">
+        <div class="lm-av" style="background:${p.color}">${p.init}</div>
+        <div class="lm-info">
+          <div class="lm-name">${statusDot(p.status)}${p.name}</div>
+          <div class="lm-role">${p.role} · ${p.rank}</div>
+        </div>
+        <div class="lm-kda">KDA ${p.kda}</div>
+      </div>`).join('');
+
+    const ov = document.createElement('div');
+    ov.id = '_lineupOverlay';
+    ov.className = 'lineup-overlay';
+    ov.innerHTML = `
+      <div class="lineup-modal">
+        <div class="lm-head">
+          <div class="lm-title">📋 MATCH LINEUP</div>
+          <div class="lm-close" onclick="closeLineup()">✕</div>
+        </div>
+        <div class="lm-match-info">
+          <b>${matchTitle}</b><br/>${matchMeta}
+        </div>
+        <div class="lm-body">${players}</div>
+        <div class="lm-foot">
+          <button class="btn-purple" style="flex:1;justify-content:center" onclick="confirmLineup()">✅ Confirm Lineup</button>
+          <button class="btn-outline" style="flex:1;justify-content:center" onclick="closeLineup()">Cancel</button>
+        </div>
+      </div>`;
+    document.body.appendChild(ov);
+    requestAnimationFrame(() => requestAnimationFrame(() => ov.classList.add('open')));
+    ov.addEventListener('click', e => { if(e.target === ov) closeLineup(); });
+  }
+
+  function closeLineup() {
+    const ov = document.getElementById('_lineupOverlay');
+    if(!ov) return;
+    ov.classList.remove('open');
+    setTimeout(() => ov.remove(), 280);
+  }
+
+  function confirmLineup() {
+    closeLineup();
+    showToast('✅', 'Lineup confirmed and sent to all players!', 'rgba(34,197,94,.5)');
+  }
+
+  /* ── Wire Lineup & Remind buttons ── */
+  const matchData = [
+    { title:'vs NightRaiders',  meta:'May 20, 2026 · 8:00 PM IST · Valorant — Split'  },
+    { title:'vs EchoForce',     meta:'May 22, 2026 · 6:00 PM IST · Valorant — Lotus'  },
+    { title:'vs ProGamingX',    meta:'May 24, 2026 · 10:00 AM IST · CS2 — Mirage'     },
+  ];
+
+  document.querySelectorAll('.upcoming-card').forEach((card, i) => {
+    const match = matchData[i] || { title:'Upcoming Match', meta:'' };
+    const [lineupBtn, remindBtn] = card.querySelectorAll('.uc-actions button');
+
+    if(lineupBtn) lineupBtn.addEventListener('click', () => openLineup(match.title, match.meta));
+
+    if(remindBtn) remindBtn.addEventListener('click', () => {
+      const active = remindBtn.dataset.reminded === '1';
+      if(active) {
+        remindBtn.dataset.reminded = '0';
+        remindBtn.innerHTML = '🔔 Remind';
+        remindBtn.style.background = '';
+        remindBtn.style.boxShadow = '';
+        showToast('🔕', 'Reminder cancelled for ' + match.title, '');
+      } else {
+        remindBtn.dataset.reminded = '1';
+        remindBtn.innerHTML = '✅ Reminded';
+        remindBtn.style.background = 'linear-gradient(135deg,#22c55e,#15803d)';
+        remindBtn.style.boxShadow = '0 4px 14px rgba(34,197,94,.4)';
+        showToast('🔔', 'Reminder set for ' + match.title + '!', 'rgba(34,197,94,.5)');
+      }
+    });
+  });
+
+  /* ── Calendar Prev/Next ── */
+  const calMonths = ['April 2026','May 2026','June 2026'];
+  let calIdx = 1;
+  const calTitle = document.querySelector('.card-head .card-title .card-dot + *') ||
+    [...document.querySelectorAll('.card-title')].find(el => el.textContent.includes('May 2026'));
+  document.querySelectorAll('.btn-outline').forEach(btn => {
+    if(btn.textContent.includes('← Prev')) btn.addEventListener('click', () => {
+      calIdx = Math.max(0, calIdx - 1);
+      if(calTitle) calTitle.nextSibling && (calTitle.parentElement.querySelector(':scope > span') || calTitle).textContent.replace('May 2026', calMonths[calIdx]);
+      showToast('📅', 'Viewing ' + calMonths[calIdx], '');
+    });
+    if(btn.textContent.includes('Next →')) btn.addEventListener('click', () => {
+      calIdx = Math.min(calMonths.length - 1, calIdx + 1);
+      showToast('📅', 'Viewing ' + calMonths[calIdx], '');
+    });
+  });
+
+  /* ── Add Match button ── */
+  document.querySelector('#schedule .btn-purple')?.addEventListener('click', () => {
+    showToast('📅', 'Match scheduler opening — fill in opponent & date', '');
+  });
+
+  /* ── Roster buttons ── */
+  document.querySelector('#roster .btn-outline')?.addEventListener('click', () => {
+    showToast('📋', 'Exporting roster... StormBreakers_Roster.csv', 'rgba(168,85,247,.5)');
+    const blob = new Blob([ROSTER.map(p => `${p.init},${p.name},${p.role},${p.rank},KDA ${p.kda}`).join('\n')], {type:'text/csv'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'StormBreakers_Roster.csv'; a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  document.querySelector('#roster .btn-purple')?.addEventListener('click', () => {
+    showToast('✉️', 'Invite link copied — share with your prospect!', 'rgba(168,85,247,.5)');
+  });
+
+  /* ── Tryout Accept / Reject ── */
+  document.querySelectorAll('.ta-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.tryout-card');
+      const name = card?.querySelector('.tryout-name')?.textContent || 'Player';
+      if(btn.classList.contains('ta-accept')) {
+        card.style.transition = 'all .3s'; card.style.opacity = '0'; card.style.transform = 'translateX(20px)';
+        setTimeout(() => { card.remove(); showToast('✅', name + ' accepted — added to tryout roster!', 'rgba(34,197,94,.5)'); }, 320);
+      } else {
+        card.style.transition = 'all .3s'; card.style.opacity = '0'; card.style.transform = 'translateX(-20px)';
+        setTimeout(() => { card.remove(); showToast('✗', name + ' rejected and notified', 'rgba(230,57,70,.5)'); }, 320);
+      }
+    });
+  });
+
+  /* ── Scrims ── */
+  document.querySelector('#scrims > .section-head .btn-purple')?.addEventListener('click', () => {
+    document.querySelector('.request-scrim-card')?.scrollIntoView({behavior:'smooth', block:'center'});
+    showToast('⚔️', 'Fill in the form below to request a scrim', '');
+  });
+
+  document.querySelector('.rs-form .btn-purple')?.addEventListener('click', () => {
+    const opp = document.querySelector('.rs-field input')?.value.trim();
+    if(!opp){ showToast('⚠️', 'Please enter an opponent team name', 'rgba(245,158,11,.5)'); return; }
+    showToast('⚔️', 'Scrim request sent to ' + opp + '!', 'rgba(168,85,247,.5)');
+    document.querySelector('.rs-field input').value = '';
+  });
+
+  /* ── VOD Watch buttons ── */
+  document.querySelectorAll('.vod-card .btn-outline').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const title = btn.closest('.vod-card')?.querySelector('.vod-title')?.textContent?.trim().split('\n')[0] || 'VOD';
+      showToast('▶️', 'Loading: ' + title.slice(0, 50), 'rgba(168,85,247,.5)');
+    });
+  });
+
+  /* ── Upload VOD ── */
+  document.querySelector('.card-head .btn-outline[style*="5px 12px"]')?.addEventListener('click', () => {
+    showToast('📁', 'Select a VOD file to upload (MP4, up to 2GB)', '');
+  });
+
+  /* ── Active nav on scroll ── */
+  const sections = ['team-overview','roster','schedule','scrims'];
+  const navItems = document.querySelectorAll('.sb-item');
+  window.addEventListener('scroll', () => {
+    let current = 'team-overview';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if(el && window.scrollY >= el.offsetTop - 120) current = id;
+    });
+    navItems.forEach(item => {
+      item.classList.remove('active');
+      const href = item.getAttribute('href');
+      if(href && href === '#' + current) item.classList.add('active');
+    });
+  }, { passive: true });
+
+  /* ── Schedule filter tabs ── */
+  document.querySelectorAll('.sft').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.sft').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

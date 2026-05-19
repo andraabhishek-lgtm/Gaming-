@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Player Dashboard — Gaming Stackly</title>
+  <link rel="icon" href="images/Logo.png" type="image/png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --red:#e63946;--red-dark:#b02132;--purple:#a855f7;--cyan:#06b6d4;
+      --gold:#f59e0b;--green:#22c55e;
+      --bg:#0a0a0f;--surface:#0f0f1a;--card:#12121e;
+      --border:rgba(255,255,255,0.08);--glass:rgba(255,255,255,0.05);
+      --text:#f0f0f5;--muted:rgba(240,240,245,0.48);
+      --sidebar:260px;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;overflow-x:hidden}
+    ::-webkit-scrollbar{width:5px;height:5px}
+    ::-webkit-scrollbar-track{background:var(--surface)}
+    ::-webkit-scrollbar-thumb{background:var(--red-dark);border-radius:3px}
+
+    /* ── SIDEBAR ── */
+    .sidebar{width:var(--sidebar);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s ease}
+    .sb-logo{display:flex;align-items:center;gap:10px;padding:20px 20px 16px;border-bottom:1px solid var(--border);text-decoration:none}
+    .sb-logo img{width:34px;height:34px;object-fit:contain;border-radius:8px;flex-shrink:0}
+    .sb-logo-text{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:900;color:#fff;white-space:nowrap}
+    .sb-logo-text span{background:linear-gradient(90deg,#e63946,#ff6b6b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .sb-user{display:flex;align-items:center;gap:12px;padding:15px 20px;border-bottom:1px solid var(--border)}
+    .sb-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:700;font-size:14px;flex-shrink:0;border:2px solid rgba(230,57,70,.35);box-shadow:0 0 12px rgba(230,57,70,.3)}
+    .sb-user-info{flex:1;min-width:0}
+    .sb-user-name{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sb-user-rank{font-size:11px;color:var(--gold);font-family:'Orbitron',sans-serif;letter-spacing:.08em}
+    .sb-online{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 7px var(--green);flex-shrink:0}
+    .sb-nav{flex:1;overflow-y:auto;padding:14px 0}
+    .sb-section{font-size:9px;font-family:'Orbitron',sans-serif;letter-spacing:.2em;color:var(--muted);padding:8px 20px 4px;text-transform:uppercase}
+    .sb-item{display:flex;align-items:center;gap:11px;padding:9px 20px;cursor:pointer;border-left:3px solid transparent;color:var(--muted);font-size:14px;font-weight:600;text-decoration:none;transition:all .18s}
+    .sb-item:hover{background:var(--glass);color:var(--text);border-left-color:rgba(230,57,70,.35)}
+    .sb-item.active{background:linear-gradient(90deg,rgba(230,57,70,.12),transparent);color:var(--text);border-left-color:var(--red)}
+    .sb-icon{width:34px;height:34px;border-radius:8px;background:var(--glass);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:all .18s}
+    .sb-item.active .sb-icon{background:rgba(230,57,70,.18);box-shadow:0 0 10px rgba(230,57,70,.3)}
+    .sb-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:9px;font-family:'Orbitron',sans-serif}
+    .sb-bottom{padding:15px 20px;border-top:1px solid var(--border)}
+    .xp-labels{display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px;color:var(--muted)}
+    .xp-labels b{color:var(--gold);font-family:'Orbitron',sans-serif;font-size:10px}
+    .xp-track{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:12px}
+    .xp-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--purple));border-radius:3px;box-shadow:0 0 7px rgba(230,57,70,.5)}
+    .sb-logout{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;transition:all .18s;text-decoration:none;background:none;border:none;width:100%}
+    .sb-logout:hover{background:rgba(230,57,70,.08);color:var(--red)}
+
+    /* ── OVERLAY (mobile) ── */
+    .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:99}
+    .sb-overlay.open{display:block}
+
+    /* ── MAIN ── */
+    .main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh;min-width:0}
+
+    /* ── TOPBAR ── */
+    .topbar{height:62px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 22px;gap:14px;position:sticky;top:0;z-index:50;flex-shrink:0}
+    .topbar-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;flex:1}
+    .topbar-title span{color:var(--red)}
+    .tb-search{display:flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--border);border-radius:9px;padding:7px 13px;width:200px}
+    .tb-search input{background:none;border:none;outline:none;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;width:100%}
+    .tb-search input::placeholder{color:var(--muted)}
+    .tb-actions{display:flex;align-items:center;gap:9px}
+    .tb-live{display:flex;align-items:center;gap:5px;font-size:10px;font-family:'Orbitron',sans-serif;color:var(--red);letter-spacing:.1em}
+    .tb-live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1.4s infinite}
+    @keyframes pulse{0%,100%{box-shadow:0 0 4px var(--red)}50%{box-shadow:0 0 14px var(--red)}}
+    .tb-btn{width:36px;height:36px;border-radius:8px;background:var(--glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--muted);transition:all .18s;text-decoration:none;position:relative}
+    .tb-btn:hover{background:var(--card);color:var(--text);border-color:rgba(230,57,70,.3)}
+    .tb-notif-dot{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 5px var(--red)}
+    .tb-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:700;font-size:12px;border:2px solid rgba(230,57,70,.35);cursor:pointer}
+    .tb-hamburger{display:none;width:36px;height:36px;border-radius:8px;background:var(--glass);border:1px solid var(--border);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;flex-direction:column;gap:5px;padding:9px}
+    .tb-hamburger span{display:block;width:100%;height:2px;background:var(--text);border-radius:2px}
+
+    /* ── PAGE ── */
+    .page{padding:22px;flex:1}
+
+    /* ── WELCOME BANNER ── */
+    .welcome{background:linear-gradient(120deg,rgba(230,57,70,.14) 0%,rgba(168,85,247,.07) 55%,transparent 100%);border:1px solid rgba(230,57,70,.22);border-radius:18px;padding:24px 28px;margin-bottom:22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;position:relative;overflow:hidden}
+    .welcome::after{content:'⚡';position:absolute;right:100px;top:50%;transform:translateY(-50%);font-size:90px;opacity:.04;pointer-events:none}
+    .welcome h1{font-family:'Orbitron',sans-serif;font-size:clamp(16px,2.5vw,22px);font-weight:900;margin-bottom:4px}
+    .welcome h1 span{color:var(--red)}
+    .welcome p{color:var(--muted);font-size:13px}
+    .welcome-stats{display:flex;gap:14px;flex-wrap:wrap}
+    .w-stat{text-align:center;padding:9px 16px;background:var(--glass);border:1px solid var(--border);border-radius:10px}
+    .w-stat .v{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700}
+    .w-stat .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+
+    /* ── STAT CARDS ── */
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s}
+    .stat-card:hover{border-color:rgba(230,57,70,.3);transform:translateY(-2px)}
+    .stat-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+    .stat-icon{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px}
+    .stat-change{font-size:11px;font-weight:700;padding:3px 7px;border-radius:6px;font-family:'Orbitron',sans-serif}
+    .up{background:rgba(34,197,94,.14);color:var(--green)}
+    .dn{background:rgba(230,57,70,.14);color:var(--red)}
+    .stat-val{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;margin-bottom:4px}
+    .stat-lbl{font-size:12px;color:var(--muted);font-weight:600}
+
+    /* ── TWO COLUMN ── */
+    .grid-2{display:grid;grid-template-columns:360px 1fr;gap:16px;margin-bottom:22px}
+    .grid-3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-bottom:22px}
+
+    /* ── CARD ── */
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+    .card-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 13px;border-bottom:1px solid var(--border)}
+    .card-title{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:.04em;display:flex;align-items:center;gap:7px}
+    .card-dot{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 5px var(--red)}
+    .card-action{font-size:12px;color:var(--red);cursor:pointer;font-weight:600;text-decoration:none;transition:color .18s}
+    .card-action:hover{color:var(--purple)}
+    .card-body{padding:16px 20px}
+
+    /* ── TOURNAMENT ITEM ── */
+    .tourn-item{display:flex;align-items:center;gap:12px;padding:11px;background:var(--glass);border:1px solid var(--border);border-radius:11px;margin-bottom:9px;cursor:pointer;transition:all .18s}
+    .tourn-item:last-child{margin-bottom:0}
+    .tourn-item:hover{border-color:rgba(230,57,70,.3);background:rgba(230,57,70,.04)}
+    .t-game{width:42px;height:42px;border-radius:10px;background:var(--glass);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+    .t-info{flex:1;min-width:0}
+    .t-name{font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .t-meta{font-size:11px;color:var(--muted);display:flex;gap:9px;margin-top:3px;flex-wrap:wrap}
+    .t-prize{font-family:'Orbitron',sans-serif;font-size:10px;padding:2px 6px;border-radius:5px;background:rgba(245,158,11,.14);color:var(--gold)}
+    .t-status{font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;flex-shrink:0}
+    .status-live{background:rgba(230,57,70,.18);color:var(--red)}
+    .status-open{background:rgba(34,197,94,.14);color:var(--green)}
+    .status-fill{background:rgba(245,158,11,.14);color:var(--gold)}
+
+    /* ── MATCH TABLE ── */
+    .table-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;min-width:420px}
+    thead tr{border-bottom:1px solid var(--border)}
+    th{padding:11px 16px;text-align:left;font-family:'Orbitron',sans-serif;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
+    tbody tr{border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s}
+    tbody tr:last-child{border-bottom:none}
+    tbody tr:hover{background:var(--glass)}
+    td{padding:11px 16px;font-size:13px;vertical-align:middle}
+    .result-badge{font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px}
+    .win{background:rgba(34,197,94,.14);color:var(--green)}
+    .loss{background:rgba(230,57,70,.14);color:var(--red)}
+    .draw{background:rgba(245,158,11,.14);color:var(--gold)}
+
+    /* ── LEADERBOARD ── */
+    .lb-item{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--border)}
+    .lb-item:last-child{border-bottom:none}
+    .lb-item.you{background:linear-gradient(90deg,rgba(230,57,70,.08),transparent);margin:0 -20px;padding:9px 20px;border-bottom:1px solid var(--border)}
+    .lb-rank{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;width:22px;text-align:center;flex-shrink:0}
+    .lb-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;flex-shrink:0}
+    .lb-name{flex:1;font-weight:600;font-size:13px}
+    .lb-score{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--gold)}
+
+    /* ── ACHIEVEMENTS ── */
+    .ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:10px}
+    .ach-item{text-align:center;padding:11px 6px;background:var(--glass);border:1px solid var(--border);border-radius:11px}
+    .ach-item.locked{opacity:.3;filter:grayscale(1)}
+    .ach-emoji{font-size:26px;margin-bottom:4px}
+    .ach-name{font-size:10px;font-weight:700}
+
+    /* ── MATCH HISTORY EXTENDED ── */
+    .mh-perf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-bottom:20px}
+    .mh-perf-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px 16px;position:relative;overflow:hidden}
+    .mh-perf-card::after{content:attr(data-icon);position:absolute;right:8px;top:8px;font-size:28px;opacity:.07}
+    .mh-perf-label{font-size:10px;font-family:'Orbitron',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+    .mh-perf-val{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;line-height:1}
+    .mh-perf-sub{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
+
+    .mh-streak{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:20px}
+    .mh-streak-dot{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Orbitron',sans-serif;flex-shrink:0}
+    .mh-streak-dot.w{background:rgba(34,197,94,.18);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+    .mh-streak-dot.l{background:rgba(230,57,70,.14);color:var(--red);border:1px solid rgba(230,57,70,.3)}
+    .mh-streak-dot.d{background:rgba(245,158,11,.12);color:var(--gold);border:1px solid rgba(245,158,11,.3)}
+
+    .mh-full-table th{padding:12px 14px}
+    .mh-full-table td{padding:12px 14px}
+    .agent-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700}
+    .agent-icon{width:26px;height:26px;border-radius:6px;background:var(--glass);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+    .rr-up{color:var(--green);font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700}
+    .rr-dn{color:var(--red);font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700}
+    .rr-na{color:var(--muted);font-family:'Orbitron',sans-serif;font-size:11px}
+    .hs-bar-wrap{display:flex;align-items:center;gap:6px}
+    .hs-bar{height:5px;border-radius:3px;background:linear-gradient(90deg,var(--red),var(--purple));flex-shrink:0}
+    .hs-bar-bg{height:5px;border-radius:3px;background:var(--border);width:50px;overflow:hidden}
+
+    .map-wr-grid{display:flex;flex-direction:column;gap:9px}
+    .map-wr-row{display:flex;align-items:center;gap:10px}
+    .map-wr-name{width:80px;font-size:12px;font-weight:700;flex-shrink:0}
+    .map-wr-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
+    .map-wr-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--green),var(--cyan))}
+    .map-wr-pct{width:34px;text-align:right;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;flex-shrink:0}
+    .map-wr-rec{font-size:10px;color:var(--muted);width:40px;flex-shrink:0}
+
+    .agent-perf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+    .agent-perf-card{background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:13px}
+    .ap-top{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+    .ap-icon{width:38px;height:38px;border-radius:9px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1px solid var(--border)}
+    .ap-name{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;color:#fff}
+    .ap-matches{font-size:10px;color:var(--muted)}
+    .ap-stat-row{display:flex;justify-content:space-between;margin-top:3px}
+    .ap-stat-k{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    .ap-stat-v{font-size:12px;font-family:'Orbitron',sans-serif;font-weight:700}
+
+    /* ── QUICK ACTIONS ── */
+    .qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .qa-btn{display:flex;align-items:center;gap:10px;padding:13px;background:var(--glass);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .18s;text-decoration:none;color:var(--text)}
+    .qa-btn:hover{background:rgba(230,57,70,.06);border-color:rgba(230,57,70,.3)}
+    .qa-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+    .qa-title{font-weight:700;font-size:13px}
+    .qa-sub{font-size:11px;color:var(--muted)}
+
+    /* ── NOTIFICATIONS ── */
+    .notif-item{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+    .notif-item:last-child{border-bottom:none}
+    .notif-dot-wrap{padding-top:4px}
+    .notif-dot{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 5px var(--red)}
+    .notif-dot.read{background:var(--border);box-shadow:none}
+    .notif-text{font-size:12px;line-height:1.5;color:rgba(240,240,245,.65)}
+    .notif-text b{color:var(--text)}
+    .notif-time{font-size:10px;color:var(--muted);margin-top:2px}
+
+    /* ── SECTION TITLE ── */
+    .section-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+    .section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+    /* ── REWARDS SECTION ── */
+    .rw-banner{background:linear-gradient(120deg,rgba(245,158,11,.16) 0%,rgba(168,85,247,.09) 55%,transparent 100%);border:1px solid rgba(245,158,11,.28);border-radius:18px;padding:22px 26px;margin-bottom:20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;position:relative;overflow:hidden}
+    .rw-banner::after{content:'🎁';position:absolute;right:80px;top:50%;transform:translateY(-50%);font-size:88px;opacity:.05;pointer-events:none}
+    .rw-banner h2{font-family:'Orbitron',sans-serif;font-size:clamp(15px,2.2vw,20px);font-weight:900;margin-bottom:4px;color:#fff}
+    .rw-banner h2 span{color:var(--gold)}
+    .rw-banner p{color:var(--muted);font-size:13px}
+    .rw-tier-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);border-radius:10px;padding:8px 16px;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--gold);white-space:nowrap}
+
+    .rw-pts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-bottom:20px}
+    .rw-pts-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px 16px;position:relative;overflow:hidden}
+    .rw-pts-card::after{content:attr(data-icon);position:absolute;right:8px;top:8px;font-size:28px;opacity:.07}
+    .rw-pts-label{font-size:10px;font-family:'Orbitron',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+    .rw-pts-val{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;line-height:1}
+    .rw-pts-sub{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
+
+    .rw-tier-track{margin-bottom:20px}
+    .rw-tier-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .rw-tier-steps{display:flex;align-items:center;gap:0;width:100%}
+    .rw-tier-step{flex:1;text-align:center;position:relative}
+    .rw-tier-step::before{content:'';position:absolute;top:13px;left:50%;right:-50%;height:3px;background:var(--border);z-index:0}
+    .rw-tier-step:last-child::before{display:none}
+    .rw-tier-step.done::before{background:linear-gradient(90deg,var(--gold),var(--gold))}
+    .rw-tier-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;margin:0 auto 5px;position:relative;z-index:1;border:2px solid var(--border);background:var(--card)}
+    .rw-tier-step.done .rw-tier-dot{border-color:var(--gold);background:rgba(245,158,11,.18);box-shadow:0 0 10px rgba(245,158,11,.35)}
+    .rw-tier-step.current .rw-tier-dot{border-color:var(--red);background:rgba(230,57,70,.18);box-shadow:0 0 10px rgba(230,57,70,.4);animation:pulse 1.4s infinite}
+    .rw-tier-name{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;color:var(--muted)}
+    .rw-tier-step.done .rw-tier-name{color:var(--gold)}
+    .rw-tier-step.current .rw-tier-name{color:var(--red)}
+
+    .rw-challenge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+    .rw-challenge{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px}
+    .rw-challenge.done-ch{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04)}
+    .rw-ch-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px}
+    .rw-ch-icon{width:36px;height:36px;border-radius:9px;background:var(--glass);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;border:1px solid var(--border)}
+    .rw-ch-title{font-weight:700;font-size:13px;color:#fff;margin-bottom:2px}
+    .rw-ch-desc{font-size:11px;color:var(--muted)}
+    .rw-ch-pts{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0}
+    .rw-ch-bar-wrap{margin-bottom:7px}
+    .rw-ch-bar-track{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:4px}
+    .rw-ch-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--red),var(--purple))}
+    .rw-ch-bar-fill.done-fill{background:linear-gradient(90deg,var(--green),var(--cyan))}
+    .rw-ch-prog{font-size:10px;color:var(--muted);display:flex;justify-content:space-between}
+    .ch-tag{font-size:9px;font-family:'Orbitron',sans-serif;font-weight:700;padding:2px 7px;border-radius:5px;text-transform:uppercase;letter-spacing:.06em}
+    .ch-daily{background:rgba(6,182,212,.14);color:var(--cyan)}
+    .ch-weekly{background:rgba(168,85,247,.14);color:var(--purple)}
+    .ch-special{background:rgba(245,158,11,.14);color:var(--gold)}
+
+    .rw-shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:13px;margin-bottom:20px}
+    .rw-shop-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all .2s;cursor:pointer}
+    .rw-shop-card:hover{border-color:rgba(245,158,11,.4);transform:translateY(-2px)}
+    .rw-shop-card.owned{border-color:rgba(34,197,94,.3)}
+    .rw-shop-img{height:80px;display:flex;align-items:center;justify-content:center;font-size:42px;background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(168,85,247,.06))}
+    .rw-shop-body{padding:12px}
+    .rw-shop-rarity{font-size:9px;font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+    .rw-shop-name{font-weight:700;font-size:13px;color:#fff;margin-bottom:4px}
+    .rw-shop-cost{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:4px}
+    .rw-redeem-btn{width:100%;padding:7px;border-radius:9px;font-family:'Orbitron',sans-serif;font-weight:700;font-size:10px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s}
+    .rw-redeem-btn.can{background:linear-gradient(135deg,var(--gold),#f97316);color:#fff;box-shadow:0 3px 12px rgba(245,158,11,.35)}
+    .rw-redeem-btn.cant{background:var(--glass);color:var(--muted);cursor:not-allowed;border:1px solid var(--border)}
+    .rw-redeem-btn.own{background:rgba(34,197,94,.14);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+
+    .rw-earn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:20px}
+    .rw-earn-card{background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:13px;text-align:center}
+    .rw-earn-icon{font-size:24px;margin-bottom:7px}
+    .rw-earn-pts{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;color:var(--gold);margin-bottom:3px}
+    .rw-earn-label{font-size:11px;color:var(--muted);font-weight:600}
+
+    .rw-history-tag{font-size:9px;font-family:'Orbitron',sans-serif;font-weight:700;padding:2px 7px;border-radius:5px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+    .tag-earn{background:rgba(34,197,94,.14);color:var(--green)}
+    .tag-spend{background:rgba(230,57,70,.14);color:var(--red)}
+    .tag-bonus{background:rgba(245,158,11,.14);color:var(--gold)}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1200px){
+      .stats-grid{grid-template-columns:repeat(2,1fr)}
+      .grid-3{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:900px){
+      .sidebar{transform:translateX(-100%)}
+      .sidebar.open{transform:translateX(0)}
+      .main{margin-left:0}
+      .tb-hamburger{display:flex}
+      .grid-2,.grid-3{grid-template-columns:1fr}
+      .welcome-stats{display:none}
+    }
+    @media(max-width:600px){
+      .stats-grid{grid-template-columns:1fr 1fr}
+      .tb-search{display:none}
+      .page{padding:14px}
+    }
+  </style>
+</head>
+<body>
+
+<div class="sb-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <a href="index.html" class="sb-logo">
+    <img src="images/Logo.png" alt="Gaming Stackly"/>
+    <div class="sb-logo-text">Gaming <span>Stackly</span></div>
+  </a>
+  <div class="sb-user">
+    <div class="sb-avatar">FX</div>
+    <div class="sb-user-info">
+      <div class="sb-user-name">Fxhgjhh</div>
+      <div class="sb-user-rank">⚔️ Diamond II</div>
+    </div>
+    <div class="sb-online"></div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">Player Menu</div>
+    <a class="sb-item active" href="player-dashboard.html"><div class="sb-icon">🏠</div>Home</a>
+    <a class="sb-item" href="#"><div class="sb-icon">👤</div>My Profile</a>
+    <a class="sb-item" href="tournaments.html"><div class="sb-icon">🏆</div>Tournaments<span class="sb-badge">3</span></a>
+    <a class="sb-item active" href="#match-history"><div class="sb-icon">⚔️</div>Match History</a>
+    <a class="sb-item" href="#rewards"><div class="sb-icon">🎁</div>Rewards<span class="sb-badge">12</span></a>
+  </nav>
+  <div class="sb-bottom">
+    <div class="xp-labels"><span>Level 42</span><b>72% → Lv.43</b></div>
+    <div class="xp-track"><div class="xp-fill" style="width:72%"></div></div>
+    <a class="sb-logout" href="login.html">🚪 &nbsp;Logout</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="tb-hamburger" id="hamburger" onclick="openSidebar()"><span></span><span></span><span></span></div>
+    <div class="topbar-title">Player <span>Dashboard</span></div>
+    <div class="tb-search">
+      <span style="color:var(--muted);font-size:13px">🔍</span>
+      <input type="text" placeholder="Search..."/>
+    </div>
+    <div class="tb-actions">
+      <div class="tb-live"><div class="tb-live-dot"></div>LIVE</div>
+      <a class="tb-btn" href="#">🔔<div class="tb-notif-dot"></div></a>
+      <a class="tb-btn" href="#">💬</a>
+      <div class="tb-avatar">FX</div>
+    </div>
+  </header>
+
+  <!-- PAGE -->
+  <main class="page">
+
+    <!-- Welcome -->
+    <div class="welcome">
+      <div>
+        <h1>Welcome Back, <span>Fxhgjhh</span> 👋</h1>
+        <p>Here's your live gaming performance overview.</p>
+      </div>
+      <div class="welcome-stats">
+        <div class="w-stat"><div class="v" style="color:var(--red)">72%</div><div class="l">Win Rate</div></div>
+        <div class="w-stat"><div class="v" style="color:var(--gold)">#142</div><div class="l">Global Rank</div></div>
+        <div class="w-stat"><div class="v" style="color:var(--purple)">Diamond II</div><div class="l">Tier</div></div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(230,57,70,.12)">🏆</div>
+          <div class="stat-change dn">-3</div>
+        </div>
+        <div class="stat-val" style="color:var(--red)">#142</div>
+        <div class="stat-lbl">Global Rank</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(34,197,94,.12)">📈</div>
+          <div class="stat-change up">+8%</div>
+        </div>
+        <div class="stat-val" style="color:var(--green)">72%</div>
+        <div class="stat-lbl">Win Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(168,85,247,.12)">⚔️</div>
+          <div class="stat-change up">+18</div>
+        </div>
+        <div class="stat-val" style="color:var(--purple)">1,248</div>
+        <div class="stat-lbl">Total Matches</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(245,158,11,.12)">💰</div>
+          <div class="stat-change up">+$420</div>
+        </div>
+        <div class="stat-val" style="color:var(--gold)">$3,200</div>
+        <div class="stat-lbl">Prize Earnings</div>
+      </div>
+    </div>
+
+    <!-- Tournaments + Match History -->
+    <div class="grid-2">
+      <!-- Tournaments -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>Active Tournaments</div>
+          <a class="card-action" href="tournaments.html">Browse All →</a>
+        </div>
+        <div class="card-body">
+          <div class="tourn-item">
+            <div class="t-game">🔫</div>
+            <div class="t-info">
+              <div class="t-name">Valorant Champions Series</div>
+              <div class="t-meta"><span>📅 May 22</span><span>👥 128/256</span><span class="t-prize">$10,000</span></div>
+            </div>
+            <div class="t-status status-open">OPEN</div>
+          </div>
+          <div class="tourn-item">
+            <div class="t-game">🧩</div>
+            <div class="t-info">
+              <div class="t-name">CS2 Major Invitational</div>
+              <div class="t-meta"><span>📅 Jun 1</span><span>👥 30/32</span><span class="t-prize">$25,000</span></div>
+            </div>
+            <div class="t-status status-fill">FILLING</div>
+          </div>
+          <div class="tourn-item">
+            <div class="t-game">🏹</div>
+            <div class="t-info">
+              <div class="t-name">Fortnite Friday Cup</div>
+              <div class="t-meta"><span>📅 TODAY</span><span>👥 240/256</span><span class="t-prize">$2,500</span></div>
+            </div>
+            <div class="t-status status-live">● LIVE</div>
+          </div>
+          <div class="tourn-item">
+            <div class="t-game">🎮</div>
+            <div class="t-info">
+              <div class="t-name">Apex Legends Open Cup</div>
+              <div class="t-meta"><span>📅 Jun 8</span><span>👥 64/128</span><span class="t-prize">$5,000</span></div>
+            </div>
+            <div class="t-status status-open">OPEN</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /grid-2 left column closes here; match history is now full-width below -->
+
+    <!-- ══════════════════════════════════════
+         MATCH HISTORY — FULL SECTION
+    ══════════════════════════════════════ -->
+    <div id="match-history" style="scroll-margin-top:80px">
+
+      <!-- Section header -->
+      <div class="section-title" style="margin-bottom:18px">⚔️ Match History</div>
+
+      <!-- 1. Performance summary cards -->
+      <div class="mh-perf-grid">
+        <div class="mh-perf-card" data-icon="🏆">
+          <div class="mh-perf-label">Total Matches</div>
+          <div class="mh-perf-val" style="color:var(--red)">1,248</div>
+          <div class="mh-perf-sub">↑ 18 this week</div>
+        </div>
+        <div class="mh-perf-card" data-icon="📈">
+          <div class="mh-perf-label">Win Rate</div>
+          <div class="mh-perf-val" style="color:var(--green)">72%</div>
+          <div class="mh-perf-sub">↑ +4% vs last month</div>
+        </div>
+        <div class="mh-perf-card" data-icon="⚔️">
+          <div class="mh-perf-label">Avg K/D/A</div>
+          <div class="mh-perf-val" style="color:var(--purple)">18/7/9</div>
+          <div class="mh-perf-sub">K/D ratio 2.57</div>
+        </div>
+        <div class="mh-perf-card" data-icon="🎯">
+          <div class="mh-perf-label">Avg HS%</div>
+          <div class="mh-perf-val" style="color:var(--gold)">38%</div>
+          <div class="mh-perf-sub">Top 12% globally</div>
+        </div>
+        <div class="mh-perf-card" data-icon="💥">
+          <div class="mh-perf-label">Avg Damage</div>
+          <div class="mh-perf-val" style="color:var(--cyan)">168</div>
+          <div class="mh-perf-sub">ADR per round</div>
+        </div>
+        <div class="mh-perf-card" data-icon="🔥">
+          <div class="mh-perf-label">Win Streak</div>
+          <div class="mh-perf-val" style="color:var(--red)">5W</div>
+          <div class="mh-perf-sub">Current streak</div>
+        </div>
+      </div>
+
+      <!-- 2. Recent result streak (last 10 games) -->
+      <div class="card" style="margin-bottom:18px">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>Last 10 Games Streak</div>
+          <span style="font-size:11px;color:var(--muted)">W = Win · L = Loss · D = Draw</span>
+        </div>
+        <div class="card-body" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+          <div class="mh-streak">
+            <div class="mh-streak-dot w">W</div>
+            <div class="mh-streak-dot w">W</div>
+            <div class="mh-streak-dot w">W</div>
+            <div class="mh-streak-dot l">L</div>
+            <div class="mh-streak-dot w">W</div>
+            <div class="mh-streak-dot w">W</div>
+            <div class="mh-streak-dot d">D</div>
+            <div class="mh-streak-dot l">L</div>
+            <div class="mh-streak-dot w">W</div>
+            <div class="mh-streak-dot w">W</div>
+          </div>
+          <div style="margin-left:auto;display:flex;gap:16px;flex-wrap:wrap">
+            <div style="text-align:center"><div style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:var(--green)">7</div><div style="font-size:10px;color:var(--muted)">WINS</div></div>
+            <div style="text-align:center"><div style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:var(--red)">2</div><div style="font-size:10px;color:var(--muted)">LOSSES</div></div>
+            <div style="text-align:center"><div style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:var(--gold)">1</div><div style="font-size:10px;color:var(--muted)">DRAWS</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Full detailed match table -->
+      <div class="card" style="margin-bottom:18px">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>Detailed Match Log</div>
+          <a class="card-action" href="#">Export CSV →</a>
+        </div>
+        <div class="table-wrap">
+          <table class="mh-full-table" style="min-width:680px">
+            <thead>
+              <tr>
+                <th>Game &amp; Agent</th>
+                <th>Map / Mode</th>
+                <th>Score</th>
+                <th>K / D / A</th>
+                <th>HS%</th>
+                <th>Damage</th>
+                <th>Result</th>
+                <th>RR</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="agent-badge"><div class="agent-icon">🔫</div><div><div style="font-weight:700;font-size:13px">Valorant</div><div style="font-size:10px;color:var(--purple)">Jett</div></div></div></td>
+                <td><div style="font-weight:700">Ascent</div><div style="font-size:11px;color:var(--muted)">Ranked 5v5</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">13–7</td>
+                <td><b>24 / 6 / 11</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:48%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">48%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">212</td>
+                <td><span class="result-badge win">WIN</span></td>
+                <td><span class="rr-up">+24</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Today, 2h ago</td>
+              </tr>
+              <tr>
+                <td><div class="agent-badge"><div class="agent-icon">🧩</div><div><div style="font-weight:700;font-size:13px">CS2</div><div style="font-size:10px;color:var(--cyan)">Rifler</div></div></div></td>
+                <td><div style="font-weight:700">Dust II</div><div style="font-size:11px;color:var(--muted)">Competitive</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--red)">10–16</td>
+                <td><b>18 / 14 / 7</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:32%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">32%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">178</td>
+                <td><span class="result-badge loss">LOSS</span></td>
+                <td><span class="rr-dn">−18</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Today, 5h ago</td>
+              </tr>
+              <tr>
+                <td><div class="agent-badge"><div class="agent-icon">🏹</div><div><div style="font-weight:700;font-size:13px">Valorant</div><div style="font-size:10px;color:var(--purple)">Sova</div></div></div></td>
+                <td><div style="font-weight:700">Haven</div><div style="font-size:11px;color:var(--muted)">Ranked 5v5</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">13–4</td>
+                <td><b>21 / 5 / 14</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:44%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">44%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">196</td>
+                <td><span class="result-badge win">WIN</span></td>
+                <td><span class="rr-up">+28</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Yesterday</td>
+              </tr>
+              <tr>
+                <td><div class="agent-badge"><div class="agent-icon">🎮</div><div><div style="font-weight:700;font-size:13px">Apex</div><div style="font-size:10px;color:var(--gold)">Wraith</div></div></div></td>
+                <td><div style="font-weight:700">Storm Point</div><div style="font-size:11px;color:var(--muted)">Ranked Trio</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">1st</td>
+                <td><b>8 / 2 / 5</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:36%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">36%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">940</td>
+                <td><span class="result-badge win">WIN</span></td>
+                <td><span class="rr-up">+42</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Yesterday</td>
+              </tr>
+              <tr>
+                <td><div class="agent-badge"><div class="agent-icon">🔫</div><div><div style="font-weight:700;font-size:13px">Valorant</div><div style="font-size:10px;color:var(--purple)">Omen</div></div></div></td>
+                <td><div style="font-weight:700">Bind</div><div style="font-size:11px;color:var(--muted)">Ranked 5v5</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--red)">9–13</td>
+                <td><b>14 / 11 / 8</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:28%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">28%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">142</td>
+                <td><span class="result-badge loss">LOSS</span></td>
+                <td><span class="rr-dn">−14</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">2 days ago</td>
+              </tr>
+              <tr>
+                <td><div class="agent-badge"><div class="agent-icon">🧩</div><div><div style="font-weight:700;font-size:13px">CS2</div><div style="font-size:10px;color:var(--cyan)">AWPer</div></div></div></td>
+                <td><div style="font-weight:700">Mirage</div><div style="font-size:11px;color:var(--muted)">Competitive</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">16–12</td>
+                <td><b>22 / 9 / 4</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:55%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">55%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">204</td>
+                <td><span class="result-badge win">WIN</span></td>
+                <td><span class="rr-up">+20</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">2 days ago</td>
+              </tr>
+              <tr>
+                <td><div class="agent-badge"><div class="agent-icon">🔫</div><div><div style="font-weight:700;font-size:13px">Valorant</div><div style="font-size:10px;color:var(--purple)">Reyna</div></div></div></td>
+                <td><div style="font-weight:700">Pearl</div><div style="font-size:11px;color:var(--muted)">Ranked 5v5</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--gold)">12–12</td>
+                <td><b>19 / 9 / 6</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:40%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">40%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">158</td>
+                <td><span class="result-badge draw">DRAW</span></td>
+                <td><span class="rr-na">—</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">3 days ago</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 4. Map Win Rate + Agent Performance side by side -->
+      <div class="grid-2" style="grid-template-columns:340px 1fr">
+
+        <!-- Map Win Rates -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title"><div class="card-dot"></div>Win Rate by Map</div>
+            <span style="font-size:10px;color:var(--muted)">Last 30 days</span>
+          </div>
+          <div class="card-body">
+            <div class="map-wr-grid">
+              <div class="map-wr-row">
+                <div class="map-wr-name">Ascent</div>
+                <div class="map-wr-track"><div class="map-wr-fill" style="width:82%"></div></div>
+                <div class="map-wr-pct" style="color:var(--green)">82%</div>
+                <div class="map-wr-rec" style="color:var(--muted)">9W–2L</div>
+              </div>
+              <div class="map-wr-row">
+                <div class="map-wr-name">Mirage</div>
+                <div class="map-wr-track"><div class="map-wr-fill" style="width:75%"></div></div>
+                <div class="map-wr-pct" style="color:var(--green)">75%</div>
+                <div class="map-wr-rec" style="color:var(--muted)">6W–2L</div>
+              </div>
+              <div class="map-wr-row">
+                <div class="map-wr-name">Haven</div>
+                <div class="map-wr-track"><div class="map-wr-fill" style="width:70%"></div></div>
+                <div class="map-wr-pct" style="color:var(--green)">70%</div>
+                <div class="map-wr-rec" style="color:var(--muted)">7W–3L</div>
+              </div>
+              <div class="map-wr-row">
+                <div class="map-wr-name">Pearl</div>
+                <div class="map-wr-track"><div class="map-wr-fill" style="width:60%;background:linear-gradient(90deg,var(--gold),var(--cyan))"></div></div>
+                <div class="map-wr-pct" style="color:var(--gold)">60%</div>
+                <div class="map-wr-rec" style="color:var(--muted)">6W–4L</div>
+              </div>
+              <div class="map-wr-row">
+                <div class="map-wr-name">Dust II</div>
+                <div class="map-wr-track"><div class="map-wr-fill" style="width:50%;background:linear-gradient(90deg,var(--gold),var(--red))"></div></div>
+                <div class="map-wr-pct" style="color:var(--gold)">50%</div>
+                <div class="map-wr-rec" style="color:var(--muted)">5W–5L</div>
+              </div>
+              <div class="map-wr-row">
+                <div class="map-wr-name">Bind</div>
+                <div class="map-wr-track"><div class="map-wr-fill" style="width:38%;background:linear-gradient(90deg,var(--red),#f97316)"></div></div>
+                <div class="map-wr-pct" style="color:var(--red)">38%</div>
+                <div class="map-wr-rec" style="color:var(--muted)">3W–5L</div>
+              </div>
+              <div class="map-wr-row">
+                <div class="map-wr-name">Fracture</div>
+                <div class="map-wr-track"><div class="map-wr-fill" style="width:33%;background:linear-gradient(90deg,var(--red),#f97316)"></div></div>
+                <div class="map-wr-pct" style="color:var(--red)">33%</div>
+                <div class="map-wr-rec" style="color:var(--muted)">2W–4L</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent Performance -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title"><div class="card-dot"></div>Performance by Agent</div>
+            <span style="font-size:10px;color:var(--muted)">Top agents this season</span>
+          </div>
+          <div class="card-body">
+            <div class="agent-perf-grid">
+              <div class="agent-perf-card">
+                <div class="ap-top">
+                  <div class="ap-icon">🔫</div>
+                  <div><div class="ap-name">Jett</div><div class="ap-matches">42 matches</div></div>
+                </div>
+                <div class="ap-stat-row"><span class="ap-stat-k">WR</span><span class="ap-stat-v" style="color:var(--green)">79%</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">KDA</span><span class="ap-stat-v" style="color:var(--purple)">2.8</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">HS%</span><span class="ap-stat-v" style="color:var(--gold)">48%</span></div>
+              </div>
+              <div class="agent-perf-card">
+                <div class="ap-top">
+                  <div class="ap-icon">🏹</div>
+                  <div><div class="ap-name">Sova</div><div class="ap-matches">28 matches</div></div>
+                </div>
+                <div class="ap-stat-row"><span class="ap-stat-k">WR</span><span class="ap-stat-v" style="color:var(--green)">71%</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">KDA</span><span class="ap-stat-v" style="color:var(--purple)">2.4</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">HS%</span><span class="ap-stat-v" style="color:var(--gold)">41%</span></div>
+              </div>
+              <div class="agent-perf-card">
+                <div class="ap-top">
+                  <div class="ap-icon">👻</div>
+                  <div><div class="ap-name">Omen</div><div class="ap-matches">19 matches</div></div>
+                </div>
+                <div class="ap-stat-row"><span class="ap-stat-k">WR</span><span class="ap-stat-v" style="color:var(--gold)">63%</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">KDA</span><span class="ap-stat-v" style="color:var(--purple)">1.9</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">HS%</span><span class="ap-stat-v" style="color:var(--gold)">29%</span></div>
+              </div>
+              <div class="agent-perf-card">
+                <div class="ap-top">
+                  <div class="ap-icon">💀</div>
+                  <div><div class="ap-name">Reyna</div><div class="ap-matches">15 matches</div></div>
+                </div>
+                <div class="ap-stat-row"><span class="ap-stat-k">WR</span><span class="ap-stat-v" style="color:var(--red)">53%</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">KDA</span><span class="ap-stat-v" style="color:var(--purple)">2.1</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">HS%</span><span class="ap-stat-v" style="color:var(--gold)">38%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /match-history -->
+
+    <!-- ══════════════════════════════════════
+         REWARDS — FULL SECTION
+    ══════════════════════════════════════ -->
+    <div id="rewards" style="scroll-margin-top:80px;margin-top:30px">
+
+      <!-- Section header -->
+      <div class="section-title" style="margin-bottom:18px">🎁 Rewards</div>
+
+      <!-- 1. Points Banner -->
+      <div class="rw-banner">
+        <div>
+          <h2>Your Points Balance: <span>2,580 pts</span></h2>
+          <p>Keep winning to earn more points and unlock exclusive rewards.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <div class="rw-tier-badge">🥇 Gold Member</div>
+          <div class="rw-tier-badge" style="color:var(--purple);border-color:rgba(168,85,247,.35);background:rgba(168,85,247,.12)">⬆ 420 pts to Platinum</div>
+        </div>
+      </div>
+
+      <!-- 2. Points stat cards -->
+      <div class="rw-pts-grid">
+        <div class="rw-pts-card" data-icon="💰">
+          <div class="rw-pts-label">Available</div>
+          <div class="rw-pts-val" style="color:var(--gold)">2,580</div>
+          <div class="rw-pts-sub">Points balance</div>
+        </div>
+        <div class="rw-pts-card" data-icon="📈">
+          <div class="rw-pts-label">Earned This Week</div>
+          <div class="rw-pts-val" style="color:var(--green)">+840</div>
+          <div class="rw-pts-sub">↑ Best week yet</div>
+        </div>
+        <div class="rw-pts-card" data-icon="🛒">
+          <div class="rw-pts-label">Total Spent</div>
+          <div class="rw-pts-val" style="color:var(--red)">3,200</div>
+          <div class="rw-pts-sub">Lifetime redeemed</div>
+        </div>
+        <div class="rw-pts-card" data-icon="⏳">
+          <div class="rw-pts-label">Expiring Soon</div>
+          <div class="rw-pts-val" style="color:var(--cyan)">180</div>
+          <div class="rw-pts-sub">Expires in 7 days</div>
+        </div>
+        <div class="rw-pts-card" data-icon="🏆">
+          <div class="rw-pts-label">Lifetime Earned</div>
+          <div class="rw-pts-val" style="color:var(--purple)">5,780</div>
+          <div class="rw-pts-sub">All time total</div>
+        </div>
+        <div class="rw-pts-card" data-icon="🎯">
+          <div class="rw-pts-label">Challenges Done</div>
+          <div class="rw-pts-val" style="color:var(--red)">38</div>
+          <div class="rw-pts-sub">This season</div>
+        </div>
+      </div>
+
+      <!-- 3. Tier progress road -->
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>Membership Tier Progress</div>
+          <span style="font-size:10px;color:var(--muted)">Season 4</span>
+        </div>
+        <div class="card-body">
+          <div class="rw-tier-steps">
+            <div class="rw-tier-step done">
+              <div class="rw-tier-dot">🥉</div>
+              <div class="rw-tier-name">Bronze</div>
+            </div>
+            <div class="rw-tier-step done">
+              <div class="rw-tier-dot">🥈</div>
+              <div class="rw-tier-name">Silver</div>
+            </div>
+            <div class="rw-tier-step done">
+              <div class="rw-tier-dot">🥇</div>
+              <div class="rw-tier-name">Gold</div>
+            </div>
+            <div class="rw-tier-step current">
+              <div class="rw-tier-dot">💎</div>
+              <div class="rw-tier-name">Platinum</div>
+            </div>
+            <div class="rw-tier-step">
+              <div class="rw-tier-dot">💠</div>
+              <div class="rw-tier-name">Diamond</div>
+            </div>
+            <div class="rw-tier-step">
+              <div class="rw-tier-dot">👑</div>
+              <div class="rw-tier-name">Legend</div>
+            </div>
+          </div>
+          <div style="margin-top:16px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px">
+              <span>Gold → Platinum</span>
+              <b style="font-family:'Orbitron',sans-serif;font-size:10px;color:var(--gold)">2,580 / 3,000 pts</b>
+            </div>
+            <div class="xp-track" style="height:8px"><div class="xp-fill" style="width:86%;background:linear-gradient(90deg,var(--gold),var(--purple))"></div></div>
+            <p style="font-size:11px;color:var(--muted);margin-top:6px">420 pts until Platinum — unlocks exclusive avatar frames & priority tournament access.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Daily & Weekly Challenges -->
+      <div class="section-title" style="margin-bottom:14px">⚡ Active Challenges</div>
+      <div class="rw-challenge-grid">
+
+        <div class="rw-challenge">
+          <div class="rw-ch-top">
+            <div style="display:flex;align-items:center;gap:9px">
+              <div class="rw-ch-icon">🎮</div>
+              <div>
+                <div class="rw-ch-title">Play 3 Matches</div>
+                <div class="rw-ch-desc">Any mode counts</div>
+              </div>
+            </div>
+            <div class="rw-ch-pts" style="background:rgba(6,182,212,.14);color:var(--cyan)">+30 pts</div>
+          </div>
+          <div class="rw-ch-bar-wrap">
+            <div class="rw-ch-bar-track"><div class="rw-ch-bar-fill" style="width:66%"></div></div>
+            <div class="rw-ch-prog"><span>2 / 3 matches</span><span class="ch-tag ch-daily">Daily</span></div>
+          </div>
+        </div>
+
+        <div class="rw-challenge">
+          <div class="rw-ch-top">
+            <div style="display:flex;align-items:center;gap:9px">
+              <div class="rw-ch-icon">🏆</div>
+              <div>
+                <div class="rw-ch-title">Win 5 Matches</div>
+                <div class="rw-ch-desc">Ranked only</div>
+              </div>
+            </div>
+            <div class="rw-ch-pts" style="background:rgba(168,85,247,.14);color:var(--purple)">+75 pts</div>
+          </div>
+          <div class="rw-ch-bar-wrap">
+            <div class="rw-ch-bar-track"><div class="rw-ch-bar-fill" style="width:60%"></div></div>
+            <div class="rw-ch-prog"><span>3 / 5 wins</span><span class="ch-tag ch-weekly">Weekly</span></div>
+          </div>
+        </div>
+
+        <div class="rw-challenge">
+          <div class="rw-ch-top">
+            <div style="display:flex;align-items:center;gap:9px">
+              <div class="rw-ch-icon">🎯</div>
+              <div>
+                <div class="rw-ch-title">Get 20 Kills</div>
+                <div class="rw-ch-desc">Any agent</div>
+              </div>
+            </div>
+            <div class="rw-ch-pts" style="background:rgba(230,57,70,.14);color:var(--red)">+40 pts</div>
+          </div>
+          <div class="rw-ch-bar-wrap">
+            <div class="rw-ch-bar-track"><div class="rw-ch-bar-fill" style="width:90%"></div></div>
+            <div class="rw-ch-prog"><span>18 / 20 kills</span><span class="ch-tag ch-daily">Daily</span></div>
+          </div>
+        </div>
+
+        <div class="rw-challenge done-ch">
+          <div class="rw-ch-top">
+            <div style="display:flex;align-items:center;gap:9px">
+              <div class="rw-ch-icon">☀️</div>
+              <div>
+                <div class="rw-ch-title">First Win Today</div>
+                <div class="rw-ch-desc">Completed!</div>
+              </div>
+            </div>
+            <div class="rw-ch-pts" style="background:rgba(34,197,94,.14);color:var(--green)">+25 pts ✓</div>
+          </div>
+          <div class="rw-ch-bar-wrap">
+            <div class="rw-ch-bar-track"><div class="rw-ch-bar-fill done-fill" style="width:100%"></div></div>
+            <div class="rw-ch-prog"><span style="color:var(--green);font-weight:700">Completed</span><span class="ch-tag ch-daily">Daily</span></div>
+          </div>
+        </div>
+
+        <div class="rw-challenge">
+          <div class="rw-ch-top">
+            <div style="display:flex;align-items:center;gap:9px">
+              <div class="rw-ch-icon">🔥</div>
+              <div>
+                <div class="rw-ch-title">5 Win Streak</div>
+                <div class="rw-ch-desc">Consecutive wins</div>
+              </div>
+            </div>
+            <div class="rw-ch-pts" style="background:rgba(245,158,11,.14);color:var(--gold)">+120 pts</div>
+          </div>
+          <div class="rw-ch-bar-wrap">
+            <div class="rw-ch-bar-track"><div class="rw-ch-bar-fill" style="width:100%"></div></div>
+            <div class="rw-ch-prog"><span>5 / 5 streak</span><span class="ch-tag ch-special">Special</span></div>
+          </div>
+        </div>
+
+        <div class="rw-challenge">
+          <div class="rw-ch-top">
+            <div style="display:flex;align-items:center;gap:9px">
+              <div class="rw-ch-icon">🛡️</div>
+              <div>
+                <div class="rw-ch-title">Top Fragger</div>
+                <div class="rw-ch-desc">Highest kills in match</div>
+              </div>
+            </div>
+            <div class="rw-ch-pts" style="background:rgba(168,85,247,.14);color:var(--purple)">+60 pts</div>
+          </div>
+          <div class="rw-ch-bar-wrap">
+            <div class="rw-ch-bar-track"><div class="rw-ch-bar-fill" style="width:33%"></div></div>
+            <div class="rw-ch-prog"><span>1 / 3 matches</span><span class="ch-tag ch-weekly">Weekly</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 5. How to earn points quick-ref -->
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>How to Earn Points</div>
+          <span style="font-size:10px;color:var(--muted)">Updated Season 4</span>
+        </div>
+        <div class="card-body">
+          <div class="rw-earn-grid">
+            <div class="rw-earn-card"><div class="rw-earn-icon">🏆</div><div class="rw-earn-pts">+10 pts</div><div class="rw-earn-label">Win a Match</div></div>
+            <div class="rw-earn-card"><div class="rw-earn-icon">🔥</div><div class="rw-earn-pts">+50 pts</div><div class="rw-earn-label">5-Game Win Streak</div></div>
+            <div class="rw-earn-card"><div class="rw-earn-icon">☀️</div><div class="rw-earn-pts">+25 pts</div><div class="rw-earn-label">Daily First Win</div></div>
+            <div class="rw-earn-card"><div class="rw-earn-icon">📋</div><div class="rw-earn-pts">+30 pts</div><div class="rw-earn-label">Complete Daily</div></div>
+            <div class="rw-earn-card"><div class="rw-earn-icon">🎯</div><div class="rw-earn-pts">+200 pts</div><div class="rw-earn-label">Tournament Win</div></div>
+            <div class="rw-earn-card"><div class="rw-earn-icon">🥈</div><div class="rw-earn-pts">+80 pts</div><div class="rw-earn-label">Tournament Runner-Up</div></div>
+            <div class="rw-earn-card"><div class="rw-earn-icon">💎</div><div class="rw-earn-pts">+15 pts</div><div class="rw-earn-label">Rank Up</div></div>
+            <div class="rw-earn-card"><div class="rw-earn-icon">👥</div><div class="rw-earn-pts">+20 pts</div><div class="rw-earn-label">Refer a Friend</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Rewards Shop -->
+      <div class="section-title" style="margin-bottom:14px">🛒 Rewards Shop</div>
+      <div class="rw-shop-grid">
+
+        <div class="rw-shop-card owned">
+          <div class="rw-shop-img">🎨</div>
+          <div class="rw-shop-body">
+            <div class="rw-shop-rarity" style="color:var(--purple)">✦ Epic</div>
+            <div class="rw-shop-name">Exclusive Skin Bundle</div>
+            <div class="rw-shop-cost">🪙 2,000 pts</div>
+            <button class="rw-redeem-btn own">✓ Owned</button>
+          </div>
+        </div>
+
+        <div class="rw-shop-card owned">
+          <div class="rw-shop-img">🏆</div>
+          <div class="rw-shop-body">
+            <div class="rw-shop-rarity" style="color:var(--gold)">★ Rare</div>
+            <div class="rw-shop-name">Winner Trophy Badge</div>
+            <div class="rw-shop-cost">🪙 500 pts</div>
+            <button class="rw-redeem-btn own">✓ Owned</button>
+          </div>
+        </div>
+
+        <div class="rw-shop-card">
+          <div class="rw-shop-img">🖼️</div>
+          <div class="rw-shop-body">
+            <div class="rw-shop-rarity" style="color:var(--cyan)">◈ Uncommon</div>
+            <div class="rw-shop-name">Neon Avatar Frame</div>
+            <div class="rw-shop-cost">🪙 1,200 pts</div>
+            <button class="rw-redeem-btn can">Redeem Now</button>
+          </div>
+        </div>
+
+        <div class="rw-shop-card">
+          <div class="rw-shop-img">📦</div>
+          <div class="rw-shop-body">
+            <div class="rw-shop-rarity" style="color:var(--gold)">★ Rare</div>
+            <div class="rw-shop-name">Mystery Loot Box</div>
+            <div class="rw-shop-cost">🪙 800 pts</div>
+            <button class="rw-redeem-btn can">Redeem Now</button>
+          </div>
+        </div>
+
+        <div class="rw-shop-card">
+          <div class="rw-shop-img">⭐</div>
+          <div class="rw-shop-body">
+            <div class="rw-shop-rarity" style="color:var(--red)">✦✦ Legendary</div>
+            <div class="rw-shop-name">Pro Player Title</div>
+            <div class="rw-shop-cost">🪙 3,000 pts</div>
+            <button class="rw-redeem-btn cant">Need 420 pts more</button>
+          </div>
+        </div>
+
+        <div class="rw-shop-card">
+          <div class="rw-shop-img">🎫</div>
+          <div class="rw-shop-body">
+            <div class="rw-shop-rarity" style="color:var(--purple)">✦ Epic</div>
+            <div class="rw-shop-name">Season Pass S5</div>
+            <div class="rw-shop-cost">🪙 1,500 pts</div>
+            <button class="rw-redeem-btn can">Redeem Now</button>
+          </div>
+        </div>
+
+        <div class="rw-shop-card">
+          <div class="rw-shop-img">🎭</div>
+          <div class="rw-shop-body">
+            <div class="rw-shop-rarity" style="color:var(--cyan)">◈ Uncommon</div>
+            <div class="rw-shop-name">Animated Banner</div>
+            <div class="rw-shop-cost">🪙 600 pts</div>
+            <button class="rw-redeem-btn can">Redeem Now</button>
+          </div>
+        </div>
+
+        <div class="rw-shop-card">
+          <div class="rw-shop-img">🔑</div>
+          <div class="rw-shop-body">
+            <div class="rw-shop-rarity" style="color:var(--red)">✦✦ Legendary</div>
+            <div class="rw-shop-name">VIP Tournament Pass</div>
+            <div class="rw-shop-cost">🪙 5,000 pts</div>
+            <button class="rw-redeem-btn cant">Need 2,420 pts more</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 7. Points earning history table -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>Points History</div>
+          <a class="card-action" href="#">Export →</a>
+        </div>
+        <div class="table-wrap">
+          <table style="min-width:520px">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Activity</th>
+                <th>Type</th>
+                <th>Points</th>
+                <th>Balance After</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="color:var(--muted);font-size:11px">Today, 2h ago</td><td><b>Match Win</b> — Ascent, Ranked</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+10</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,580</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">Today, 2h ago</td><td><b>5-Win Streak Bonus</b></td><td><span class="rw-history-tag tag-bonus">Bonus</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+50</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,570</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">Today, 8h ago</td><td><b>Daily Challenge</b> — First Win</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+25</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,520</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">Yesterday</td><td><b>Neon Avatar Frame</b> redeemed</td><td><span class="rw-history-tag tag-spend">Spend</span></td><td style="color:var(--red);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">−1,200</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,495</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">Yesterday</td><td><b>Match Win</b> — Haven, Ranked</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+10</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">3,695</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">2 days ago</td><td><b>Tournament Runner-Up</b> — Valorant Cup</td><td><span class="rw-history-tag tag-bonus">Bonus</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+80</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">3,685</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">3 days ago</td><td><b>Weekly Challenge</b> — Win 5 Matches</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+75</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">3,605</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">4 days ago</td><td><b>Winner Trophy Badge</b> redeemed</td><td><span class="rw-history-tag tag-spend">Spend</span></td><td style="color:var(--red);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">−500</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">3,530</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /rewards -->
+
+  </main>
+</div>
+
+<script>
+  function openSidebar(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
+  function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }
+</script>
+</body>
+</html>

@@ -865,10 +865,16 @@
     loginBtn.classList.add('loading');
     loginBtn.disabled = true;
 
-    /* Simulate auth — replace with real auth call */
+    /* Redirect to role-specific dashboard */
+    var activeRole = document.querySelector('.role-tab.active').getAttribute('data-role');
+    var dashboardMap = {
+      player: 'player-dashboard.html',
+      team:   'team-dashboard.html',
+      admin:  'admin-dashboard.html'
+    };
     setTimeout(function () {
-      window.location.href = 'index.html';
-    }, 1000);
+      window.location.href = dashboardMap[activeRole] || 'player-dashboard.html';
+    }, 900);
   });
 
   /* Shake animation added via JS */

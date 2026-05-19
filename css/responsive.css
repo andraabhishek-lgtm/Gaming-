@@ -1,9 +1,76 @@
 /* Responsive Design */
 
+/* ── Large Tablets / Small Laptops (1024px and below) ── */
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 0 24px;
+    }
+
+    .hero-content {
+        gap: 2rem;
+    }
+
+    .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .teams-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .game-slider {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tournaments-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .leadership-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .contact-wrapper {
+        gap: 32px;
+    }
+
+    /* Table horizontal scroll on mid-size screens */
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 600px;
+    }
+}
+
 /* Tablets (768px and below) */
 @media (max-width: 768px) {
-    /* Navigation */
+    /* Show hamburger, hide desktop nav */
+    .hamburger {
+        display: flex;
+    }
+
     .nav-menu {
+        display: none;
         gap: 1rem;
     }
 
@@ -162,34 +229,34 @@
         margin: 0 10px;
     }
 
-    /* Table */
+    /* Table — force horizontal scroll on small screens */
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+
     table {
         font-size: 0.9rem;
+        min-width: 480px;
     }
 
     table th,
     table td {
         padding: 10px;
     }
+
+    /* Prevent global overflow */
+    img, video, iframe, embed, object {
+        max-width: 100%;
+    }
 }
 
 /* Mobile (480px and below) */
 @media (max-width: 480px) {
-    /* Navigation */
+    /* Navigation — hide logo text, hamburger already shown at 768px */
     .logo span {
         display: none;
-    }
-
-    .nav-menu {
-        display: none;
-    }
-
-    .hamburger {
-        display: flex;
-    }
-
-    .nav-menu.active {
-        display: none !important;
     }
 
     /* Text */
@@ -498,6 +565,37 @@
     /* Container padding */
     .container {
         padding: 0 15px;
+    }
+
+    /* Hero layout — stack on mobile */
+    .hero-content {
+        grid-template-columns: 1fr !important;
+        gap: 2rem;
+    }
+
+    .hero-image {
+        display: none;
+    }
+
+    /* Prevent fixed-width navbars from causing overflow */
+    .navbar {
+        padding: 0 16px;
+    }
+
+    /* Touch-friendly minimum tap targets */
+    .btn, .nav-menu a, .filter-btn, .page-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Footer grid single column */
+    .footer-content {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Dashboard sidebar items */
+    .sidebar {
+        width: 100%;
     }
 
     /* Newsletter section */

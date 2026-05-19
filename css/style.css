@@ -44,6 +44,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* Prevent horizontal scroll at root level */
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -53,6 +56,21 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
+  max-width: 100%;
+}
+
+/* Responsive media — prevent overflow */
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Table horizontal scroll wrapper */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  border-radius: 8px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -250,7 +268,8 @@ h1, h2, h3, h4, h5, h6 {
     padding: 16px 40px;
     font-size: 1.1rem;
 }
-========================================
+
+/* ========================================
    Footer
 ======================================== */
 .footer {

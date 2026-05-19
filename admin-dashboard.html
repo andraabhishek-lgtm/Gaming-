@@ -262,7 +262,29 @@
     @media(max-width:1200px){.stats-grid,.mini-row,.um-stats-row{grid-template-columns:repeat(2,1fr)}.analytics-grid,.tourn-list-grid,.report-card-grid{grid-template-columns:1fr}.tc-form{grid-template-columns:1fr 1fr}}
     @media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.tb-hamburger{display:flex}}
     @media(max-width:600px){.stats-grid,.mini-row,.um-stats-row{grid-template-columns:1fr 1fr}.tb-search{display:none}.page{padding:14px}.tc-form{grid-template-columns:1fr}}
+    @media(max-width:480px){
+      .gs-toast{min-width:min(260px,calc(100vw - 40px));right:16px;bottom:16px}
+      .page{padding:10px}
+      .stat-val,.mini-val{font-size:18px}
+      .topbar{padding:0 14px}
+      .tb-live,.tb-email{display:none}
+    }
+    @media(max-width:400px){
+      .topbar{padding:0 10px}
+      .um-search{min-width:0;flex:1}
+      .gs-toast{min-width:min(220px,calc(100vw - 24px));right:12px;bottom:12px}
+      .admin-banner{padding:16px 18px}
+    }
+    @media(max-width:360px){
+      .stats-grid,.mini-row,.um-stats-row{grid-template-columns:1fr}
+      .tourn-list-grid,.report-card-grid{grid-template-columns:1fr}
+      .gs-toast{right:8px;bottom:8px;min-width:calc(100vw - 16px)}
+      .page{padding:8px}
+      .topbar{padding:0 8px}
+      .tb-btn,.tb-avatar,.tb-hamburger{width:34px;height:34px}
+    }
   </style>
+  <link rel="stylesheet" href="css/responsive-fix.css">
 </head>
 <body>
 

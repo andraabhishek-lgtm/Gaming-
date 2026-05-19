@@ -289,7 +289,25 @@
     @media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.topbar{width:100%;height:64px;padding:0 16px}.tb-hamburger{display:flex}.topbar-title{flex:0 1 auto;line-height:1.25}.tb-search{display:none}.tb-actions{margin-left:auto}.ov-grid,.ov-bottom,.map-perf-grid{grid-template-columns:1fr}.team-stats{display:none}.rs-form{grid-template-columns:1fr}}
     @media(max-width:600px){.stats-grid,.roster-perf-grid,.scrim-stats-grid{grid-template-columns:1fr 1fr}.page{padding:14px}.cal-grid{display:none}.upcoming-card{grid-template-columns:58px minmax(0,1fr) 72px;gap:10px;padding:12px}.uc-countdown{width:58px;min-width:58px;padding:8px 4px}.uc-countdown .days{font-size:20px}.uc-game-icon{width:28px;height:28px;border-radius:8px;font-size:15px}.uc-team,.uc-opp{font-size:14px}.uc-meta{font-size:11px}.uc-actions{width:72px;flex-direction:column;gap:6px}.uc-actions button{width:100%;min-width:0;padding:7px 6px!important;font-size:9px!important;letter-spacing:0}}
     @media(max-width:420px){.topbar{padding:0 12px;gap:10px}.topbar-title{font-size:13px}.tb-actions{gap:7px}.tb-live{display:none}.tb-email{display:none}.tb-btn,.tb-avatar,.tb-hamburger{width:36px;height:36px}.upcoming-card{grid-template-columns:52px minmax(0,1fr) 64px;gap:8px;padding:10px}.uc-countdown{width:52px;min-width:52px}.uc-countdown .days{font-size:18px}.uc-countdown .dlbl{font-size:8px}.uc-game-icon{width:24px;height:24px;font-size:14px}.uc-team,.uc-opp{font-size:13px}.uc-type-badge{max-width:74px;font-size:8px;padding:2px 5px}.uc-meta{font-size:10px}.uc-actions{width:64px}.uc-actions button{padding:6px 4px!important;font-size:8px!important}}
+    @media(max-width:380px){
+      .stats-grid,.roster-perf-grid,.scrim-stats-grid{grid-template-columns:1fr}
+      .gs-toast{min-width:min(260px,calc(100vw - 40px));right:16px;bottom:16px}
+      .page{padding:10px}
+      .stat-val,.sc-val{font-size:18px}
+      .upcoming-card{grid-template-columns:44px minmax(0,1fr);gap:8px}.uc-actions{display:none}
+      .team-banner{padding:16px 18px}
+    }
+    @media(max-width:360px){
+      .topbar{padding:0 8px;gap:8px}
+      .topbar-title{font-size:12px}
+      .tb-btn,.tb-avatar,.tb-hamburger{width:32px;height:32px}
+      .gs-toast{right:8px;bottom:8px;min-width:calc(100vw - 16px)}
+      .page{padding:8px}
+      .ov-bottom,.map-perf-grid{grid-template-columns:1fr}
+      .rs-form{grid-template-columns:1fr}
+    }
   </style>
+  <link rel="stylesheet" href="css/responsive-fix.css">
 </head>
 <body>
 

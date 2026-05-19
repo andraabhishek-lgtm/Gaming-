@@ -435,42 +435,86 @@
             margin-top: 0;
         }
         .partner-card {
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
             position: relative;
-            height: 180px;
+            height: clamp(220px, 26vw, 300px);
             border: 1px solid #2a2a2a;
+            cursor: pointer;
+            transition: transform .3s, border-color .3s, box-shadow .3s;
+        }
+        .partner-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(230,57,70,.45);
+            box-shadow: 0 20px 50px rgba(230,57,70,.12);
         }
         .partner-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            filter: grayscale(60%);
-            transition: filter 0.3s, transform 0.3s;
+            filter: brightness(.5);
+            transition: filter .4s, transform .5s;
         }
         .partner-card:hover img {
-            filter: grayscale(0%);
-            transform: scale(1.05);
+            filter: brightness(.65);
+            transform: scale(1.07);
         }
-        .partner-card .partner-overlay {
+        .partner-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.45);
+            background: linear-gradient(to top, rgba(0,0,0,.95) 0%, rgba(0,0,0,.3) 50%, rgba(0,0,0,.05) 100%);
+        }
+        .partner-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: clamp(12px,2vw,18px);
+        }
+        .partner-tag {
+            align-self: flex-start;
+            background: var(--primary);
+            color: #fff;
+            font-size: clamp(.55rem,1.1vw,.65rem);
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-family: 'Orbitron', monospace;
+        }
+        .partner-bottom { display: flex; flex-direction: column; gap: 5px; }
+        .partner-name {
+            color: #fff;
+            font-weight: 800;
+            font-size: clamp(.82rem,1.8vw,1.05rem);
+            font-family: 'Orbitron', monospace;
+            line-height: 1.2;
+            margin: 0;
+        }
+        .partner-desc {
+            color: rgba(224,224,255,.72);
+            font-size: clamp(.7rem,1.3vw,.8rem);
+            line-height: 1.5;
+            margin: 0;
+        }
+        .partner-meta {
+            display: flex;
+            gap: clamp(8px,1.5vw,14px);
+            margin-top: 5px;
+            flex-wrap: wrap;
+        }
+        .partner-meta span {
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: background 0.3s;
+            gap: 5px;
+            color: rgba(224,224,255,.5);
+            font-size: clamp(.6rem,1.1vw,.68rem);
+            font-family: 'Orbitron', monospace;
         }
-        .partner-card:hover .partner-overlay { background: rgba(0,0,0,0.15); }
-        .partner-card .partner-name {
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-align: center;
-            padding: 8px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-        }
+        .partner-meta i { color: var(--primary); font-size: .6rem; }
 
         /* ── Mission/Vision ── */
         .mission-section {
@@ -528,10 +572,20 @@
             .about-story-content { padding-right: 0; }
             .categories-grid { grid-template-columns: 1fr 1fr; }
             .values-grid, .leadership-grid, .stats-grid { grid-template-columns: 1fr 1fr; }
-            .partners-grid { grid-template-columns: 1fr 1fr; }
+            .partners-grid { grid-template-columns: repeat(2, 1fr); }
+            .partner-card { height: clamp(200px, 28vw, 260px); }
+        }
+        @media (max-width: 640px) {
+            .partners-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+            .partner-card { height: clamp(180px, 45vw, 240px); }
+            .partner-meta { gap: 8px; }
+        }
+        @media (max-width: 480px) {
+            .partners-grid { grid-template-columns: 1fr; }
+            .partner-card { height: clamp(200px, 60vw, 260px); }
         }
         @media (max-width: 576px) {
-            .categories-grid, .values-grid, .leadership-grid, .stats-grid, .partners-grid { grid-template-columns: 1fr; }
+            .categories-grid, .values-grid, .leadership-grid, .stats-grid { grid-template-columns: 1fr; }
         }
         /* ── Poki-style Footer ── */
         .site-footer { background: #080808; position: relative; }
@@ -559,6 +613,7 @@
         @media (max-width: 900px) { .footer-inner { grid-template-columns: 1fr; gap: 36px; } }
         @media (max-width: 560px) { .footer-right { grid-template-columns: 1fr 1fr; } .footer-bottom-bar { flex-direction: column; text-align: center; } }
     </style>
+    <link rel="stylesheet" href="css/responsive-fix.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -851,42 +906,103 @@
                 <p>World-class brands and publishers backing the future of racing esports.</p>
             </div>
             <div class="partners-grid">
+
                 <div class="partner-card">
-                    <img src="images/car-racing-04.webp" alt="Partner - Gran Turismo">
-                    <div class="partner-overlay">
-                        <span class="partner-name">Gran Turismo</span>
+                    <img src="images/car-racing-04.webp" alt="Gran Turismo">
+                    <div class="partner-overlay"></div>
+                    <div class="partner-content">
+                        <span class="partner-tag">Sim Racing</span>
+                        <div class="partner-bottom">
+                            <h3 class="partner-name">Gran Turismo</h3>
+                            <p class="partner-desc">The Real Driving Simulator — precision physics across 500+ licensed cars and iconic circuits worldwide.</p>
+                            <div class="partner-meta">
+                                <span><i class="fas fa-users"></i> 120K Players</span>
+                                <span><i class="fas fa-trophy"></i> 48 Events</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="partner-card">
-                    <img src="images/car-racing-05.webp" alt="Partner - Forza Motorsport">
-                    <div class="partner-overlay">
-                        <span class="partner-name">Forza Motorsport</span>
+                    <img src="images/car-racing-05.webp" alt="Forza Motorsport">
+                    <div class="partner-overlay"></div>
+                    <div class="partner-content">
+                        <span class="partner-tag">Car Racing</span>
+                        <div class="partner-bottom">
+                            <h3 class="partner-name">Forza Motorsport</h3>
+                            <p class="partner-desc">Open-world circuits and competitive ranked seasons — over 800 cars built for speed and style.</p>
+                            <div class="partner-meta">
+                                <span><i class="fas fa-users"></i> 95K Players</span>
+                                <span><i class="fas fa-trophy"></i> 36 Events</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="partner-card">
-                    <img src="images/car-racing-06.webp" alt="Partner - iRacing">
-                    <div class="partner-overlay">
-                        <span class="partner-name">iRacing</span>
+                    <img src="images/car-racing-06.webp" alt="iRacing">
+                    <div class="partner-overlay"></div>
+                    <div class="partner-content">
+                        <span class="partner-tag">Online Racing</span>
+                        <div class="partner-bottom">
+                            <h3 class="partner-name">iRacing</h3>
+                            <p class="partner-desc">The world's premier motorsport simulation — real circuits, real physics, and serious competition.</p>
+                            <div class="partner-meta">
+                                <span><i class="fas fa-users"></i> 80K Players</span>
+                                <span><i class="fas fa-trophy"></i> 60 Events</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="partner-card">
-                    <img src="images/bike-racing-03.webp" alt="Partner - MotoGP Esports">
-                    <div class="partner-overlay">
-                        <span class="partner-name">MotoGP Esports</span>
+                    <img src="images/bike-racing-03.webp" alt="MotoGP Esports">
+                    <div class="partner-overlay"></div>
+                    <div class="partner-content">
+                        <span class="partner-tag">Bike Racing</span>
+                        <div class="partner-bottom">
+                            <h3 class="partner-name">MotoGP Esports</h3>
+                            <p class="partner-desc">Official MotoGP esports series — licensed circuits, factory bikes, and full championship standings.</p>
+                            <div class="partner-meta">
+                                <span><i class="fas fa-users"></i> 65K Players</span>
+                                <span><i class="fas fa-trophy"></i> 24 Events</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="partner-card">
-                    <img src="images/bike-racing-04.webp" alt="Partner - RIDE Series">
-                    <div class="partner-overlay">
-                        <span class="partner-name">RIDE Series</span>
+                    <img src="images/bike-racing-04.webp" alt="RIDE Series">
+                    <div class="partner-overlay"></div>
+                    <div class="partner-content">
+                        <span class="partner-tag">Bike Racing</span>
+                        <div class="partner-bottom">
+                            <h3 class="partner-name">RIDE Series</h3>
+                            <p class="partner-desc">Pure motorcycle championship covering superbikes, nakeds, and retros across global tracks.</p>
+                            <div class="partner-meta">
+                                <span><i class="fas fa-users"></i> 42K Players</span>
+                                <span><i class="fas fa-trophy"></i> 18 Events</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="partner-card">
-                    <img src="images/blog-racing.webp" alt="Partner - F1 Esports">
-                    <div class="partner-overlay">
-                        <span class="partner-name">F1 Esports Series</span>
+                    <img src="images/blog-racing.webp" alt="F1 Esports Series">
+                    <div class="partner-overlay"></div>
+                    <div class="partner-content">
+                        <span class="partner-tag">Formula</span>
+                        <div class="partner-bottom">
+                            <h3 class="partner-name">F1 Esports Series</h3>
+                            <p class="partner-desc">The official Formula 1 esports competition — the fastest, most watched esport on the grid.</p>
+                            <div class="partner-meta">
+                                <span><i class="fas fa-users"></i> 110K Players</span>
+                                <span><i class="fas fa-trophy"></i> 52 Events</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>

@@ -63,9 +63,6 @@
     .topbar{height:62px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 22px;gap:14px;position:sticky;top:0;z-index:50;flex-shrink:0}
     .topbar-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;flex:1}
     .topbar-title span{color:var(--red)}
-    .tb-search{display:flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--border);border-radius:9px;padding:7px 13px;width:200px}
-    .tb-search input{background:none;border:none;outline:none;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;width:100%}
-    .tb-search input::placeholder{color:var(--muted)}
     .tb-actions{display:flex;align-items:center;gap:9px}
     .tb-live{display:flex;align-items:center;gap:5px;font-size:10px;font-family:'Orbitron',sans-serif;color:var(--red);letter-spacing:.1em}
     .tb-live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1.4s infinite}
@@ -76,6 +73,30 @@
     .tb-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:700;font-size:12px;border:2px solid rgba(230,57,70,.35);cursor:pointer}
     .tb-hamburger{display:none;width:36px;height:36px;border-radius:8px;background:var(--glass);border:1px solid var(--border);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;flex-direction:column;gap:5px;padding:9px}
     .tb-hamburger span{display:block;width:100%;height:2px;background:var(--text);border-radius:2px}
+    .tb-badge{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:8px;background:var(--red);color:#fff;font-size:9px;font-weight:700;font-family:'Orbitron',sans-serif;display:flex;align-items:center;justify-content:center;padding:0 3px;border:2px solid var(--surface);box-shadow:0 0 5px rgba(230,57,70,.5)}
+    .tb-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:300px;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.65);z-index:200;overflow:hidden;opacity:0;transform:translateY(-8px);transition:opacity .2s,transform .2s;pointer-events:none}
+    .tb-dropdown.open{opacity:1;transform:translateY(0);pointer-events:all}
+    .tb-dropdown-head{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--border)}
+    .tb-dropdown-title{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em}
+    .tb-dropdown-action{font-size:11px;color:var(--red);cursor:pointer;font-weight:600;background:none;border:none;font-family:'Rajdhani',sans-serif}
+    .tb-notif-item{display:flex;gap:10px;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .15s}
+    .tb-notif-item:last-child{border-bottom:none}
+    .tb-notif-item:hover{background:var(--glass)}
+    .tb-notif-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+    .tb-notif-body{flex:1;min-width:0}
+    .tb-notif-text{font-size:12px;line-height:1.45;color:rgba(240,240,245,.65)}
+    .tb-notif-text b{color:var(--text)}
+    .tb-notif-time{font-size:10px;color:var(--muted);margin-top:2px}
+    .tb-notif-unread .tb-notif-text{color:var(--text)}
+    .tb-msg-item{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .15s}
+    .tb-msg-item:last-child{border-bottom:none}
+    .tb-msg-item:hover{background:var(--glass)}
+    .tb-msg-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:700;font-size:11px;flex-shrink:0;position:relative}
+    .tb-msg-online{position:absolute;bottom:0;right:0;width:10px;height:10px;border-radius:50%;background:var(--green);border:2px solid var(--card)}
+    .tb-msg-body{flex:1;min-width:0}
+    .tb-msg-name{font-weight:700;font-size:13px;margin-bottom:2px}
+    .tb-msg-preview{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .tb-msg-time{font-size:10px;color:var(--muted);flex-shrink:0}
 
     /* ── PAGE ── */
     .page{padding:22px;flex:1}
@@ -313,10 +334,30 @@
     }
     @media(max-width:600px){
       .stats-grid{grid-template-columns:1fr 1fr}
-      .tb-search{display:none}
       .page{padding:14px}
     }
+    @media(max-width:480px){
+      .gs-toast{min-width:min(260px,calc(100vw - 40px));right:16px;bottom:16px}
+      .page{padding:10px}
+      .stat-val{font-size:20px}
+      .mh-perf-grid,.rw-pts-grid,.agent-perf-grid,.rw-earn-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:400px){
+      .stat-val{font-size:18px}
+      .gs-toast{min-width:min(220px,calc(100vw - 24px));right:12px;bottom:12px}
+      .ach-grid{grid-template-columns:repeat(auto-fill,minmax(60px,1fr))}
+      .rw-banner{padding:14px 16px}
+      .rw-challenge-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:360px){
+      .stats-grid{grid-template-columns:1fr}
+      .qa-grid{grid-template-columns:1fr}
+      .gs-toast{right:8px;bottom:8px;min-width:calc(100vw - 16px)}
+      .page{padding:8px}
+      .mh-perf-grid,.rw-pts-grid,.agent-perf-grid,.rw-earn-grid{grid-template-columns:1fr}
+    }
   </style>
+  <link rel="stylesheet" href="css/responsive-fix.css">
 </head>
 <body>
 
@@ -357,14 +398,83 @@
   <header class="topbar">
     <div class="tb-hamburger" id="hamburger" onclick="openSidebar()"><span></span><span></span><span></span></div>
     <div class="topbar-title">Player <span>Dashboard</span></div>
-    <div class="tb-search">
-      <span style="color:var(--muted);font-size:13px">🔍</span>
-      <input type="text" placeholder="Search..."/>
-    </div>
     <div class="tb-actions">
       <div class="tb-live"><div class="tb-live-dot"></div>LIVE</div>
-      <a class="tb-btn" href="#">🔔<div class="tb-notif-dot"></div></a>
-      <a class="tb-btn" href="#">💬</a>
+
+      <!-- Notification Button -->
+      <div class="tb-btn" id="notifBtn" onclick="toggleDropdown('notifDropdown',event)">
+        🔔<span class="tb-badge" id="notifBadge">3</span>
+        <div class="tb-dropdown" id="notifDropdown" onclick="event.stopPropagation()">
+          <div class="tb-dropdown-head">
+            <span class="tb-dropdown-title">Notifications</span>
+            <button class="tb-dropdown-action" onclick="markAllRead()">Mark all read</button>
+          </div>
+          <div class="tb-notif-item tb-notif-unread">
+            <div class="tb-notif-icon" style="background:rgba(230,57,70,.14)">🏆</div>
+            <div class="tb-notif-body">
+              <div class="tb-notif-text"><b>Tournament Starting</b> — CS2 Pro League begins in 30 min</div>
+              <div class="tb-notif-time">2 min ago</div>
+            </div>
+          </div>
+          <div class="tb-notif-item tb-notif-unread">
+            <div class="tb-notif-icon" style="background:rgba(34,197,94,.14)">✅</div>
+            <div class="tb-notif-body">
+              <div class="tb-notif-text"><b>Match Won</b> — You beat Team Shadow <span style="color:var(--green)">+42 RR</span></div>
+              <div class="tb-notif-time">1 hr ago</div>
+            </div>
+          </div>
+          <div class="tb-notif-item tb-notif-unread">
+            <div class="tb-notif-icon" style="background:rgba(245,158,11,.14)">🎁</div>
+            <div class="tb-notif-body">
+              <div class="tb-notif-text"><b>Reward Unlocked</b> — You reached Gold tier!</div>
+              <div class="tb-notif-time">3 hr ago</div>
+            </div>
+          </div>
+          <div class="tb-notif-item">
+            <div class="tb-notif-icon" style="background:rgba(168,85,247,.14)">👥</div>
+            <div class="tb-notif-body">
+              <div class="tb-notif-text"><b>Team Invite</b> — PhantomX invited you to join their roster</div>
+              <div class="tb-notif-time">Yesterday</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messages Button -->
+      <div class="tb-btn" id="msgBtn" onclick="toggleDropdown('msgDropdown',event)">
+        💬<span class="tb-badge" style="background:var(--purple);box-shadow:0 0 5px rgba(168,85,247,.5)" id="msgBadge">2</span>
+        <div class="tb-dropdown" id="msgDropdown" onclick="event.stopPropagation()">
+          <div class="tb-dropdown-head">
+            <span class="tb-dropdown-title">Messages</span>
+            <button class="tb-dropdown-action" onclick="clearMsgs()">View all</button>
+          </div>
+          <div class="tb-msg-item">
+            <div class="tb-msg-av" style="background:linear-gradient(135deg,#e63946,#a855f7)">SX<div class="tb-msg-online"></div></div>
+            <div class="tb-msg-body">
+              <div class="tb-msg-name">ShadowX</div>
+              <div class="tb-msg-preview">GG bro, that clutch was insane! 🔥</div>
+            </div>
+            <div class="tb-msg-time">5m</div>
+          </div>
+          <div class="tb-msg-item">
+            <div class="tb-msg-av" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">NK<div class="tb-msg-online"></div></div>
+            <div class="tb-msg-body">
+              <div class="tb-msg-name">NeonKnight</div>
+              <div class="tb-msg-preview">Are you joining the scrim tonight?</div>
+            </div>
+            <div class="tb-msg-time">22m</div>
+          </div>
+          <div class="tb-msg-item">
+            <div class="tb-msg-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">TR</div>
+            <div class="tb-msg-body">
+              <div class="tb-msg-name">Team Manager</div>
+              <div class="tb-msg-preview">Practice rescheduled to 8PM today</div>
+            </div>
+            <div class="tb-msg-time">1h</div>
+          </div>
+        </div>
+      </div>
+
       <div class="tb-avatar js-player-initials">PL</div>
     </div>
   </header>
@@ -1137,6 +1247,29 @@
 
   function openSidebar(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
   function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }
+
+  function toggleDropdown(id, e) {
+    if(e) e.stopPropagation();
+    var dd = document.getElementById(id);
+    var isOpen = dd.classList.contains('open');
+    document.querySelectorAll('.tb-dropdown').forEach(function(el){ el.classList.remove('open'); });
+    if(!isOpen) dd.classList.add('open');
+  }
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.tb-dropdown').forEach(function(el){ el.classList.remove('open'); });
+  });
+
+  function markAllRead() {
+    document.querySelectorAll('.tb-notif-unread').forEach(function(el){ el.classList.remove('tb-notif-unread'); });
+    var badge = document.getElementById('notifBadge');
+    if(badge) badge.style.display = 'none';
+  }
+  function clearMsgs() {
+    var badge = document.getElementById('msgBadge');
+    if(badge) badge.style.display = 'none';
+    document.getElementById('msgDropdown').classList.remove('open');
+  }
+
   hydratePlayerIdentity();
 </script>
 </body>

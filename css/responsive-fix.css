@@ -1,0 +1,1185 @@
+/* ═══════════════════════════════════════════════════════════════════
+   responsive-fix.css — Gaming Stackly | Full-Site Mobile Repair
+   Covers: index, about, blog, contact, teams, tournaments,
+           login, signup, 404, player-dashboard, team-dashboard,
+           admin-dashboard, gaming-app
+   Breakpoints: 1200px | 1024px | 900px | 768px | 640px | 480px | 360px
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────
+   0. GLOBAL RESETS — prevent horizontal scroll
+   ────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  min-width: 320px;
+}
+
+img, video, iframe, canvas, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+
+/* ──────────────────────────────────────────────
+   1. NAVBAR — all public pages
+   ────────────────────────────────────────────── */
+.navbar {
+  padding: 0 clamp(12px, 3vw, 40px);
+}
+
+.nav-container {
+  gap: 8px;
+}
+
+/* Hide desktop nav, show hamburger on mobile */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none !important;
+  }
+  .hamburger {
+    display: flex !important;
+  }
+}
+
+/* Mobile menu links — full-width touch targets */
+.mobile-menu a,
+.mobile-menu .mob-cta {
+  display: block;
+  width: 100%;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+/* Prevent mobile menu overflowing viewport */
+.mobile-menu {
+  max-height: calc(100vh - 68px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+/* ──────────────────────────────────────────────
+   2. HERO / PAGE HEADERS
+   ────────────────────────────────────────────── */
+.hero-swiper-section {
+  height: 100svh;
+  min-height: 480px;
+}
+
+.slide-content {
+  padding: 0 clamp(16px, 5vw, 60px);
+}
+
+.slide-inner {
+  max-width: min(700px, 90vw);
+}
+
+.page-header {
+  min-height: clamp(260px, 40vw, 420px);
+  padding-top: 68px;
+}
+
+.page-header h1 {
+  font-size: clamp(1.6rem, 5vw, 3.8rem);
+}
+
+@media (max-width: 768px) {
+  .hero-swiper-section {
+    min-height: 420px;
+  }
+
+  /* Swiper nav arrows — reposition on small screens */
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 36px !important;
+    height: 36px !important;
+    --swiper-navigation-size: 16px;
+  }
+
+  .swiper-button-prev { left: 8px !important; }
+  .swiper-button-next { right: 8px !important; }
+
+  .page-header-content {
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   3. LIVE TICKER
+   ────────────────────────────────────────────── */
+.live-ticker {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-label {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .ticker-label {
+    font-size: 0.7rem;
+    padding: 0 10px;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   4. STATS STRIPS (index, tournaments, dashboards)
+   ────────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.stats-strip-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stats-strip-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-strip-item {
+    border-right: none !important;
+    border-bottom: 1px solid #1e1e1e;
+    padding: 16px 12px;
+  }
+
+  .stat-strip-item:nth-child(odd) {
+    border-right: 1px solid #1e1e1e !important;
+  }
+
+  .stat-strip-item:last-child,
+  .stat-strip-item:nth-last-child(2):nth-child(odd) {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .stats-strip-grid {
+    grid-template-columns: 1fr;
+  }
+  .stat-strip-item {
+    border-right: none !important;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   5. LEADERBOARD GRID (index.html)
+   ────────────────────────────────────────────── */
+.lb-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .lb-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* Leaderboard table row — fixed columns cause overflow */
+.lb-head,
+.lb-row {
+  grid-template-columns: 40px 1fr 70px 80px 70px;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .lb-head,
+  .lb-row {
+    grid-template-columns: 32px 1fr 60px 70px;
+  }
+  /* Hide last column on very small screens */
+  .lb-head > *:last-child,
+  .lb-row > *:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .lb-head,
+  .lb-row {
+    grid-template-columns: 28px 1fr 55px;
+  }
+  .lb-head > *:nth-last-child(-n+2),
+  .lb-row > *:nth-last-child(-n+2) {
+    display: none;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   6. ABOUT / STORY GRID (about.html, index.html)
+   ────────────────────────────────────────────── */
+.about-story-grid,
+.apg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 5vw, 70px);
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .about-story-grid,
+  .apg {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  /* Floating badge overflows on mobile — tuck it inside */
+  .exp-badge {
+    right: 0 !important;
+    bottom: 12px !important;
+  }
+}
+
+/* Aurora / Features 3-col grid */
+.aurora-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+@media (max-width: 900px) {
+  .aurora-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .aurora-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   7. CONTACT GRID (contact.html)
+   ────────────────────────────────────────────── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 44px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* Contact card hover slide — disable on mobile (causes overflow) */
+@media (max-width: 768px) {
+  .contact-card:hover {
+    transform: none;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   8. FOOTER (all public pages)
+   ────────────────────────────────────────────── */
+.footer-inner {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 80px;
+  padding: 52px 0 44px;
+}
+
+.footer-right {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+@media (max-width: 1024px) {
+  .footer-inner {
+    gap: 48px;
+  }
+}
+
+@media (max-width: 900px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-right {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 400px) {
+  .footer-right {
+    grid-template-columns: 1fr;
+  }
+}
+
+.footer-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 560px) {
+  .footer-bottom-bar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-legal-links {
+    justify-content: center;
+  }
+
+  .footer-socials {
+    justify-content: center;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   9. TOURNAMENT FILTER BAR (tournaments.html)
+   ────────────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  padding: 0 16px;
+}
+
+.filter-btn {
+  flex-shrink: 0;
+  min-height: 40px;
+  padding: 8px 16px;
+  touch-action: manipulation;
+}
+
+@media (max-width: 480px) {
+  .filter-btn {
+    font-size: 0.78rem;
+    padding: 7px 12px;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   10. TOURNAMENT CARDS GRID
+   ────────────────────────────────────────────── */
+.tournaments-grid,
+.tourn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 22px;
+}
+
+@media (max-width: 640px) {
+  .tournaments-grid,
+  .tourn-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tournament bracket tables — horizontal scroll wrapper */
+.bracket-wrap,
+.bracket-table {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+/* ──────────────────────────────────────────────
+   11. TEAMS GRID (teams.html, index.html)
+   ────────────────────────────────────────────── */
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 22px;
+}
+
+@media (max-width: 480px) {
+  .teams-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   12. BLOG GRID (blog.html, index.html)
+   ────────────────────────────────────────────── */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 22px;
+}
+
+@media (max-width: 480px) {
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Article modal — full screen on mobile */
+.art-panel {
+  max-height: 92vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .art-panel {
+    max-height: 95vh;
+    border-radius: 18px 18px 0 0;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   13. LOGIN & SIGNUP (login.html, signup.html)
+   ────────────────────────────────────────────── */
+.top-navbar {
+  padding: 0 clamp(12px, 3vw, 20px);
+}
+
+/* Ensure login card never wider than viewport */
+.login-card,
+.signup-card,
+.auth-card {
+  width: min(100%, 460px);
+  margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+  .login-card,
+  .signup-card,
+  .auth-card {
+    padding: 24px 18px !important;
+    border-radius: 16px !important;
+  }
+
+  .bg-swiper {
+    display: none; /* Heavy BG image — hide on small phones for perf */
+  }
+}
+
+/* Swiper nav on login/signup bg — hide on mobile */
+@media (max-width: 480px) {
+  .bg-swiper .swiper-button-next,
+  .bg-swiper .swiper-button-prev {
+    display: none !important;
+  }
+}
+
+/* Input touch-target sizing */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+select,
+textarea {
+  min-height: 44px;
+  font-size: 16px; /* Prevent iOS zoom */
+  touch-action: manipulation;
+}
+
+/* Submit / CTA buttons — full width on small phones */
+@media (max-width: 400px) {
+  .auth-submit,
+  .login-btn,
+  .signup-btn {
+    width: 100%;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   14. 404 PAGE (404.html)
+   ────────────────────────────────────────────── */
+.nf-content {
+  padding: 100px clamp(16px, 5vw, 24px) 60px;
+}
+
+.nf-number {
+  font-size: clamp(5rem, 20vw, 14rem);
+}
+
+@media (max-width: 480px) {
+  .nf-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nf-actions a,
+  .nf-actions button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   15. DASHBOARD SIDEBAR LAYOUTS
+       (player-dashboard, team-dashboard, admin-dashboard)
+   ────────────────────────────────────────────── */
+:root {
+  --sidebar: 260px;
+}
+
+.sidebar {
+  width: var(--sidebar);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+.main {
+  margin-left: var(--sidebar);
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+/* Topbar hamburger — hidden on desktop */
+.tb-hamburger {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  /* Collapse sidebar off-screen */
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 4px 0 32px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Main takes full width */
+  .main {
+    margin-left: 0;
+  }
+
+  /* Show hamburger toggle */
+  .tb-hamburger {
+    display: flex !important;
+  }
+}
+
+/* Overlay for sidebar on mobile */
+.sb-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  z-index: 99;
+  touch-action: none;
+}
+
+.sb-overlay.open {
+  display: block;
+}
+
+/* Dashboard page padding */
+.page {
+  padding: clamp(14px, 2.5vw, 22px);
+}
+
+/* Topbar search — hide on mobile (space-saving) */
+@media (max-width: 600px) {
+  .tb-search {
+    display: none !important;
+  }
+
+  .topbar {
+    padding: 0 14px;
+  }
+}
+
+/* Topbar on very small screens */
+@media (max-width: 400px) {
+  .topbar-title {
+    font-size: 11px;
+  }
+
+  .tb-actions {
+    gap: 6px;
+  }
+
+  .tb-btn {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   16. DASHBOARD STAT GRIDS (all dashboards)
+   ────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .stats-grid,
+  .mini-row,
+  .um-stats-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .analytics-grid,
+  .tourn-list-grid,
+  .report-card-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .tc-form {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-grid,
+  .mini-row,
+  .um-stats-row {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .tc-form {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .stats-grid,
+  .mini-row,
+  .um-stats-row {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   17. DASHBOARD TABLES — horizontal scroll
+   ────────────────────────────────────────────── */
+.table-wrap,
+.user-table-wrap,
+.match-table,
+.roster-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent table cells from squishing text */
+.table-wrap table,
+.user-table-wrap table {
+  min-width: 580px;
+}
+
+@media (max-width: 768px) {
+  /* Card-style rows on small screens */
+  .responsive-table thead {
+    display: none;
+  }
+
+  .responsive-table tr {
+    display: block;
+    background: var(--card, #12121e);
+    border: 1px solid var(--border, rgba(255,255,255,.08));
+    border-radius: 12px;
+    margin-bottom: 10px;
+    padding: 12px 16px;
+  }
+
+  .responsive-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border: none;
+    font-size: 13px;
+  }
+
+  .responsive-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--muted, rgba(240,240,245,.48));
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    flex-shrink: 0;
+    margin-right: 12px;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   18. WELCOME / ADMIN BANNER (dashboards)
+   ────────────────────────────────────────────── */
+.welcome,
+.admin-banner,
+.team-banner {
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.welcome h1,
+.admin-banner h1,
+.team-banner h1 {
+  font-size: clamp(15px, 2.5vw, 22px);
+}
+
+@media (max-width: 640px) {
+  .welcome,
+  .admin-banner,
+  .team-banner {
+    padding: 18px 16px;
+  }
+
+  .welcome-stats,
+  .team-stats {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .w-stat {
+    padding: 7px 12px;
+    min-width: 70px;
+  }
+
+  .team-logo {
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 18px !important;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   19. GAMING APP / UNIFIED DASHBOARD (gaming-app.html)
+   ────────────────────────────────────────────── */
+
+/* Tailwind sidebar on mobile — full overlay */
+@media (max-width: 768px) {
+  /* The gaming-app uses Tailwind so we target class patterns */
+  .lg\:flex.w-60 {
+    position: fixed !important;
+    left: -100%;
+    top: 0;
+    bottom: 0;
+    z-index: 50;
+    transition: left 0.3s ease;
+    width: 240px !important;
+  }
+
+  .lg\:flex.w-60.sidebar-open {
+    left: 0;
+  }
+
+  /* Main panel no left offset */
+  .lg\:ml-60,
+  .lg\:pl-60 {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+}
+
+/* Role tabs — scroll horizontally on small screens */
+.role-tabs-row,
+[class*="flex"][class*="gap"] > .role-tab {
+  flex-shrink: 0;
+}
+
+.tabs-scroll-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.tabs-scroll-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+/* Stat cards in gaming-app */
+@media (max-width: 640px) {
+  .grid.grid-cols-3,
+  .grid.grid-cols-4 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .grid.grid-cols-3,
+  .grid.grid-cols-4,
+  .grid.grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   20. PLAYER / TEAM DASHBOARD — specific fixes
+   ────────────────────────────────────────────── */
+
+/* Player name truncation in welcome banner */
+.player-name-inline {
+  max-width: min(58vw, 360px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+@media (max-width: 480px) {
+  .player-name-inline {
+    max-width: 140px;
+  }
+
+  .welcome h1,
+  .welcome-title {
+    font-size: 14px;
+  }
+}
+
+/* Topbar email truncation */
+.tb-email {
+  max-width: clamp(80px, 20vw, 180px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .tb-email {
+    display: none;
+  }
+}
+
+/* Topbar user section */
+.tb-user {
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+
+/* ──────────────────────────────────────────────
+   21. MODALS & POPUPS
+   ────────────────────────────────────────────── */
+.modal,
+.popup,
+[class*="-modal"],
+[class*="modal-"] {
+  max-width: min(92vw, 720px);
+  margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+  .modal-inner,
+  .popup-inner,
+  [class*="modal-body"] {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  /* Bottom-sheet style modals on mobile */
+  .modal-sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 20px 20px 0 0;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   22. BUTTONS — minimum touch targets
+   ────────────────────────────────────────────── */
+button,
+[role="button"],
+.btn,
+.btn-gold,
+.btn-red,
+.btn-purple,
+.btn-outline,
+.filter-btn,
+.nav-cta {
+  min-height: 40px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  /* Stack button groups vertically */
+  .btn-group,
+  .hero-cta-group,
+  .nf-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-group > *,
+  .hero-cta-group > * {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   23. FORMS — full-width on mobile
+   ────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  form,
+  .form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .form-row > * {
+    width: 100%;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   24. SPONSOR / LOGO STRIP (index.html)
+   ────────────────────────────────────────────── */
+.logos-track-wrapper {
+  overflow: hidden;
+}
+
+.logo-item {
+  flex-shrink: 0;
+  width: clamp(120px, 15vw, 168px);
+  height: clamp(70px, 9vw, 98px);
+}
+
+
+/* ──────────────────────────────────────────────
+   25. CAROUSELS / SWIPERS
+   ────────────────────────────────────────────── */
+.swiper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.swiper-wrapper {
+  align-items: stretch;
+}
+
+/* Game cards swiper */
+.games-swiper .swiper-slide {
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .games-swiper .swiper-button-next,
+  .games-swiper .swiper-button-prev {
+    display: none !important;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   26. SECTION PADDING — breathing room on mobile
+   ────────────────────────────────────────────── */
+section,
+.section {
+  padding-left: clamp(16px, 4vw, 24px);
+  padding-right: clamp(16px, 4vw, 24px);
+}
+
+.container {
+  padding-left: clamp(16px, 4vw, 24px);
+  padding-right: clamp(16px, 4vw, 24px);
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .about-story {
+    padding: 56px 0 70px;
+  }
+
+  .contact-section {
+    padding: 56px 0 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-story,
+  .contact-section,
+  .filter-section {
+    padding: 40px 0 50px;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   27. TYPOGRAPHY — clamp scaling
+   ────────────────────────────────────────────── */
+.section-title {
+  font-size: clamp(1.3rem, 3.5vw, 2.5rem);
+}
+
+.page-title {
+  font-size: clamp(1.8rem, 5vw, 3.8rem);
+}
+
+.section-desc {
+  font-size: clamp(0.88rem, 2.2vw, 1rem);
+}
+
+@media (max-width: 360px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   28. OVERFLOW SAFETY — catch-all containers
+   ────────────────────────────────────────────── */
+.container,
+.page,
+.main,
+.site-footer,
+.navbar,
+.page-header,
+.not-found {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Long words / URLs breaking layouts */
+p, h1, h2, h3, h4, h5, h6, a, span, td, th, li {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+
+/* ──────────────────────────────────────────────
+   29. FIXED-WIDTH ELEMENT OVERRIDES
+   ────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  /* Ensure no element is wider than viewport */
+  [style*="width: 260px"],
+  [style*="width:260px"] {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   30. ANIMATION SAFETY — reduce motion
+   ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .speed-line,
+  .ticker-track,
+  .logos-track {
+    animation: none !important;
+  }
+}
+
+/* Prevent animation from causing layout shifts on mobile */
+@media (max-width: 768px) {
+  .reveal,
+  .reveal-left,
+  .reveal-right {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

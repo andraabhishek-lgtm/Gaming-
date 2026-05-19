@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us — Gaming Stackly</title>
+    <meta name="description" content="Get in touch with Gaming Stackly. We're here for every racer.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e63946;
+            --purple: #a855f7;
+            --cyan: #06b6d4;
+            --bg-deep: #0a0a0f;
+            --bg-mid:  #0d0d14;
+            --bg-card: #111118;
+            --border:  #1e1e2a;
+            --text:    #e0e0ff;
+            --muted:   #6b7280;
+            --dim:     #9ca3af;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg-deep); color: var(--text); font-family: 'Rajdhani', 'Segoe UI', sans-serif; overflow-x: hidden; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        a { text-decoration: none; color: inherit; }
+        img { display: block; max-width: 100%; }
+
+        /* Section Headers */
+        .section-header { text-align: center; margin-bottom: 52px; }
+        .section-subtitle { display: inline-block; color: var(--primary); font-size: 0.72rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; padding-left: 28px; position: relative; font-family: 'Orbitron', monospace; }
+        .section-subtitle::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 18px; height: 2px; background: var(--primary); }
+        .section-title { font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 12px; font-family: 'Orbitron', monospace; }
+        .text-gradient { background: linear-gradient(90deg, #e63946, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .section-desc { color: var(--muted); font-size: 0.97rem; max-width: 500px; margin: 0 auto; }
+
+        /* Reveal */
+        .reveal       { opacity: 0; transform: translateY(30px); transition: opacity .65s ease, transform .65s ease; }
+        .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity .65s ease, transform .65s ease; }
+        .reveal.active, .reveal-right.active { opacity: 1; transform: translate(0); }
+        .st1{transition-delay:.1s} .st2{transition-delay:.2s} .st3{transition-delay:.3s} .st4{transition-delay:.4s}
+
+        /* ════════════ NAVBAR ════════════ */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 68px; padding: 0 40px; display: flex; align-items: center; background: rgba(10,10,15,0.82); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(168,85,247,0.07); transition: background .3s; }
+        .navbar.scrolled { background: rgba(10,10,15,0.97); border-bottom-color: rgba(168,85,247,0.18); }
+        .nav-container { width: 100%; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 10px; font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 900; color: #fff; }
+        .logo img { width: 34px; height: 34px; object-fit: contain; border-radius: 8px; }
+        .logo span { background: linear-gradient(90deg, #e63946, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-menu { list-style: none; display: flex; gap: 4px; align-items: center; }
+        .nav-menu a { color: var(--dim); font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; padding: 7px 13px; border-radius: 6px; border: 1px solid transparent; font-family: 'Orbitron', monospace; transition: all .2s; }
+        .nav-menu a:hover { color: var(--purple); border-color: rgba(168,85,247,.35); background: rgba(168,85,247,.08); box-shadow: 0 0 12px rgba(168,85,247,.2); }
+        .nav-menu a.active { color: var(--cyan); border-color: rgba(6,182,212,.3); background: rgba(6,182,212,.06); }
+        .nav-cta { background: var(--primary)!important; color: #fff!important; border-color: var(--primary)!important; }
+        .nav-cta:hover { background: #c0303c!important; color: #fff!important; }
+
+        /* Hamburger */
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; background: rgba(255,255,255,.03); transition: all .2s; }
+        .hamburger:hover { border-color: var(--purple); background: rgba(168,85,247,.08); }
+        .hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s, opacity .3s; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* Mobile Menu */
+        .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 998; background: rgba(10,10,15,.98); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); padding: 16px 20px 20px; flex-direction: column; gap: 6px; }
+        .mobile-menu.open { display: flex; animation: slideDown .22s ease; }
+        @keyframes slideDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+        .mobile-menu a { color: var(--dim); font-size: 0.75rem; font-weight: 700; padding: 11px 14px; border-radius: 8px; border: 1px solid transparent; font-family: 'Orbitron', monospace; letter-spacing: 1px; transition: all .2s; }
+        .mobile-menu a:hover { color: var(--purple); border-color: rgba(168,85,247,.3); background: rgba(168,85,247,.06); }
+        .mobile-menu a.active { color: var(--cyan); border-color: rgba(6,182,212,.25); }
+        .mobile-menu .mob-cta { background: var(--primary)!important; color: #fff!important; border-color: var(--primary)!important; text-align: center; margin-top: 6px; }
+
+        /* ════════════ PAGE HEADER ════════════ */
+        .page-header { position: relative; min-height: 360px; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; background: #0a0a0a; padding-top: 68px; }
+        .page-header-bg { position: absolute; inset: 0; background: url('images/car-racing-04.webp') center/cover no-repeat; filter: brightness(.25); transform: scale(1.05); }
+        .page-header-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(168,85,247,.06) 0%, rgba(0,0,0,.5) 100%); }
+        .page-header .container { position: relative; z-index: 2; padding: 40px 24px; }
+        .page-title { font-size: clamp(2rem, 6vw, 3.8rem); font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 18px; font-family: 'Orbitron', monospace; }
+        .breadcrumb { display: inline-flex; align-items: center; gap: 10px; color: #555566; font-size: 0.82rem; }
+        .breadcrumb a { color: var(--dim); transition: color .2s; }
+        .breadcrumb a:hover { color: var(--primary); }
+        .breadcrumb i { font-size: 0.6rem; color: #333344; }
+        .breadcrumb span { color: var(--primary); font-weight: 600; }
+
+        /* ════════════ CONTACT SECTION ════════════ */
+        .contact-section { padding: 90px 0 110px; background: var(--bg-mid); position: relative; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 44px; align-items: start; }
+
+        /* Info Cards */
+        .contact-info { display: flex; flex-direction: column; gap: 18px; }
+        .contact-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 24px 22px; display: flex; align-items: flex-start; gap: 16px; transition: transform .3s, border-color .3s, box-shadow .3s; }
+        .contact-card:hover { transform: translateX(6px); border-color: rgba(168,85,247,.4); box-shadow: 0 10px 35px rgba(168,85,247,.08); }
+        .contact-card-icon { flex-shrink: 0; width: 50px; height: 50px; border-radius: 14px; background: rgba(230,57,70,.1); border: 1px solid rgba(230,57,70,.2); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.15rem; transition: background .3s; }
+        .contact-card:hover .contact-card-icon { background: rgba(230,57,70,.18); }
+        .contact-card-body { flex: 1; min-width: 0; }
+        .contact-card-title { color: #fff; font-size: 0.92rem; font-weight: 700; margin-bottom: 7px; font-family: 'Orbitron', monospace; letter-spacing: .5px; }
+        .contact-card-info { color: var(--muted); font-size: 0.83rem; line-height: 1.75; }
+        .contact-card-info a { color: var(--muted); transition: color .2s; }
+        .contact-card-info a:hover { color: var(--primary); }
+        .card-social { display: flex; gap: 9px; margin-top: 12px; flex-wrap: wrap; }
+        .card-social a { width: 34px; height: 34px; border-radius: 10px; background: #18181e; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.85rem; transition: all .2s; }
+        .card-social a:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        /* Contact Form */
+        .contact-form-wrapper { background: var(--bg-card); border: 1px solid var(--border); border-radius: 22px; padding: 42px 40px; }
+        .contact-form-title { color: #fff; font-size: 1.5rem; font-weight: 900; margin-bottom: 7px; font-family: 'Orbitron', monospace; }
+        .contact-form-subtitle { color: var(--muted); font-size: 0.86rem; margin-bottom: 30px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
+        .form-label { color: var(--dim); font-size: 0.8rem; font-weight: 700; letter-spacing: .5px; font-family: 'Orbitron', monospace; }
+        .form-input { background: #0e0e16; border: 1px solid var(--border); border-radius: 10px; color: #fff; font-size: 0.9rem; font-family: 'Rajdhani', sans-serif; padding: 12px 15px; outline: none; transition: border-color .25s, box-shadow .25s, background .25s; width: 100%; }
+        .form-input::placeholder { color: #33334a; }
+        .form-input:focus { border-color: var(--primary); background: #111118; box-shadow: 0 0 0 3px rgba(230,57,70,.12); }
+        select.form-input { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555566' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; padding-right: 38px; }
+        select.form-input option { background: var(--bg-card); color: #fff; }
+        textarea.form-input { resize: vertical; min-height: 128px; line-height: 1.6; }
+        .btn-submit { width: 100%; padding: 14px 28px; background: var(--primary); color: #fff; border: none; border-radius: 10px; font-size: 0.92rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px; transition: all .22s; box-shadow: 0 8px 28px rgba(230,57,70,.3); margin-top: 4px; font-family: 'Orbitron', monospace; letter-spacing: 1px; }
+        .btn-submit:hover { background: #c0303c; transform: translateY(-2px); box-shadow: 0 14px 38px rgba(230,57,70,.45); }
+
+        /* ════════════ MAP SECTION ════════════ */
+        .map-section { padding: 0 0 90px; background: var(--bg-mid); }
+        .map-container { border-radius: 20px; overflow: hidden; border: 1px solid var(--border); position: relative; }
+        .map-placeholder { height: 300px; background: var(--bg-card); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; position: relative; overflow: hidden; }
+        .map-placeholder::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,.02) 39px,rgba(255,255,255,.02) 40px), repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,.02) 39px,rgba(255,255,255,.02) 40px); }
+        .map-pin { width: 60px; height: 60px; background: rgba(230,57,70,.12); border: 2px solid rgba(230,57,70,.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.5rem; position: relative; z-index: 1; animation: mapPulse 2.5s ease-in-out infinite; }
+        @keyframes mapPulse { 0%,100%{box-shadow:0 0 0 0 rgba(230,57,70,.4)} 50%{box-shadow:0 0 0 20px rgba(230,57,70,0)} }
+        .map-placeholder p { color: #44445a; font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; position: relative; z-index: 1; font-family: 'Orbitron', monospace; text-align: center; padding: 0 20px; }
+        .map-address-bar { background: var(--bg-card); border-top: 1px solid var(--border); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .map-address-bar span { color: var(--muted); font-size: 0.83rem; display: flex; align-items: center; gap: 8px; }
+        .map-address-bar i { color: var(--primary); }
+        .map-directions { display: inline-flex; align-items: center; gap: 7px; background: rgba(230,57,70,.1); border: 1px solid rgba(230,57,70,.25); color: var(--primary); font-size: 0.78rem; font-weight: 700; padding: 7px 15px; border-radius: 8px; transition: background .2s; font-family: 'Orbitron', monospace; }
+        .map-directions:hover { background: rgba(230,57,70,.2); }
+
+        /* ════════════ FAQ ════════════ */
+        .faq-section { padding: 90px 0 110px; background: var(--bg-deep); position: relative; }
+        .faq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .faq-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 28px 24px; transition: transform .3s, border-color .3s, box-shadow .3s; position: relative; overflow: hidden; }
+        .faq-item::before { content: '?'; position: absolute; top: -14px; right: 16px; font-size: 5rem; font-weight: 900; color: rgba(168,85,247,.05); line-height: 1; pointer-events: none; }
+        .faq-item:hover { transform: translateY(-6px); border-color: rgba(168,85,247,.4); box-shadow: 0 16px 40px rgba(168,85,247,.08); }
+        .faq-num { display: inline-block; background: rgba(230,57,70,.1); border: 1px solid rgba(230,57,70,.2); color: var(--primary); font-size: 0.68rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 6px; margin-bottom: 14px; font-family: 'Orbitron', monospace; }
+        .faq-item h3 { color: #fff; font-size: 0.9rem; font-weight: 700; margin-bottom: 10px; line-height: 1.4; font-family: 'Orbitron', monospace; }
+        .faq-item p  { color: var(--muted); font-size: 0.83rem; line-height: 1.7; }
+
+        /* ════════════ CTA ════════════ */
+        .cta-section { padding: 100px 0; position: relative; overflow: hidden; text-align: center; }
+        .cta-bg { position: absolute; inset: 0; background: url('images/bike-racing-09.webp') center/cover no-repeat; filter: brightness(.18); transform: scale(1.04); }
+        .cta-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(168,85,247,.07) 0%, rgba(0,0,0,.58) 100%); }
+        .cta-content { position: relative; z-index: 2; }
+        .cta-badge { display: inline-block; background: rgba(168,85,247,.12); border: 1px solid rgba(168,85,247,.3); color: #c084fc; font-size: 0.7rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; padding: 6px 18px; border-radius: 20px; margin-bottom: 22px; font-family: 'Orbitron', monospace; backdrop-filter: blur(8px); }
+        .cta-content h2 { font-size: clamp(1.8rem, 5vw, 3.2rem); font-weight: 900; color: #fff; margin-bottom: 16px; line-height: 1.15; font-family: 'Orbitron', monospace; }
+        .cta-content p { color: rgba(224,224,255,.65); font-size: 1rem; max-width: 480px; margin: 0 auto 34px; line-height: 1.7; }
+        .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .btn-cta-discord { padding: 13px 32px; background: #5865f2; color: #fff; border: none; border-radius: 10px; font-size: 0.88rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all .22s; box-shadow: 0 8px 28px rgba(88,101,242,.35); font-family: 'Orbitron', monospace; }
+        .btn-cta-discord:hover { background: #4752c4; transform: translateY(-2px); }
+        .btn-cta-twitch { padding: 13px 32px; background: #9146ff; color: #fff; border: none; border-radius: 10px; font-size: 0.88rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all .22s; font-family: 'Orbitron', monospace; }
+        .btn-cta-twitch:hover { background: #7c38d6; transform: translateY(-2px); }
+
+        /* ════════════ FOOTER ════════════ */
+        .site-footer { background: #060609; position: relative; }
+        .footer-wave-top { line-height: 0; overflow: hidden; }
+        .footer-wave-top svg { display: block; width: 100%; }
+        .footer-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .footer-inner { display: grid; grid-template-columns: 240px 1fr; gap: 72px; padding: 50px 0 42px; border-bottom: 1px solid rgba(30,30,48,.6); }
+        .footer-left { display: flex; flex-direction: column; gap: 16px; }
+        .footer-logo { display: flex; align-items: center; gap: 10px; font-family: 'Orbitron', monospace; font-size: .95rem; font-weight: 900; color: #fff; }
+        .footer-logo img { width: 32px; height: 32px; object-fit: contain; border-radius: 8px; }
+        .footer-logo span { background: linear-gradient(90deg,#e63946,#ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .footer-tagline { color: #28283a; font-size: .85rem; font-family: 'Orbitron', monospace; }
+        .footer-socials { display: flex; gap: 9px; flex-wrap: wrap; }
+        .footer-socials a { width: 36px; height: 36px; border-radius: 50%; background: rgba(17,17,24,.8); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: #44445a; font-size: .85rem; transition: all .2s; }
+        .footer-socials a:hover { background: var(--primary); color: #fff; border-color: var(--primary); transform: translateY(-3px); }
+        .footer-right { display: grid; grid-template-columns: repeat(3,1fr); gap: 36px; }
+        .footer-col-title { display: block; color: #28283a; font-size: .65rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; font-family: 'Orbitron', monospace; }
+        .footer-col ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+        .footer-col ul li a { color: #44445a; font-size: .88rem; font-weight: 600; transition: color .2s; }
+        .footer-col ul li a:hover { color: #fff; }
+        .footer-bottom-bar { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; flex-wrap: wrap; gap: 10px; }
+        .footer-bottom-bar > p { color: #28283a; font-size: .75rem; font-family: 'Orbitron', monospace; }
+        .footer-legal-links { display: flex; gap: 18px; }
+        .footer-legal-links a { color: #28283a; font-size: .75rem; font-family: 'Orbitron', monospace; transition: color .2s; }
+        .footer-legal-links a:hover { color: #fff; }
+
+        /* ════════════ RESPONSIVE ════════════ */
+        @media (max-width: 1100px) {
+            .contact-grid { grid-template-columns: 1fr 1.4fr; gap: 32px; }
+        }
+        @media (max-width: 960px) {
+            .navbar { padding: 0 24px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .contact-form-wrapper { padding: 34px 28px; }
+            .faq-grid { grid-template-columns: 1fr 1fr; }
+            .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+        }
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .hamburger { display: flex; }
+            .page-header { min-height: 280px; }
+            .contact-section { padding: 70px 0 90px; }
+            .map-section { padding: 0 0 70px; }
+            .faq-section { padding: 70px 0 90px; }
+            .cta-section { padding: 80px 0; }
+        }
+        @media (max-width: 640px) {
+            .form-row { grid-template-columns: 1fr; }
+            .contact-form-wrapper { padding: 26px 20px; }
+            .faq-grid { grid-template-columns: 1fr; }
+            .footer-right { grid-template-columns: 1fr 1fr; }
+            .footer-bottom-bar { flex-direction: column; text-align: center; }
+            .footer-legal-links { justify-content: center; }
+            .map-address-bar { flex-direction: column; align-items: flex-start; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .btn-cta-discord, .btn-cta-twitch { width: 100%; justify-content: center; }
+        }
+        @media (max-width: 480px) {
+            .navbar { padding: 0 16px; }
+            .container { padding: 0 16px; }
+            .page-title { font-size: clamp(1.6rem, 8vw, 2.4rem); }
+            .contact-card { padding: 18px 16px; }
+            .contact-card-icon { width: 42px; height: 42px; font-size: 1rem; }
+            .contact-form-wrapper { padding: 22px 16px; border-radius: 16px; }
+            .contact-form-title { font-size: 1.2rem; }
+            .faq-item { padding: 22px 18px; }
+            .footer-right { grid-template-columns: 1fr; }
+            .map-placeholder { height: 240px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════ NAVBAR ════ -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <img src="images/Logo.png" alt="Gaming Stackly Logo">
+            <span>Gaming Stackly</span>
+        </a>
+        <ul class="nav-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tournaments.html">Tournaments</a></li>
+            <li><a href="teams.html">Teams</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="tournaments.html">Tournaments</a>
+    <a href="teams.html">Teams</a>
+    <a href="blog.html">Blog</a>
+    <a href="about.html">About</a>
+    <a href="contact.html" class="active">Contact</a>
+</div>
+
+<!-- ════ PAGE HEADER ════ -->
+<section class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="page-header-overlay"></div>
+    <div class="container">
+        <div class="page-header-content reveal active">
+            <h1 class="page-title">Contact <span class="text-gradient">Us</span></h1>
+            <nav class="breadcrumb">
+                <a href="index.html">Home</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Contact</span>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<!-- ════ CONTACT SECTION ════ -->
+<section class="contact-section">
+    <div class="container">
+        <div class="contact-grid">
+
+            <!-- Info Cards -->
+            <div class="contact-info">
+                <div class="contact-card reveal st1">
+                    <div class="contact-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="contact-card-body">
+                        <h3 class="contact-card-title">Our Location</h3>
+                        <p class="contact-card-info">
+                            100 Circuit Drive<br>
+                            Las Vegas, NV 89101<br>
+                            United States
+                        </p>
+                    </div>
+                </div>
+
+                <div class="contact-card reveal st2">
+                    <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="contact-card-body">
+                        <h3 class="contact-card-title">Email Us</h3>
+                        <p class="contact-card-info">
+                            <a href="mailto:info@gamingstackly.com">info@gamingstackly.com</a><br>
+                            <a href="mailto:support@gamingstackly.com">support@gamingstackly.com</a><br>
+                            <a href="mailto:partners@gamingstackly.com">partners@gamingstackly.com</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="contact-card reveal st3">
+                    <div class="contact-card-icon"><i class="fas fa-phone"></i></div>
+                    <div class="contact-card-body">
+                        <h3 class="contact-card-title">Call Us</h3>
+                        <p class="contact-card-info">
+                            <a href="tel:+18007226464">+1-800-RACING-1</a><br>
+                            <a href="tel:+18009876543">+1-800-987-6543</a><br>
+                            Mon &ndash; Fri: 9AM &ndash; 6PM EST
+                        </p>
+                    </div>
+                </div>
+
+                <div class="contact-card reveal st4">
+                    <div class="contact-card-icon"><i class="fas fa-share-alt"></i></div>
+                    <div class="contact-card-body">
+                        <h3 class="contact-card-title">Follow Us</h3>
+                        <p class="contact-card-info">Stay in the race — join us on social media.</p>
+                        <div class="card-social">
+                            <a href="404.html" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="404.html" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="404.html" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="404.html" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                            <a href="404.html" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form-wrapper reveal-right">
+                <h2 class="contact-form-title">Send Us a Message</h2>
+                <p class="contact-form-subtitle">Have a question, partnership idea, or just want to say hi? We'd love to hear from you.</p>
+
+                <form id="contact-form" action="404.html">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-input" placeholder="e.g. Alex" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-input" placeholder="e.g. Torres" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" placeholder="you@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number <span style="color:#33334a;font-weight:400;">(optional)</span></label>
+                        <input type="tel" class="form-input" placeholder="+1 (555) 000-0000">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Subject</label>
+                        <select class="form-input" required>
+                            <option value="">Select a subject</option>
+                            <option value="tournament">Tournament &amp; Race Registration</option>
+                            <option value="team">Team Partnership</option>
+                            <option value="sponsorship">Sponsorship &amp; Branding</option>
+                            <option value="support">Technical Support</option>
+                            <option value="careers">Careers</option>
+                            <option value="media">Media &amp; Press</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-input" rows="5" placeholder="Tell us what's on your mind..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════ MAP SECTION ════ -->
+<section class="map-section">
+    <div class="container">
+        <div class="map-container reveal">
+            <div class="map-placeholder">
+                <div class="map-pin"><i class="fas fa-map-marker-alt"></i></div>
+                <p>Gaming Stackly HQ &mdash; Las Vegas, NV</p>
+            </div>
+            <div class="map-address-bar">
+                <span><i class="fas fa-location-dot"></i> 100 Circuit Drive, Las Vegas, NV 89101, United States</span>
+                <a href="404.html" class="map-directions"><i class="fas fa-route"></i> Get Directions</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════ FAQ SECTION ════ -->
+<section class="faq-section">
+    <div class="container">
+        <div class="section-header reveal">
+            <p class="section-subtitle">Got Questions?</p>
+            <h2 class="section-title">Frequently <span class="text-gradient">Asked Questions</span></h2>
+            <p class="section-desc">Everything you need to know before joining the race. Can't find your answer? Contact us directly.</p>
+        </div>
+        <div class="faq-grid">
+            <div class="faq-item reveal st1">
+                <span class="faq-num">01</span>
+                <h3>How do I register for a racing tournament?</h3>
+                <p>Head to our Tournaments page, choose your discipline, and click "Register". Fill in your driver profile and preferred class — you're on the grid in minutes.</p>
+            </div>
+            <div class="faq-item reveal st2">
+                <span class="faq-num">02</span>
+                <h3>What racing disciplines are available?</h3>
+                <p>We host Formula Esports, MotoGP Leagues, Touring Car Championships, Off-Road Rally, and open Sim-Racing cups across multiple platforms.</p>
+            </div>
+            <div class="faq-item reveal st3">
+                <span class="faq-num">03</span>
+                <h3>How are prize pools distributed?</h3>
+                <p>1st Place — 50%, 2nd Place — 25%, 3rd Place — 15%. Remaining 10% is shared among other finalists. Full breakdown shown on every tournament page.</p>
+            </div>
+            <div class="faq-item reveal st1">
+                <span class="faq-num">04</span>
+                <h3>What equipment do I need for sim-racing?</h3>
+                <p>A compatible racing wheel and pedals are recommended, but keyboard and gamepad entries are accepted in select categories for all skill levels.</p>
+            </div>
+            <div class="faq-item reveal st2">
+                <span class="faq-num">05</span>
+                <h3>Can brands become a racing sponsor?</h3>
+                <p>Absolutely. We offer trackside branding, jersey placement, broadcast integration, and exclusive title sponsorships. Email partners@gamingstackly.com to get started.</p>
+            </div>
+            <div class="faq-item reveal st3">
+                <span class="faq-num">06</span>
+                <h3>How do I report a fair play violation?</h3>
+                <p>Email support@gamingstackly.com with match details, timestamps, and any recordings. Our integrity team reviews all reports within 24 hours.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════ CTA ════ -->
+<section class="cta-section">
+    <div class="cta-bg"></div>
+    <div class="cta-overlay"></div>
+    <div class="cta-content container reveal">
+        <div class="cta-badge">&#9655; Join the Community</div>
+        <h2>Connect With <span class="text-gradient">500K+ Racers</span></h2>
+        <p>Jump into our Discord for live race events, driver meetups, setup tips, and exclusive giveaways — all in real time.</p>
+        <div class="cta-buttons">
+            <a href="404.html" class="btn-cta-discord"><i class="fab fa-discord"></i> Join Discord</a>
+            <a href="404.html" class="btn-cta-twitch"><i class="fab fa-twitch"></i> Watch on Twitch</a>
+        </div>
+    </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer class="site-footer">
+    <div class="footer-wave-top" style="background:var(--bg-deep);">
+        <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0 70V30C360 5 720 0 1080 20C1260 30 1380 38 1440 40V70H0Z" fill="#060609"/>
+        </svg>
+    </div>
+    <div class="footer-container">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <a href="index.html" class="footer-logo">
+                    <img src="images/Logo.png" alt="Gaming Stackly Logo">
+                    <span>Gaming Stackly</span>
+                </a>
+                <p class="footer-tagline">Let the Race Begin.</p>
+                <div class="footer-socials">
+                    <a href="404.html" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="404.html" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="404.html" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="404.html" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="404.html" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-col">
+                    <span class="footer-col-title">Popular</span>
+                    <ul>
+                        <li><a href="tournaments.html">Car Racing</a></li>
+                        <li><a href="tournaments.html">Bike Racing</a></li>
+                        <li><a href="tournaments.html">Formula Esports</a></li>
+                        <li><a href="tournaments.html">Sim Racing Cups</a></li>
+                        <li><a href="tournaments.html">Off-Road Rally</a></li>
+                        <li><a href="tournaments.html">All Tournaments</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <span class="footer-col-title">Help &amp; Support</span>
+                    <ul>
+                        <li><a href="contact.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="404.html">Privacy Center</a></li>
+                        <li><a href="404.html">Terms of Service</a></li>
+                        <li><a href="contact.html">Support Ticket</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <span class="footer-col-title">Get to Know Us</span>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="teams.html">Teams</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="404.html">Careers</a></li>
+                        <li><a href="404.html">Press &amp; Media</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-bar">
+            <p>&copy; 2026 Gaming Stackly. All rights reserved.</p>
+            <div class="footer-legal-links">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            hamburger.classList.remove('open');
+            mobileMenu.classList.remove('open');
+        });
+    });
+
+    // Reveal animations
+    const revealEls = document.querySelectorAll('.reveal, .reveal-right');
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

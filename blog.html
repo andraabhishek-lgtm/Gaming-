@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Gaming Stackly</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ════ VARS ════ */
+        :root { --primary: #e63946; --purple: #a855f7; --cyan: #06b6d4; --bg-deep: #0a0a0f; --border: #1e1e2a; --dim: #9ca3af; }
+        /* ════ NAVBAR ════ */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 68px; padding: 0 40px; display: flex; align-items: center; background: rgba(10,10,15,0.82); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(168,85,247,0.07); transition: background .3s; }
+        .navbar.scrolled { background: rgba(10,10,15,0.97); border-bottom-color: rgba(168,85,247,0.18); }
+        .nav-container { width: 100%; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 10px; font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 900; color: #fff; text-decoration: none; }
+        .logo img { width: 34px; height: 34px; object-fit: contain; border-radius: 8px; }
+        .logo span { background: linear-gradient(90deg, #e63946, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-menu { list-style: none; display: flex; gap: 4px; align-items: center; }
+        .nav-menu a { color: var(--dim); font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; padding: 7px 13px; border-radius: 6px; border: 1px solid transparent; font-family: 'Orbitron', monospace; transition: all .2s; text-decoration: none; }
+        .nav-menu a::after { display: none; }
+        .nav-menu a:hover { color: var(--purple); border-color: rgba(168,85,247,.35); background: rgba(168,85,247,.08); box-shadow: 0 0 12px rgba(168,85,247,.2); }
+        .nav-menu a.active { color: var(--cyan); border-color: rgba(6,182,212,.3); background: rgba(6,182,212,.06); }
+        .nav-cta { background: var(--primary)!important; color: #fff!important; border-color: var(--primary)!important; }
+        .nav-cta:hover { background: #c0303c!important; color: #fff!important; box-shadow: 0 4px 16px rgba(230,57,70,.4)!important; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; background: rgba(255,255,255,.03); transition: all .2s; }
+        .hamburger:hover { border-color: var(--purple); background: rgba(168,85,247,.08); }
+        .hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s, opacity .3s; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 998; background: rgba(10,10,15,.98); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); padding: 16px 20px 20px; flex-direction: column; gap: 6px; }
+        .mobile-menu.open { display: flex; animation: slideDown .22s ease; }
+        @keyframes slideDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+        .mobile-menu a { color: var(--dim); font-size: 0.75rem; font-weight: 700; padding: 11px 14px; border-radius: 8px; border: 1px solid transparent; font-family: 'Orbitron', monospace; letter-spacing: 1px; transition: all .2s; text-decoration: none; display: block; }
+        .mobile-menu a:hover { color: var(--purple); border-color: rgba(168,85,247,.3); background: rgba(168,85,247,.06); }
+        .mobile-menu a.active { color: var(--cyan); border-color: rgba(6,182,212,.25); }
+        .mobile-menu .mob-cta { background: var(--primary)!important; color: #fff!important; border-color: var(--primary)!important; text-align: center; margin-top: 6px; }
+        @media (max-width: 768px) { .hamburger { display: flex; } .nav-menu { display: none; } }
+
+        .site-footer { background: #080808; position: relative; }
+        .footer-wave-top { line-height: 0; overflow: hidden; }
+        .footer-wave-top svg { display: block; width: 100%; }
+        .footer-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .footer-inner { display: grid; grid-template-columns: 260px 1fr; gap: 80px; padding: 52px 0 44px; border-bottom: 1px solid #141414; }
+        .footer-left { display: flex; flex-direction: column; gap: 18px; }
+        .footer-logo { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 800; color: #fff; text-decoration: none; }
+        .footer-logo img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; }
+        .footer-tagline { color: #555; font-size: 0.9rem; }
+        .footer-socials { display: flex; gap: 10px; flex-wrap: wrap; }
+        .footer-socials a { width: 40px; height: 40px; border-radius: 50%; background: #141414; border: 1px solid #222; display: flex; align-items: center; justify-content: center; color: #888; font-size: 0.9rem; text-decoration: none; transition: background .2s, color .2s, border-color .2s, transform .2s; }
+        .footer-socials a:hover { background: #e63946; color: #fff; border-color: #e63946; transform: translateY(-3px); }
+        .footer-right { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; }
+        .footer-col-title { display: block; color: #555; font-size: .72rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 22px; }
+        .footer-col ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+        .footer-col ul li a { color: #ccc; font-size: .95rem; font-weight: 600; text-decoration: none; transition: color .2s; }
+        .footer-col ul li a:hover { color: #e63946; }
+        .footer-bottom-bar { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; flex-wrap: wrap; gap: 10px; }
+        .footer-bottom-bar > p { color: #444; font-size: .82rem; }
+        .footer-legal-links { display: flex; gap: 20px; }
+        .footer-legal-links a { color: #444; font-size: .82rem; text-decoration: none; transition: color .2s; }
+        .footer-legal-links a:hover { color: #fff; }
+        @media (max-width: 900px) { .footer-inner { grid-template-columns: 1fr; gap: 36px; } }
+        @media (max-width: 560px) { .footer-right { grid-template-columns: 1fr 1fr; } .footer-bottom-bar { flex-direction: column; text-align: center; } }
+
+        /* ═══════════════ READ MORE LINK FIX ═══════════════ */
+        .read-more {
+            display: inline-flex; align-items: center; gap: 4px;
+            color: #e63946; font-weight: 700; font-size: 0.9rem;
+            text-decoration: none; cursor: pointer;
+            transition: color 0.2s, gap 0.2s, letter-spacing 0.2s;
+            position: relative; z-index: 2;
+            touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+            pointer-events: all;
+        }
+        .read-more:hover { color: #ff6b6b; gap: 8px; }
+        .blog-post { cursor: pointer; position: relative; }
+
+        /* ═══════════════ ARTICLE MODAL ═══════════════ */
+        .art-modal {
+            position: fixed; inset: 0; z-index: 4000;
+            display: flex; align-items: flex-end;
+            pointer-events: none; visibility: hidden;
+        }
+        .art-modal.open { pointer-events: all; visibility: visible; }
+        .art-modal-overlay {
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,0.78);
+            opacity: 0; transition: opacity 0.32s ease;
+            cursor: pointer;
+        }
+        .art-modal.open .art-modal-overlay { opacity: 1; }
+        .art-panel {
+            position: relative; width: 100%;
+            background: #0e0e18;
+            border-radius: 22px 22px 0 0;
+            overflow: hidden;
+            transform: translateY(100%);
+            transition: transform 0.44s cubic-bezier(0.22,1,0.36,1);
+            display: flex; flex-direction: column;
+            max-height: 94vh;
+        }
+        .art-modal.open .art-panel { transform: translateY(0); }
+
+        /* Desktop: centered panel */
+        @media (min-width: 768px) {
+            .art-modal { align-items: center; justify-content: center; }
+            .art-panel {
+                width: 90%; max-width: 860px;
+                border-radius: 20px;
+                transform: translateY(32px) scale(0.97);
+                opacity: 0;
+                transition: transform 0.44s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease;
+            }
+            .art-modal.open .art-panel { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .art-scroll {
+            overflow-y: auto; overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch; max-height: 94vh;
+        }
+
+        /* Hero */
+        .art-hero { position: relative; height: 280px; overflow: hidden; flex-shrink: 0; }
+        .art-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .art-hero-grad {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(14,14,24,0.97) 100%);
+        }
+        .art-hero-btns {
+            position: absolute; top: 16px; left: 16px; right: 16px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 5;
+        }
+        .art-btn-back, .art-btn-share {
+            display: flex; align-items: center; gap: 6px;
+            padding: 8px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(10,10,20,0.75); backdrop-filter: blur(14px);
+            color: #fff; font-family: 'Rajdhani', sans-serif;
+            font-size: 0.88rem; font-weight: 700; cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, transform 0.18s;
+            touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+        }
+        .art-btn-back:hover { background: rgba(230,57,70,0.22); border-color: rgba(230,57,70,0.5); transform: translateX(-2px); }
+        .art-btn-share { background: rgba(230,57,70,0.18); border-color: rgba(230,57,70,0.38); }
+        .art-btn-share:hover { background: rgba(230,57,70,0.32); transform: translateY(-1px); }
+
+        /* Content */
+        .art-content { padding: 24px 32px 48px; max-width: 740px; margin: 0 auto; }
+        .art-meta-row {
+            display: flex; align-items: center; flex-wrap: wrap;
+            gap: 10px; margin-bottom: 14px;
+        }
+        .art-cat-badge {
+            padding: 4px 13px; border-radius: 20px;
+            background: rgba(230,57,70,0.14); border: 1px solid rgba(230,57,70,0.32);
+            color: #e63946; font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 1.2px; text-transform: uppercase;
+        }
+        .art-date-txt, .art-read-txt {
+            color: #555; font-size: 0.8rem; font-weight: 600;
+        }
+        .art-read-txt::before { content: "·"; margin-right: 6px; }
+        .art-title {
+            font-family: 'Orbitron', monospace; font-weight: 900;
+            font-size: clamp(1.25rem, 3vw, 1.85rem);
+            color: #fff; line-height: 1.3; margin-bottom: 18px; letter-spacing: 0.02em;
+        }
+        .art-author-row {
+            display: flex; align-items: center; gap: 12px;
+            padding-bottom: 22px; margin-bottom: 22px;
+            border-bottom: 1px solid #1a1a28;
+        }
+        .art-avatar {
+            width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+            background: linear-gradient(135deg, #e63946, #a855f7);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron', monospace; font-size: 0.75rem; font-weight: 700; color: #fff;
+        }
+        .art-author-name { display: block; color: #ddd; font-weight: 700; font-size: 0.88rem; }
+        .art-author-sub { display: block; color: #555; font-size: 0.75rem; }
+
+        /* Body */
+        .art-body { color: #aaa; font-size: 0.97rem; line-height: 1.82; margin-bottom: 28px; }
+        .art-body p { margin-bottom: 16px; }
+        .art-body h3 {
+            font-family: 'Orbitron', monospace; font-size: 0.98rem; font-weight: 700;
+            color: #fff; margin: 26px 0 12px;
+            padding-left: 13px; border-left: 3px solid #e63946;
+        }
+        .art-body ul { margin: 0 0 16px 18px; }
+        .art-body ul li { margin-bottom: 8px; line-height: 1.65; }
+        .art-body .tip-box {
+            background: rgba(230,57,70,0.07); border: 1px solid rgba(230,57,70,0.2);
+            border-radius: 12px; padding: 16px 20px; margin: 22px 0;
+        }
+        .art-body .tip-box strong {
+            display: block; color: #e63946; font-size: 0.72rem;
+            letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 7px;
+        }
+
+        /* Tags */
+        .art-tags {
+            display: flex; flex-wrap: wrap; gap: 7px;
+            padding-top: 22px; margin-bottom: 36px;
+            border-top: 1px solid #1a1a28;
+        }
+        .art-tag {
+            padding: 4px 13px; background: #141422;
+            border: 1px solid #22223a; border-radius: 20px;
+            color: #666; font-size: 0.75rem; font-weight: 600;
+            cursor: default; transition: border-color 0.2s, color 0.2s;
+        }
+        .art-tag:hover { border-color: #e63946; color: #e63946; }
+
+        /* Related */
+        .art-related-title {
+            font-family: 'Orbitron', monospace; font-size: 0.92rem; font-weight: 700;
+            color: #fff; margin-bottom: 16px; letter-spacing: 0.05em;
+        }
+        .art-related-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+        .art-rel-card {
+            background: #161624; border: 1px solid #222236;
+            border-radius: 12px; overflow: hidden;
+            cursor: pointer; transition: border-color 0.2s, transform 0.2s;
+            touch-action: manipulation;
+        }
+        .art-rel-card:hover { border-color: #e63946; transform: translateY(-3px); }
+        .art-rel-card img { width: 100%; height: 88px; object-fit: cover; display: block; }
+        .art-rel-info { padding: 9px 11px 11px; }
+        .art-rel-cat { display: block; color: #e63946; font-size: 0.67rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+        .art-rel-name { color: #bbb; font-size: 0.78rem; font-weight: 600; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        @media (max-width: 600px) {
+            .art-content { padding: 18px 16px 40px; }
+            .art-hero { height: 200px; }
+            .art-related-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 380px) { .art-related-grid { grid-template-columns: 1fr; } }
+        @media (min-width: 768px) { .art-hero { height: 320px; } }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/Logo.png" alt="Gaming Stackly Logo">
+                <span>Gaming Stackly</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tournaments.html">Tournaments</a></li>
+                <li><a href="teams.html">Teams</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="tournaments.html" class="nav-cta">Join Now</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="tournaments.html">Tournaments</a>
+        <a href="teams.html">Teams</a>
+        <a href="blog.html" class="active">Blog</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="tournaments.html" class="mob-cta">Join Now</a>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Car & Bike Gaming Blog</h1>
+            <p>Racing news, speed guides, tournaments, and tuning ideas for competitive drivers and riders</p>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <div class="container">
+            <div class="blog-filters">
+                <input type="text" id="searchBlog" placeholder="Search racing articles...">
+                <select id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="car">Car Games</option>
+                    <option value="bike">Bike Games</option>
+                    <option value="guides">Racing Guides</option>
+                    <option value="news">News</option>
+                </select>
+            </div>
+
+            <div class="blog-grid">
+                <article class="blog-post" data-category="car"><img src="images/car-racing-01.webp" alt="Neon car racing game"><div class="post-meta"><span class="post-date">May 18, 2026</span><span class="post-category">Car Games</span></div><h3>Turbo Circuit Championship Opens With Night Runs</h3><p>High-speed car racing takes center stage with neon street tracks, clean overtakes, and leaderboard battles built for precision drivers.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="bike"><img src="images/bike-racing-01.webp" alt="Neon bike racing game"><div class="post-meta"><span class="post-date">May 17, 2026</span><span class="post-category">Bike Games</span></div><h3>Bike Racing Mastery: Lean, Brake, Launch</h3><p>Competitive bike gaming rewards fearless corner entries and smart throttle control. These techniques help riders stay fast without losing grip.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="guides"><img src="images/car-racing-02.webp" alt="Car racing drift guide"><div class="post-meta"><span class="post-date">May 16, 2026</span><span class="post-category">Racing Guides</span></div><h3>Drift Lines That Save Seconds</h3><p>Learn how late apexes, short corrections, and stable exits can turn a messy drift into a repeatable racing advantage.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="news"><img src="images/bike-racing-02.webp" alt="Bike tournament update"><div class="post-meta"><span class="post-date">May 15, 2026</span><span class="post-category">News</span></div><h3>Extreme Moto Cup Adds Canyon Sprint Mode</h3><p>The newest bike racing event adds tighter roads, heavier boost risk, and more room for clutch last-corner passes.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="car"><img src="images/car-racing-03.webp" alt="Car racing speed challenge"><div class="post-meta"><span class="post-date">May 14, 2026</span><span class="post-category">Car Games</span></div><h3>Street Sprint Builds for Maximum Boost</h3><p>Balance acceleration and handling to hold speed through traffic-heavy circuits without burning boost at the wrong moment.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="bike"><img src="images/bike-racing-03.webp" alt="Bike racing speed challenge"><div class="post-meta"><span class="post-date">May 13, 2026</span><span class="post-category">Bike Games</span></div><h3>Two-Wheel Time Trials Get Ranked Support</h3><p>Bike racers can now chase official splits, compare sector pace, and practice perfect starts across competitive time trial maps.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="car"><img src="images/car-racing-04.webp" alt="Arcade car racing game"><div class="post-meta"><span class="post-date">May 12, 2026</span><span class="post-category">Car Games</span></div><h3>Arcade Handling for Close Combat Racing</h3><p>Sharp steering, readable braking zones, and controlled bumps make arcade car racing feel fast without becoming random.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="bike"><img src="images/bike-racing-04.webp" alt="Arcade bike racing game"><div class="post-meta"><span class="post-date">May 11, 2026</span><span class="post-category">Bike Games</span></div><h3>Bike Chase Modes Built for Aggressive Riders</h3><p>Chase events reward brave passing and fast recovery, making every bike race feel like a duel at full throttle.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="guides"><img src="images/car-racing-05.webp" alt="Racing car tuning guide"><div class="post-meta"><span class="post-date">May 10, 2026</span><span class="post-category">Racing Guides</span></div><h3>Beginner Tuning: Grip Before Power</h3><p>Raw speed looks exciting, but stable grip and predictable braking help new racers finish cleaner laps and win more matches.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="bike"><img src="images/bike-racing-05.webp" alt="Bike racing stunt event"><div class="post-meta"><span class="post-date">May 9, 2026</span><span class="post-category">Bike Games</span></div><h3>Stunt Racing Events With Real Stakes</h3><p>Trick chains, ramp timing, and clean landings combine with racing pace for bike events that test control under pressure.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="car"><img src="images/car-racing-06.webp" alt="Car racing tournament"><div class="post-meta"><span class="post-date">May 8, 2026</span><span class="post-category">Car Games</span></div><h3>Neon Grand Prix Qualifiers Begin</h3><p>Drivers are battling through knockout heats where one missed corner can drop a podium favorite into elimination.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="guides"><img src="images/bike-racing-06.webp" alt="Bike racing braking guide"><div class="post-meta"><span class="post-date">May 7, 2026</span><span class="post-category">Racing Guides</span></div><h3>Trail Braking for Bike Games</h3><p>Small brake inputs while leaning can tighten your line, keep the bike planted, and open better exits.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="car"><img src="images/car-racing-07.webp" alt="Car racing night map"><div class="post-meta"><span class="post-date">May 6, 2026</span><span class="post-category">Car Games</span></div><h3>Night Maps That Reward Track Memory</h3><p>Low-visibility racing highlights players who know every curb, tunnel, and boost pad before the lights blur.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="bike"><img src="images/bike-racing-07.webp" alt="Bike racing night map"><div class="post-meta"><span class="post-date">May 5, 2026</span><span class="post-category">Bike Games</span></div><h3>Moto Rivals: Drafting on Long Straights</h3><p>Drafting gives bike racers a comeback tool, but breaking out too late can cost the finish line sprint.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="news"><img src="images/car-racing-08.webp" alt="Car racing update"><div class="post-meta"><span class="post-date">May 4, 2026</span><span class="post-category">News</span></div><h3>Car Physics Update Improves Collision Recovery</h3><p>The latest racing update reduces spinouts from light contact while keeping hard crashes punishing in competitive rooms.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="bike"><img src="images/bike-racing-08.webp" alt="Bike racing tournament"><div class="post-meta"><span class="post-date">May 3, 2026</span><span class="post-category">Bike Games</span></div><h3>Rider League Expands to Duo Events</h3><p>Bike teams can now combine drafting, blocking, and split-route strategy in faster two-player tournament formats.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="car"><img src="images/car-racing-09.webp" alt="Car racing city track"><div class="post-meta"><span class="post-date">May 2, 2026</span><span class="post-category">Car Games</span></div><h3>City Tracks Need Patience, Not Panic</h3><p>Walls punish overdriving, so the best car racers focus on exits, rhythm, and clean defensive positioning.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="guides"><img src="images/bike-racing-09.webp" alt="Bike racing setup guide"><div class="post-meta"><span class="post-date">May 1, 2026</span><span class="post-category">Racing Guides</span></div><h3>Controller Settings for Bike Racing</h3><p>Dead zones, trigger sensitivity, and camera distance can make leaning feel smoother during long competitive sessions.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="car"><img src="images/car-racing-10.webp" alt="Car racing endurance mode"><div class="post-meta"><span class="post-date">April 30, 2026</span><span class="post-category">Car Games</span></div><h3>Endurance Races Test Focus and Fuel</h3><p>Long car races reward calm pacing, efficient lines, and smart pit timing more than one-lap aggression.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="bike"><img src="images/bike-racing-10.webp" alt="Bike racing endurance mode"><div class="post-meta"><span class="post-date">April 29, 2026</span><span class="post-category">Bike Games</span></div><h3>Superbike Endurance Arrives This Week</h3><p>Riders need tire care, clean passing, and consistent lap rhythm to survive longer superbike formats.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="news"><img src="images/car-racing-11.webp" alt="Car racing esports news"><div class="post-meta"><span class="post-date">April 28, 2026</span><span class="post-category">News</span></div><h3>Racing Esports Prize Pool Grows</h3><p>New sponsors are pushing car and bike gaming into larger brackets with more frequent community qualifiers.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="bike"><img src="images/bike-racing-11.webp" alt="Bike racing desert track"><div class="post-meta"><span class="post-date">April 27, 2026</span><span class="post-category">Bike Games</span></div><h3>Desert Bike Tracks Add Loose-Surface Racing</h3><p>Sand sections change braking points and force riders to manage slides without losing too much drive.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="car"><img src="images/car-racing-12.webp" alt="Car racing garage builds"><div class="post-meta"><span class="post-date">April 26, 2026</span><span class="post-category">Car Games</span></div><h3>Garage Builds for Sprint Lobbies</h3><p>Short races favor launch speed, lighter handling, and quick boost recovery over heavy top-speed setups.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="guides"><img src="images/bike-racing-12.webp" alt="Bike racing overtaking guide"><div class="post-meta"><span class="post-date">April 25, 2026</span><span class="post-category">Racing Guides</span></div><h3>Clean Overtakes on Bikes</h3><p>Show the pass early, hold your lane, and avoid risky contact when the racing line narrows.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="car"><img src="images/car-racing-13.webp" alt="Car racing rally mode"><div class="post-meta"><span class="post-date">April 24, 2026</span><span class="post-category">Car Games</span></div><h3>Rally Stages Bring Dirt to the Grid</h3><p>Mixed-surface car racing changes everything: braking, steering, and boost use all need a softer touch.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="bike"><img src="images/bike-racing-13.webp" alt="Bike racing rally mode"><div class="post-meta"><span class="post-date">April 23, 2026</span><span class="post-category">Bike Games</span></div><h3>Moto Rally Challenges Reward Balance</h3><p>Bike rally events are less about maximum speed and more about keeping momentum through unstable surfaces.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="news"><img src="images/car-racing-14.webp" alt="Car racing leaderboard"><div class="post-meta"><span class="post-date">April 22, 2026</span><span class="post-category">News</span></div><h3>Global Racing Leaderboards Reset</h3><p>The seasonal reset gives new drivers and riders a fresh chance to climb into elite racing divisions.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="bike"><img src="images/bike-racing-14.webp" alt="Bike racing leaderboard"><div class="post-meta"><span class="post-date">April 21, 2026</span><span class="post-category">Bike Games</span></div><h3>Rider Rankings Highlight Consistency</h3><p>The fastest bike players are not only winning finals, they are posting stable lap deltas every round.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="car"><img src="images/car-racing-15.webp" alt="Car racing final lap"><div class="post-meta"><span class="post-date">April 20, 2026</span><span class="post-category">Car Games</span></div><h3>Final-Lap Pressure in Car Racing</h3><p>Defensive lines, boost patience, and braking discipline decide more final laps than risky dive bombs.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+                <article class="blog-post" data-category="bike"><img src="images/bike-racing-15.webp" alt="Bike racing final lap"><div class="post-meta"><span class="post-date">April 19, 2026</span><span class="post-category">Bike Games</span></div><h3>Last-Corner Bike Racing Wins</h3><p>Late braking can win the race, but only if the rider keeps enough angle control to launch cleanly.</p><a href="#" class="read-more">Read More &rarr;</a></article>
+            </div>
+
+            <div class="pagination">
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">Next &rarr;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Stay Updated</h2>
+            <p>Subscribe to our newsletter for the latest gaming news and exclusive offers</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Article Modal -->
+    <div id="artModal" class="art-modal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="art-modal-overlay" id="artOverlay"></div>
+        <div class="art-panel" id="artPanel">
+            <div class="art-scroll" id="artScroll">
+                <div class="art-hero">
+                    <img id="artImg" src="" alt=""/>
+                    <div class="art-hero-grad"></div>
+                    <div class="art-hero-btns">
+                        <button class="art-btn-back" id="artBackBtn" aria-label="Close article">
+                            ← Back
+                        </button>
+                        <button class="art-btn-share" id="artShareBtn" aria-label="Share article">
+                            &#8679; Share
+                        </button>
+                    </div>
+                </div>
+                <div class="art-content">
+                    <div class="art-meta-row">
+                        <span class="art-cat-badge" id="artCat"></span>
+                        <span class="art-date-txt" id="artDate"></span>
+                        <span class="art-read-txt" id="artRead"></span>
+                    </div>
+                    <h1 class="art-title" id="artTitle"></h1>
+                    <div class="art-author-row">
+                        <div class="art-avatar" id="artAvatar"></div>
+                        <div>
+                            <span class="art-author-name" id="artAuthor"></span>
+                            <span class="art-author-sub">Gaming Stackly Staff</span>
+                        </div>
+                    </div>
+                    <div class="art-body" id="artBody"></div>
+                    <div class="art-tags" id="artTags"></div>
+                    <div>
+                        <p class="art-related-title">Related Articles</p>
+                        <div class="art-related-grid" id="artRelated"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-wave-top" style="background:#111;">
+            <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0 70V30C360 5 720 0 1080 20C1260 30 1380 38 1440 40V70H0Z" fill="#080808"/></svg>
+        </div>
+        <div class="footer-container">
+            <div class="footer-inner">
+                <div class="footer-left">
+                    <a href="index.html" class="footer-logo"><img src="images/Logo.png" alt="Gaming Stackly Logo"><span>Gaming Stackly</span></a>
+                    <p class="footer-tagline">Let the Race Begin.</p>
+                    <div class="footer-socials">
+                        <a href="404.html" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="404.html" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="404.html" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="404.html" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="404.html" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-right">
+                    <div class="footer-col">
+                        <span class="footer-col-title">Popular</span>
+                        <ul>
+                            <li><a href="tournaments.html">Car Racing</a></li>
+                            <li><a href="tournaments.html">Bike Racing</a></li>
+                            <li><a href="tournaments.html">Formula Esports</a></li>
+                            <li><a href="tournaments.html">Sim Racing Cups</a></li>
+                            <li><a href="tournaments.html">Off-Road Rally</a></li>
+                            <li><a href="tournaments.html">All Tournaments</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <span class="footer-col-title">Help &amp; Support</span>
+                        <ul>
+                            <li><a href="contact.html">FAQ</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="404.html">Privacy Center</a></li>
+                            <li><a href="404.html">Terms of Service</a></li>
+                            <li><a href="contact.html">Support Ticket</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <span class="footer-col-title">Get to Know Us</span>
+                        <ul>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="teams.html">Teams</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="404.html">Careers</a></li>
+                            <li><a href="404.html">Press &amp; Media</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom-bar">
+                <p>&copy; 2026 Gaming Stackly. All rights reserved.</p>
+                <div class="footer-legal-links">
+                    <a href="404.html">Privacy Policy</a>
+                    <a href="404.html">Terms of Service</a>
+                    <a href="404.html">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        /* ── Navbar ── */
+        var nb = document.getElementById('navbar');
+        if (nb) window.addEventListener('scroll', function () { nb.classList.toggle('scrolled', window.scrollY > 60); }, { passive: true });
+        var hb = document.getElementById('hamburger'), mm = document.getElementById('mobileMenu');
+        if (hb && mm) {
+            hb.addEventListener('click', function () { hb.classList.toggle('open'); mm.classList.toggle('open'); });
+            mm.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { hb.classList.remove('open'); mm.classList.remove('open'); }); });
+        }
+
+        /* ══════════════════════════════════
+           BLOG DATA — full article content
+        ══════════════════════════════════ */
+        var POSTS = [
+            { title: "Turbo Circuit Championship Opens With Night Runs", cat: "Car Games", catKey: "car", date: "May 18, 2026", img: "images/car-racing-01.webp", author: "Alex Renn", read: "5 min read", tags: ["Car Racing","Championship","Night Racing","Esports"],
+              body: '<p>The Turbo Circuit Championship has kicked off its 2026 season with a bold new format: night runs through neon-lit city circuits. For competitive car racers, the shift to night maps changes everything — from visibility windows to braking zones.</p><h3>Why Night Racing Changes Strategy</h3><p>Under artificial lighting, depth perception narrows and corner entry cues shift. Experienced drivers adapt by relying on track memory over visual reference points. The walls glow just enough to telegraph proximity, but late-braking entries become riskier when the runoff zones blend into shadow.</p><p>In the first qualifier, the top five positions were all held by players who consistently hit late apexes without overcooking into the barriers. The neon reflections actually help with wet sections — tire spray catches light and acts as an early warning for grip loss.</p><h3>What the Top Drivers Are Doing</h3><ul><li>Using fixed reference markers instead of track edge color</li><li>Reducing braking zones by 8–12% compared to day runs</li><li>Running softer tire compounds for faster initial response</li><li>Prioritizing clean exits over aggressive entries</li></ul><div class="tip-box"><strong>Pro Tip</strong>The start of each night race offers the cleanest air. Push hard through the opening three sectors before tire degradation closes the gap behind you.</div><p>The championship format runs knockout heats across eight city circuits. Points carry across all sessions, meaning consistency matters more than individual stage domination.</p><h3>What to Watch in Round Two</h3><p>Round two adds a tunnel section that kills external light for 4.2 seconds. Players who have mapped the tunnel corners will have a decisive advantage. Expect more conservative setups to shine there.</p>' },
+            { title: "Bike Racing Mastery: Lean, Brake, Launch", cat: "Bike Games", catKey: "bike", date: "May 17, 2026", img: "images/bike-racing-01.webp", author: "Priya Voss", read: "6 min read", tags: ["Bike Racing","Technique","Throttle Control","Mastery"],
+              body: '<p>Competitive bike gaming separates itself from car racing in one key way: the rider\'s body is part of the physics. In most modern titles, lean angle, brake pressure, and launch timing form a triangle that determines whether you\'re winning or watching the pack pull away.</p><h3>The Lean-Brake Relationship</h3><p>Trail braking into corners while maintaining lean angle is the highest-ceiling skill in bike racing. Done correctly, it pushes the front tire into the asphalt and allows tighter lines. Done incorrectly, it washes the front and drops you instantly.</p><p>The safest way to learn is to work backwards: nail your exit speed first. A messy entry with a clean exit almost always beats a perfect entry with a bad exit.</p><h3>Launch Control Optimization</h3><p>Most titles include a launch control mechanic, but fewer players understand the RPM window. Holding revs 200–400 below the redline on launch gives more traction than maximum revs, particularly on slight uphill gradients.</p><ul><li>Watch for wheelspin indicators in the telemetry HUD</li><li>Bias your weight forward during acceleration phases</li><li>Avoid full throttle until the bike is fully upright post-corner</li><li>Save boost for straights longer than 8 seconds</li></ul><div class="tip-box"><strong>Core Principle</strong>Lean angle and brake pressure work inversely. As lean increases, brake input must decrease. Violating this causes the most crashes in mid-corner situations.</div><h3>Building Consistency Under Pressure</h3><p>Ranked play adds pressure that changes physical inputs. The best way to train consistency is deliberate repetition of time trials until the lines become automatic, not decisions.</p>' },
+            { title: "Drift Lines That Save Seconds", cat: "Racing Guides", catKey: "guides", date: "May 16, 2026", img: "images/car-racing-02.webp", author: "James Turlock", read: "7 min read", tags: ["Drifting","Line Theory","Lap Time","Technique"],
+              body: '<p>Drifting in competitive gaming is often misunderstood. At the elite level, it is a precisely calculated tool for maintaining speed through corners that would otherwise require heavy braking. The difference is in where the drift starts and ends.</p><h3>Late Apex vs Early Apex Drifts</h3><p>An early apex drift looks fast because the car gets close to the inside early. But it forces a wide exit, where wall proximity kills speed. A late apex drift sacrifices entry angle for a cleaner exit line — the straight that follows is worth far more time than the corner itself.</p><p>A drift that exits cleanly at 80% of corner speed is worth 0.3–0.5 seconds more per lap than a flashy entry with a slow exit. Over 10 laps, that adds up to podium margins.</p><h3>Short Corrections Are the Secret</h3><p>Overcorrecting a drift wastes angle and scrubs speed. The best drifters apply the smallest steering input needed to maintain the angle.</p><ul><li>Keep corrections under 15 degrees whenever possible</li><li>A drift angle over 45 degrees is too committed</li><li>Throttle consistency matters more than steering in mid-corner</li><li>A stable drift angle is more valuable than a large one</li></ul><div class="tip-box"><strong>The Exit Rule</strong>If you cannot see the next straight before you exit the drift, you have held the angle too long. Straighten earlier and use the power to exit cleanly.</div><h3>Which Corners Are Worth Drifting?</h3><p>Not every corner rewards a drift. High-speed sweepers often punish sideways movement. The best drift corners have a tight entry, wide exit, and long straight following. Study your circuit map before attempting drift entries.</p>' },
+            { title: "Extreme Moto Cup Adds Canyon Sprint Mode", cat: "News", catKey: "news", date: "May 15, 2026", img: "images/bike-racing-02.webp", author: "Sam Delray", read: "4 min read", tags: ["News","Moto Cup","Canyon Racing","Update"],
+              body: '<p>The Extreme Moto Cup has announced a major update for its 2026 schedule: Canyon Sprint Mode. Starting this week, all registered riders have access to a new set of canyon circuit maps designed specifically for aggressive, technical riding.</p><h3>What Canyon Sprint Mode Changes</h3><p>The canyon circuits are narrower than the traditional Moto Cup tracks. Passing zones are limited to two points per lap, which creates intense positional battles that reward defensive riding as much as raw pace. The boost mechanic has been adjusted — risk-reward is higher because the walls are unforgiving.</p><p>Course designers confirmed that every fast line carries a consequence. Taking the widest entry requires the most commitment on exit. The aggressive inside line is faster in isolation but leaves riders vulnerable to late-braking passes.</p><h3>New Rules for Canyon Rounds</h3><ul><li>Last-corner boost is disabled in the final sector</li><li>Contact penalties carry a 0.8-second time addition</li><li>Canyon rounds count for 1.5× points in the overall standings</li><li>Qualifying uses a single fast lap rather than an aggregate session</li></ul><div class="tip-box"><strong>Organizer Statement</strong>"Canyon Sprint Mode was built to reward racing IQ, not just speed. The narrow tracks punish impatient riding and reward players who can manage pressure."</div><h3>Community Response</h3><p>Initial community reaction has been overwhelmingly positive. Top riders are already logging practice laps to map the canyon reference points. The mode is available in both ranked and casual lobbies.</p>' },
+            { title: "Street Sprint Builds for Maximum Boost", cat: "Car Games", catKey: "car", date: "May 14, 2026", img: "images/car-racing-03.webp", author: "Alex Renn", read: "5 min read", tags: ["Car Tuning","Boost","Street Racing","Build Guide"],
+              body: '<p>Street sprint circuits punish players who build their cars wrong. Unlike closed-circuit tracks where mechanical grip determines consistency, street sprints reward explosive acceleration bursts in short windows between tight corners.</p><h3>Acceleration vs Top Speed Trade-off</h3><p>On most street sprint maps, the longest straight is under 400 meters. Top-speed tuning hits a ceiling before it pays off. What moves you forward is exit acceleration — the speed you generate from corner exit to the next braking zone. Gear ratios need to be short, keeping the engine in its power band.</p><h3>Boost Timing Is Everything</h3><p>In traffic-heavy street circuits, boost management separates amateurs from veterans. Using boost on a straight with another car ahead is wasted. Smart boost use targets open air: the moment an overtake succeeds or after a gap opens.</p><ul><li>Reserve at least 40% boost for the final lap</li><li>Never boost mid-corner — it unsettles rear grip</li><li>Use micro-boosts on corner exits, not full burns</li><li>Watch rival boost levels during head-to-head sections</li></ul><div class="tip-box"><strong>Build Priority</strong>For street sprints: acceleration first, then handling balance, then top speed last. A car that grips and launches well will outscore a faster-on-paper setup.</div><h3>Suspension Setup for Bumpy Streets</h3><p>Street circuits have surface variation that closed tracks do not. Stiff setups that work perfectly on smooth circuits cause massive stability problems on cobblestone. Running slightly softer spring rates absorbs bumps and keeps tires in contact longer.</p>' },
+            { title: "Two-Wheel Time Trials Get Ranked Support", cat: "Bike Games", catKey: "bike", date: "May 13, 2026", img: "images/bike-racing-05.webp", author: "Priya Voss", read: "4 min read", tags: ["Time Trial","Ranked Play","Bike Games","Update"],
+              body: '<p>Time trial mode now contributes to official ranked standings, giving riders who prefer solo performance runs a legitimate path to climbing the ladder without relying on race pack dynamics.</p><h3>How Ranked Time Trials Work</h3><p>Each session runs on a single circuit per week. Players get five attempt slots per day, with only the fastest lap counting toward their ranking score. The leaderboard updates in real time.</p><p>Sector splits are now displayed during replay, allowing riders to pinpoint exactly where they gain or lose compared to the division leader. This telemetry access was previously limited to tournament modes.</p><h3>Why This Changes the Meta</h3><ul><li>Riders with strong time trial skills can rank up without requiring a full lobby</li><li>Sector analysis encourages technical improvement over raw repetition</li><li>Division-specific leaderboards create realistic targets for improvement</li><li>Perfect start practice finally has a ranked incentive</li></ul><div class="tip-box"><strong>Strategy Note</strong>Use your first attempt of each session to find your current natural lap time. Save your cleanest setups for attempts three and four, when you have warmed up your lines.</div><h3>Community Impact</h3><p>Within the first 24 hours, time trial participation jumped by 340%. Several previously-unknown riders surfaced with exceptionally clean lap times that suggest deep practice in solo mode. This update gives those riders the recognition they deserve.</p>' },
+            { title: "Arcade Handling for Close Combat Racing", cat: "Car Games", catKey: "car", date: "May 12, 2026", img: "images/car-racing-04.webp", author: "Alex Renn", read: "5 min read", tags: ["Arcade Racing","Contact","Car Games","Combat"],
+              body: '<p>Arcade car handling is designed for chaos — and that is exactly what makes it competitive. Unlike simulation titles where contact ends races, arcade-style physics let drivers bounce, block, and barge through corners. Mastering this chaos requires a completely different skill set.</p><h3>Reading Contact Before It Happens</h3><p>In close combat racing, the best players are not reacting to contact — they are predicting it. Watching a rival\'s braking line three corners ahead tells you where the squeeze is coming before it arrives.</p><h3>Braking Zones as Weapons</h3><p>In arcade physics, the braking zone is a battleground. Going slightly later into a corner forces a rival into either a harder brake or contact. The defender who brakes early and wide gives up position.</p><ul><li>Know whether your car pushes forward or rotates under rear contact</li><li>Use the barrier as a final defense — not a primary one</li><li>A stable bump is better than an unstable dodge</li><li>Control your exit after contact — do not over-correct</li></ul><div class="tip-box"><strong>Mindset Shift</strong>Stop thinking of contact as a mistake and start thinking of it as a variable. Some contact costs you nothing. Some costs you everything. Learn the difference before racing ranked.</div><h3>Readable Braking Zones Win Matches</h3><p>The most-won corners in arcade racing are the ones that are easy to read. Tight hairpins at the end of long straights produce the most passing. Approach these with a defensive mindset and a planned counter-attack.</p>' },
+            { title: "Bike Chase Modes Built for Aggressive Riders", cat: "Bike Games", catKey: "bike", date: "May 11, 2026", img: "images/bike-racing-04.webp", author: "Priya Voss", read: "4 min read", tags: ["Chase Mode","Aggressive Riding","Bike Games","Event"],
+              body: '<p>Chase events are the most intense format in competitive bike gaming. Instead of timed laps, chase mode tasks the lead rider with staying ahead of an accelerating pursuit pack. The lead rider scores points for each second of separation. Everyone is always racing.</p><h3>What Makes Chase Mode Unique</h3><p>Standard races reward consistency. Chase mode rewards bravery. Taking a risky cut through a chicane that might cost you a lap in a standard race can add two seconds of separation in a chase run.</p><p>For pursuit riders, the tactics are opposite. Precision matters more than aggression. Catching a lead rider who is at race pace requires finding micro-gains, not big swings.</p><h3>Top Chase Mode Tactics</h3><ul><li>Lead riders: pick routes with narrow sections that are hard to draft through</li><li>Pursuit riders: draft until within 0.5 seconds, then commit to an overtake</li><li>Watch for the lead rider\'s boost timing — they are giving you a signal</li><li>Never brake earlier than the lead rider unless you are setting up a position swap</li></ul><div class="tip-box"><strong>Lead Rider Rule</strong>Every second of separation you open in the first lap doubles in difficulty to close later. Extend early, defend late.</div><h3>Why Aggressive Riders Win Chase Events</h3><p>Chase mode rewards the traits that standard racing punishes. Using the full track width to deny overtake angles is legal and effective. Riders who are naturally aggressive find that chase mode is the format where aggression is the optimal strategy.</p>' },
+            { title: "Beginner Tuning: Grip Before Power", cat: "Racing Guides", catKey: "guides", date: "May 10, 2026", img: "images/car-racing-05.webp", author: "James Turlock", read: "6 min read", tags: ["Tuning","Beginner Guide","Grip","Car Setup"],
+              body: '<p>Every new racing player makes the same mistake: they add power first. The car goes faster in a straight line, crashes in every corner, and the lap time does not improve. Grip is the foundation of every competitive setup — power is only useful when the tires can apply it.</p><h3>Understanding Understeer and Oversteer</h3><p>Understeer is when the front pushes wide — the car goes straight when you try to turn. Oversteer is when the rear steps out. Both are grip problems, but they have opposite solutions.</p><p>The fastest way to identify your issue is to run the same corner at the same speed ten times and note whether you run wide at entry or exit. Entry issues point to understeer. Exit issues point to oversteer.</p><h3>The Grip Tuning Priority Order</h3><ul><li>Tire compound: always choose a compound that matches track temperature first</li><li>Downforce: more rear fixes oversteer; more front fixes understeer</li><li>Suspension stiffness: softer rear means more oversteer; stiffer rear means more stability</li><li>Brake bias: rear bias adds rotation; front bias adds stability</li><li>Power output: only increase once grip is balanced</li></ul><div class="tip-box"><strong>The Golden Rule</strong>Build your car to be slightly understeery. It is easier to manage and forgives minor line mistakes more than an oversteery setup that needs constant correction.</div><h3>When to Add Power</h3><p>Power upgrades are worth pursuing when lap times stop improving from grip changes. At that point, the car is using all available grip and needs more speed. If you can run five consecutive clean laps without a spin, your grip balance is correct and you are ready to explore power tuning.</p>' },
+            { title: "Stunt Racing Events With Real Stakes", cat: "Bike Games", catKey: "bike", date: "May 9, 2026", img: "images/bike-racing-05.webp", author: "Priya Voss", read: "5 min read", tags: ["Stunt Racing","Tricks","High Stakes","Events"],
+              body: '<p>Stunt racing events used to be casual modes in bike games — fun but separate from competitive play. Gaming Stackly\'s stunt racing format now integrates trick chains directly into race scoring, creating a format where the fastest lap time alone is not enough.</p><h3>How Stunt Scoring Works</h3><p>Each stunt event assigns trick multipliers to designated ramp sections. A clean trick at a multiplier zone boosts your overall score by a percentage of your accumulated race time points. A slightly slower rider who hits three clean tricks can outscore a faster rider who ignores the trick zones entirely.</p><p>The multiplier zones are positioned at natural racing opportunities — elevated sections between fast corners where the physics allow trick execution without major speed loss.</p><h3>Which Tricks Are Worth the Risk</h3><ul><li>Wheelie extensions: low risk, moderate score — good for conservative strategies</li><li>Barrel rolls: high risk, high score — worth it only on dedicated ramp sections</li><li>Endo braking: technically legal trick that can also slow a rider in front</li><li>Air grabs: purely cosmetic points — not worth the hang-time loss in competition</li></ul><div class="tip-box"><strong>Competition Rule</strong>A failed trick that causes a crash resets your multiplier to zero. It is better to skip a trick zone than to attempt one with low confidence in your current lap.</div><h3>Practice Approach for Stunt Events</h3><p>Start with time trial mode on stunt event maps. Identify every multiplier zone and test each trick at racing speed, not slow speed. Build your stunt race line in stages, adding one trick zone at a time until you can chain all of them cleanly.</p>' },
+            { title: "Neon Grand Prix Qualifiers Begin", cat: "Car Games", catKey: "car", date: "May 8, 2026", img: "images/car-racing-06.webp", author: "Alex Renn", read: "4 min read", tags: ["Grand Prix","Qualifiers","Neon Racing","Tournament"],
+              body: '<p>The Neon Grand Prix — Gaming Stackly\'s largest car racing tournament — has opened its 2026 qualifier stage. Over the next three weeks, drivers compete in heat rounds to earn their place in the main bracket.</p><h3>The Qualifier Format</h3><p>Each heat contains eight drivers. The top two advance directly. Positions three and four enter a repechage round. Positions five through eight are eliminated. Tactical positioning in the final two laps often determines who advances more than total lap speed.</p><p>Last year\'s winner qualified from a repechage after finishing fourth in their heat — proving that consistency across a longer event trail matters more than peak performance in a single heat.</p><h3>What\'s Working in Qualifying</h3><ul><li>Clean starts: the top two qualifiers in heat one both ran top-three grid positions</li><li>Conservative early tactics: staying out of contact in lap one preserved tire performance</li><li>Late lap pushes: several repechage qualifiers posted fastest laps in the final sector</li><li>Draft positioning: using rivals for slipstreaming on the long main straight</li></ul><div class="tip-box"><strong>Qualifier Mindset</strong>In knockout formats, finishing position matters more than lap time. A fifth-fastest lap time in second place is worth more than a fastest-lap time in fifth place.</div><h3>Watching the Qualifiers</h3><p>All qualifier sessions are streamed live on Gaming Stackly\'s competition channel with professional commentary. For aspiring competitors, watching how top-ranked players handle pressure moments is more valuable than any guide article.</p>' },
+            { title: "Trail Braking for Bike Games", cat: "Racing Guides", catKey: "guides", date: "May 7, 2026", img: "images/bike-racing-06.webp", author: "James Turlock", read: "6 min read", tags: ["Trail Braking","Technique","Bike Guide","Cornering"],
+              body: '<p>Trail braking is the single highest-leverage skill in competitive bike gaming. The technique involves maintaining brake pressure past the corner entry point — continuing to brake while the bike is already leaned into the corner. Done correctly, it tightens the line and allows a later apex without scrubbing speed.</p><h3>Why Standard Braking Is Slower</h3><p>Most players learn to brake before the corner and release completely before turning. This is stable and easy to repeat, but significantly slower. When the brake releases before entry, the front rises and the bike goes wide. Trail braking keeps the front loaded during the entire entry phase.</p><h3>The Three Phases of Trail Braking</h3><ul><li><strong>Initial:</strong> Maximum braking in a straight line. Reduce by 20% as you approach turn-in.</li><li><strong>Mid-entry:</strong> Lean begins. Brake pressure reduces to 30–40% — still active but lighter.</li><li><strong>Release:</strong> At the apex, brake releases completely. The front unloads onto the exit line.</li></ul><div class="tip-box"><strong>The Risk Window</strong>If you reach the apex with brake still applied, the front will push wide. The release must happen at or just before the apex — not after. Timing this is what separates intermediate from advanced riders.</div><h3>Which Corners Reward Trail Braking Most</h3><p>Slow corners at the end of long straights benefit the most. High-speed sweepers are too risky. Medium-speed chicanes give the biggest lap time return without requiring maximum input precision.</p>' },
+            { title: "Night Maps That Reward Track Memory", cat: "Car Games", catKey: "car", date: "May 6, 2026", img: "images/car-racing-07.webp", author: "Alex Renn", read: "5 min read", tags: ["Night Racing","Track Memory","Car Games","Circuit"],
+              body: '<p>Racing at night is a fundamentally different cognitive exercise. The visual information that day racing provides — track edges, corner color, runoff zones — narrows dramatically when artificial lighting takes over. What replaces it is track memory: the internalized knowledge of every corner radius and braking point.</p><h3>Building Track Memory Systematically</h3><p>Random repetition builds weak track memory. Systematic repetition builds reliable track memory. Start with sector one only. Run it 20 times until every braking zone, apex, and exit angle is automatic. Then move to sector two. Link them together after mastering each individually.</p><p>By that point night lighting is an irrelevant variable — you do not need to see the track edge because you already know where it is.</p><h3>Night-Specific Cues to Memorize</h3><ul><li>Boost pad glow colors — your primary speed reference at night</li><li>Shadow zones in tunnels — memorize where they begin and end</li><li>Rival headlight positions — they reveal corner angles in zero-visibility sections</li><li>Surface reflection differences — wet sections reflect more light than dry ones</li></ul><div class="tip-box"><strong>Night Race Prep</strong>Always run at least one daytime lap on any night circuit before racing it in the dark. The day version reveals track geometry that night lighting obscures.</div><h3>Using Night Races to Expose Weaknesses</h3><p>Night racing is a diagnostic tool. If your lap times drop significantly at night versus day on the same circuit, you are relying on visual cues rather than track knowledge. Close that gap and your day-race performance will also improve.</p>' },
+            { title: "Moto Rivals: Drafting on Long Straights", cat: "Bike Games", catKey: "bike", date: "May 5, 2026", img: "images/bike-racing-07.webp", author: "Priya Voss", read: "5 min read", tags: ["Drafting","Slipstream","Bike Racing","Tactics"],
+              body: '<p>Drafting is the most powerful momentum tool available to a competitive bike racer. Getting into the slipstream of a faster rider eliminates aerodynamic drag and allows you to match speeds you could not sustain alone. Used correctly, drafting converts a 0.8-second deficit into a match race at the end of the straight.</p><h3>The Draft Window</h3><p>The effective draft window begins approximately 1.5 bike lengths behind the lead rider. Within that zone, your top speed increases by 4–7%. The goal is to enter the zone at the midpoint of the straight, not the start — this preserves the momentum for the sprint at the end.</p><h3>When to Break the Draft</h3><p>Staying in the draft too long means the lead rider reaches the corner first and blocks your overtake line. The correct break point is approximately 60 meters before the braking zone — enough distance to draw alongside before both riders need to brake.</p><ul><li>Break left on a left-hand corner circuit, right on a right-hand one</li><li>Use boost precisely when you break draft — that is when your speed advantage peaks</li><li>Never break draft into a headwind section — you lose the benefit instantly</li><li>Watch the lead rider\'s throttle — a lift is your signal to break</li></ul><div class="tip-box"><strong>The Draft Trap</strong>If you enter the draft too early and run out of engine response at the braking zone, you will either brake too early or brake too late. Time your draft entry to peak exactly at the braking zone.</div><h3>Defending Against the Draft</h3><p>As the lead rider, vary your line. A straight line gives maximum draft benefit. A slightly diagonal line on the straight forces the drafting rider to choose a side and reduces their draft efficiency, creating a natural blocking position without requiring illegal contact.</p>' },
+            { title: "Car Physics Update Improves Collision Recovery", cat: "News", catKey: "news", date: "May 4, 2026", img: "images/car-racing-08.webp", author: "Sam Delray", read: "4 min read", tags: ["Physics Update","Collision","Car Racing","Patch Notes"],
+              body: '<p>Gaming Stackly\'s development team released a significant physics update targeting one of the most controversial aspects of competitive car racing: collision recovery. The previous system treated all contact equally, causing disproportionate spinouts from minor side touches that frustrated competitive players.</p><h3>What Changed in the Update</h3><p>The new collision model distinguishes between four contact categories: light side touch, moderate side impact, rear tap, and head-on collision. Each category now triggers a physics response proportional to the actual momentum transfer.</p><p>Rear taps on straight sections now produce a push-forward effect rather than a rotation, which better matches real-world racing physics. Head-on and hard barrier impacts remain punishing, as they should be for competitive integrity.</p><h3>Community Reaction</h3><ul><li>Positive response from high-ranked players who felt minor contact was too punishing</li><li>Some concern from hardcore sim players that the change rewards reckless driving</li><li>Tournament organizers have confirmed the update applies to all ranked formats</li><li>Penalty thresholds have been rebalanced to match the new collision severity model</li></ul><div class="tip-box"><strong>Dev Note</strong>"We wanted close racing to feel like close racing — not like a penalty trap. The new system rewards skill in contact situations rather than punishing anyone in the vicinity of contact."</div><h3>Implications for Ranked Racing</h3><p>The practical effect is that close-quarters ranked racing should produce fewer ghost penalties and more genuine position battles. Drivers who previously defended with wide lines to avoid contact incidents can now hold tighter defensive positions without catastrophic risk.</p>' },
+            { title: "Rider League Expands to Duo Events", cat: "Bike Games", catKey: "bike", date: "May 3, 2026", img: "images/bike-racing-08.webp", author: "Priya Voss", read: "4 min read", tags: ["Duo Racing","Team Events","Rider League","Update"],
+              body: '<p>The Rider League has expanded its format with the addition of duo events. Teams of two can now register and compete in synchronized racing formats that reward cooperative strategy alongside individual pace.</p><h3>How Duo Events Work</h3><p>Each team\'s score is the combined finish position of both riders. Finishing first and third scores the same as finishing second and second — encouraging teams to optimize both riders\' results rather than sacrificing one for the other.</p><p>Draft coordination becomes a team weapon. The faster rider can give the slower rider a draft for three laps to build their race position before breaking away in the final sector. This deliberate coordination elevates duo racing above simple solo riding with a partner.</p><h3>Strategies That Work in Duo Format</h3><ul><li>Lead-draft rotation: alternate leading and drafting across laps to preserve both riders\' tires</li><li>Blocking assignments: one rider defends position while the other pushes forward</li><li>Split-route gambles: take different lines through a chicane to ensure at least one works</li><li>Finish coordination: ensure both riders cross within 3 seconds for combined scoring</li></ul><div class="tip-box"><strong>Team Chemistry</strong>Duo events are as much about communication as pace. Teams that pre-plan their lap-by-lap strategy consistently outperform faster duo pairs who ride independently.</div><h3>Registration and Requirements</h3><p>Both riders must hold a minimum rank of Bronze III and must have completed at least 20 solo ranked races each. Teams register together and compete as a named unit, with standings tracked separately from solo rankings.</p>' },
+            { title: "City Tracks Need Patience, Not Panic", cat: "Car Games", catKey: "car", date: "May 2, 2026", img: "images/car-racing-09.webp", author: "Alex Renn", read: "5 min read", tags: ["City Racing","Street Circuit","Patience","Tactics"],
+              body: '<p>City circuits are the hardest car racing tracks to master. Unlike purpose-built racetracks with generous runoffs, city maps are lined with walls that punish every mistake immediately. One tapped barrier at speed can end a qualifying run or a race position that took eight laps to build.</p><h3>Why Overdriving Destroys City Track Pace</h3><p>The instinct on city tracks is to push harder because the gaps feel smaller and the walls feel closer. This instinct is counterproductive. Pushing harder increases the chance of wall contact, which loses more time than a slightly conservative line would have cost.</p><p>Consistent 97% pace laps are worth more than erratic 100%/crash sequences. A driver who runs 22 clean laps at 97% beats a driver who runs 20 clean laps at 100% and one wall at 100%. The math is never close.</p><h3>Finding the Safe Fast Line</h3><ul><li>Use the full width of the track only on confirmed-clear exits</li><li>Identify which corners have safe runoff and which are instant-wall consequences</li><li>On wall-risk corners, brake 10 meters earlier and commit to the center of the track</li><li>Pass only at long-straight entry points — never in technical sections</li></ul><div class="tip-box"><strong>Defensive Positioning</strong>On city tracks, the defensive line and the fast line are often the same line. Hold your position rather than chasing a risky pass — the opportunity will come at the right corner if you are patient.</div><h3>Attacking on City Tracks</h3><p>The only pass worth attempting is one where you can complete the move without requiring the rival to make space. If your pass depends on the rival braking early, it is not a pass yet — it is a plan for a future corner.</p>' },
+            { title: "Controller Settings for Bike Racing", cat: "Racing Guides", catKey: "guides", date: "May 1, 2026", img: "images/bike-racing-09.webp", author: "James Turlock", read: "6 min read", tags: ["Controller","Settings","Bike Racing","Setup Guide"],
+              body: '<p>The gap between a well-configured controller and factory defaults in bike racing is substantial. Most default settings are built for casual play and prioritize accessibility over competitive precision. Optimizing your configuration takes 20 minutes and can shave significant time off your lap times before you change a single thing about your riding technique.</p><h3>Dead Zone Settings</h3><p>Dead zones determine how far you need to move the stick before the input registers. Factory dead zones are typically set high (15–20%) to prevent drift from worn sticks. For competitive racing, set a dead zone of 5–8% — low enough to capture small steering inputs.</p><p>If you reduce dead zones and experience unwanted inputs, it means your stick is wearing. Clean the stick or reduce dead zone only as far as your stick allows.</p><h3>Trigger Sensitivity for Braking</h3><p>Analog triggers allow proportional braking — the harder you squeeze, the harder the bike brakes. Most players use binary trigger presses (all or nothing), which loses subtle braking control. Practice applying 70–80% brake pressure before going to full brake.</p><ul><li>Set trigger dead zone to 5% to prevent accidental brake inputs</li><li>Set trigger response curve to "aggressive" or "fast" for quicker brake engagement</li><li>Never set brake trigger to the same button as a face button — muscle memory conflicts</li><li>Set progressive brake sensitivity — more force required for the last 20% of input</li></ul><div class="tip-box"><strong>Camera Distance</strong>A wider field of view camera pulled further back from the bike gives more visual information about upcoming corners. Most competitive players use a camera setting 15–20% further back than the default.</div><h3>Vibration and Feedback</h3><p>Controller vibration carries useful information: the front-end warning feeling when grip is at its limit is often conveyed through subtle vibration patterns. Do not disable vibration entirely — instead, reduce intensity to a level where you feel grip warnings without it interfering with steering precision.</p>' },
+            { title: "Endurance Races Test Focus and Fuel", cat: "Car Games", catKey: "car", date: "April 30, 2026", img: "images/car-racing-10.webp", author: "Alex Renn", read: "5 min read", tags: ["Endurance Racing","Fuel Strategy","Long Race","Focus"],
+              body: '<p>Endurance racing separates the strategists from the sprint racers. A race that lasts 30 minutes or longer exposes every weakness in your setup, your fuel strategy, and your mental consistency. Players who dominate five-lap sprints frequently discover that maintaining peak concentration across extended sessions is a completely different challenge.</p><h3>Fuel Strategy as a Competitive Weapon</h3><p>In endurance formats, fuel consumption varies with driving style. Aggressive throttle use burns fuel faster. Controlled throttle — particularly in corners and during lapping traffic — extends your range. The best endurance drivers manage fuel actively, not just at pit windows.</p><p>The key decision is whether to take a conservative stint (fewer pit stops) or an aggressive stint (faster pace but more frequent pitting). The correct answer depends on track position and rival strategy, not a predetermined plan.</p><h3>Maintaining Focus Across Long Stints</h3><ul><li>Break the race mentally into thirds — focus only on the next third</li><li>Set mini-goals: sector improvements, consistent gap-holding, clean overtakes</li><li>Deliberately scan the HUD every three laps for tire and fuel data</li><li>If concentration drops, immediately reduce pace by 3% and recharge for two laps</li></ul><div class="tip-box"><strong>The Tortoise Strategy</strong>Consistent 95% pace beats aggressive 100% pace in endurance formats 70% of the time. The tire and fuel savings compound across the race length in ways that are hard to see in a single lap comparison.</div><h3>Pit Stop Timing</h3><p>In competitive endurance races, pit stop timing is the biggest single variable. Pitting under safety car periods saves 18–24 seconds compared to pitting under green. Watching for incidents ahead and being positioned to enter the pits quickly when a safety car deploys is a legitimate race-winning strategy.</p>' },
+            { title: "Superbike Endurance Arrives This Week", cat: "Bike Games", catKey: "bike", date: "April 29, 2026", img: "images/bike-racing-10.webp", author: "Priya Voss", read: "4 min read", tags: ["Superbike","Endurance","Tire Management","New Mode"],
+              body: '<p>Superbike Endurance makes its debut on Gaming Stackly this week, bringing the tire-management format from car racing into the two-wheel competitive scene. For riders who have mastered sprint formats, endurance bike racing presents an entirely different set of challenges.</p><h3>The Superbike Endurance Format</h3><p>Each event runs 20–35 laps depending on circuit length. Tire compounds degrade progressively, and compound choice at the start is a strategic decision with long-term consequences. Soft compounds give faster early laps but degrade quickly. Hard compounds take longer to warm up but last the full race distance.</p><h3>Tire Management Under Pressure</h3><p>Tire care on bikes is more nuanced than on cars because of the lean angle requirement. Overheating the front tire through aggressive trail braking in consecutive corners builds up rubber grain — the tire surface starts slipping. Once you feel this onset, reducing brake pressure and increasing entry speed briefly lets the tire recover.</p><ul><li>Watch the tire temperature indicator — above the green zone means you are using your grip budget</li><li>Alternate which tire you stress — use the front in braking zones, the rear in acceleration zones</li><li>In the final five laps, allow 5% tire slip to use what is left rather than managing it away</li><li>Rain tires require lower temperatures — warm them gently for the first two laps</li></ul><div class="tip-box"><strong>Rhythm Racing</strong>Endurance bikes respond best to metronomic lap times. Setting the same corner entry speed every lap produces better tire longevity and more consistent overall pace than optimizing each lap individually.</div><h3>Community Events This Week</h3><p>Gaming Stackly is hosting a community Superbike Endurance event this weekend with open entry. It is the ideal opportunity to practice the format before it becomes part of the ranked meta. Prizes include exclusive livery codes and season points multipliers.</p>' },
+            { title: "Racing Esports Prize Pool Grows", cat: "News", catKey: "news", date: "April 28, 2026", img: "images/car-racing-11.webp", author: "Sam Delray", read: "4 min read", tags: ["Prize Pool","Esports","Sponsors","News"],
+              body: '<p>The 2026 Gaming Stackly racing esports prize pool has reached a new record following three major new sponsorship agreements. The total available prize money across all official formats for the current season is now 40% higher than last year.</p><h3>New Sponsors and Their Impact</h3><p>The three new partners represent a hardware peripherals company focused on controllers and racing wheels, an energy drink brand prominent in motorsport for a decade, and a streaming platform expanding into esports broadcasting rights. Each partnership includes both prize fund contributions and community event sponsorship.</p><p>Beyond raw prize money, the streaming partnership means that more qualifying rounds will be broadcast live with professional commentary, giving mid-ranked players exposure they could not access through platform streaming alone.</p><h3>Prize Distribution Structure</h3><ul><li>Grand Prix Finals: 45% of total prize pool</li><li>Rider Championship Finals: 30% of total prize pool</li><li>Community qualifier prizes: 15% of total prize pool</li><li>Content creator partnership bonuses: 10% of total prize pool</li></ul><div class="tip-box"><strong>Qualifying Opportunity</strong>15% of the prize pool goes through community qualifiers — meaning players outside the established elite circuit have a direct financial incentive to compete. Register for the next community qualifier window through the tournament page.</div><h3>Impact on Competitive Scene</h3><p>Higher prize money directly correlates with increased competitive participation and improved player skill development. When financial stakes rise, more players invest in dedicated practice, better equipment, and structured coaching. Last year\'s prize increase correlated with a 28% improvement in average qualifying lap times across all divisions.</p>' },
+            { title: "Desert Bike Tracks Add Loose-Surface Racing", cat: "Bike Games", catKey: "bike", date: "April 27, 2026", img: "images/bike-racing-11.webp", author: "Priya Voss", read: "5 min read", tags: ["Desert Tracks","Sand Racing","Loose Surface","Bike Games"],
+              body: '<p>Gaming Stackly\'s map team has released a new desert circuit pack featuring four tracks built specifically for loose-surface racing. Sand sections, compacted dirt straights, and gravel-infield corners change how bike physics behave in ways that require riders to completely rethink their standard approaches.</p><h3>How Loose Surface Changes Bike Handling</h3><p>On tarmac, the tire grips and the bike pivots around a defined contact patch. On loose surfaces, the tire pushes material as it rotates — the grip is softer and more progressive, but the limit arrives suddenly when the material shifts.</p><p>The biggest adjustment is braking. Hard braking on loose surface locks the front wheel and causes it to plow rather than slow. Shorter, lighter braking pulses slow the bike without locking the wheel. This technique is counterintuitive compared to tarmac braking and takes deliberate practice.</p><h3>Setup Changes for Desert Circuits</h3><ul><li>Reduce downforce to minimum — it is irrelevant on loose surface and adds drag on long sand straights</li><li>Increase suspension travel to maximum — absorbs bumps and ruts in the surface</li><li>Switch to the widest available tire option — more contact area means more grip on soft ground</li><li>Raise the ride height — prevents the chassis from catching on surface ridges</li></ul><div class="tip-box"><strong>The Slide Rule</strong>Controlled rear slides are faster than grip riding on loose desert surfaces. Accept the slide and steer into it — fighting it causes the front to wash instead.</div><h3>New Desert Pack Circuits</h3><p>The four new circuits range from a fast desert highway sprint to a technical canyon-floor circuit with multiple surface changes per lap. The most popular is the Canyon Floor Circuit, where the narrow track and mixed surfaces create extremely close racing.</p>' },
+            { title: "Garage Builds for Sprint Lobbies", cat: "Car Games", catKey: "car", date: "April 26, 2026", img: "images/car-racing-12.webp", author: "Alex Renn", read: "5 min read", tags: ["Garage Builds","Sprint Racing","Car Setup","Tuning"],
+              body: '<p>Sprint lobbies reward a different car than endurance formats. With race lengths between three and seven laps, there is no need to manage tire longevity or fuel, and setup choices that would compromise a longer race become strong in the short format.</p><h3>Priority Shifts in Sprint Builds</h3><p>In endurance races, tire longevity forces compromise on mechanical grip settings. In sprint racing, run the most aggressive grip settings available. Softer tires, maximum downforce, and the stiffest anti-roll configuration that keeps the car stable all become options when you do not need to manage them for 20+ laps.</p><h3>The Launch Advantage</h3><p>The start of a sprint race represents a higher percentage of total race time than any other format. A well-executed launch in a seven-lap sprint is worth twice as much as in a 20-lap endurance race because fewer laps follow it to recover.</p><ul><li>Set torque bias to rear-dominant for better launch traction</li><li>Use the shortest first gear ratio your transmission allows</li><li>Enable launch limiter if available — keeps revs in the optimal traction window</li><li>Fill boost to maximum before every race — in sprint formats, using all of it is the goal</li></ul><div class="tip-box"><strong>Sprint Philosophy</strong>In sprint racing, every setup compromise you make for reliability is speed you have given away. With only seven laps, there is nothing to be reliable for — build for maximum pace.</div><h3>Common Sprint Build Mistakes</h3><p>The most common mistake is using an endurance build in sprint format. Conservative tire settings that protect rubber longevity over 30 laps produce cold, slow tires in a seven-lap sprint where the tires never reach their optimal temperature.</p>' },
+            { title: "Clean Overtakes on Bikes", cat: "Racing Guides", catKey: "guides", date: "April 25, 2026", img: "images/bike-racing-12.webp", author: "James Turlock", read: "6 min read", tags: ["Overtaking","Bike Tactics","Clean Racing","Technique"],
+              body: '<p>Overtaking on a bike is fundamentally different from overtaking in a car. The narrower profile means there is more space to work with, but the instability at high lean angles means a badly timed pass can take both riders out simultaneously. Clean overtaking is about preparation, patience, and picking moments where completion is inevitable.</p><h3>Showing the Move Early</h3><p>The best bike passes start two corners before the actual pass. By positioning your bike on the outside of the corner two laps before you attempt the overtake, you communicate your intent and gather information about the lead rider\'s defensive habits.</p><h3>The Pass in Three Phases</h3><ul><li><strong>Approach:</strong> Draft to within 0.5 seconds, then shift to the overtake side — no later than 150 meters from the braking zone</li><li><strong>Entry:</strong> Brake slightly later than the lead rider but only by the amount you have practiced. Never out-brake by more than your safety margin.</li><li><strong>Completion:</strong> Apex the corner with your bike fully alongside or ahead. If you are behind at the apex, the pass has not happened yet.</li></ul><div class="tip-box"><strong>The Half-Bike Rule</strong>A pass is complete when you are alongside by at least half a bike length at the braking zone entry. Anything less is an attempt, not a pass — and aggressive defense at that point is the lead rider\'s right.</div><h3>Holding Your Line After a Pass</h3><p>The moment after a successful pass is when most riders make mistakes. The adrenaline of completing the move pushes you to accelerate immediately, but the corner exit is still ahead. Hold your line, make the apex, and then apply full throttle on the exit. A pass followed by a wide exit gives the position back immediately.</p>' },
+            { title: "Rally Stages Bring Dirt to the Grid", cat: "Car Games", catKey: "car", date: "April 24, 2026", img: "images/car-racing-13.webp", author: "Alex Renn", read: "5 min read", tags: ["Rally Racing","Dirt Tracks","Mixed Surface","Car Games"],
+              body: '<p>Rally stages are the most technically demanding car racing format in competitive gaming. Unlike circuit racing where the track is fixed and memory is cumulative, rally stages change surface type, grip level, and track width multiple times per stage. Setups that work for the first 30 seconds can be actively wrong for the next 30 seconds.</p><h3>The Surface Change Challenge</h3><p>Moving from tarmac to gravel mid-stage is the defining challenge of rally racing. The grip level drops by approximately 40% when transitioning to loose gravel, and the optimal speed for that same corner changes significantly.</p><p>The practical approach is to memorize transition points as separate landmarks. For most circuits, gravel corners require 15–20% earlier braking than the equivalent tarmac corner.</p><h3>Rally-Specific Setup Adjustments</h3><ul><li>All-surface tires outperform specialized compounds on mixed stages</li><li>Raised suspension travel helps over ruts and loose surface ridges</li><li>Reduce front downforce — gravel does not reward the same turn-in as tarmac</li><li>Set differential to more open — prevents grip-locking on loose surfaces</li></ul><div class="tip-box"><strong>Pace Note Equivalent</strong>Before each rally stage, run it once in spectator mode (if available) to observe each surface transition. This is the digital equivalent of a co-driver\'s pace notes — the most important preparation tool available.</div><h3>Scoring and Strategy in Rally Events</h3><p>Rally stages are typically scored on aggregate time across multiple stages rather than finishing position. A consistent conservative strategy often beats a high-risk fast approach. Staying on the road through all stages is worth more than posting the fastest individual stage time if it costs a recovery lap.</p>' },
+            { title: "Moto Rally Challenges Reward Balance", cat: "Bike Games", catKey: "bike", date: "April 23, 2026", img: "images/bike-racing-13.webp", author: "Priya Voss", read: "5 min read", tags: ["Moto Rally","Balance","Off-Road","Bike Games"],
+              body: '<p>Moto rally events are the most patience-testing format in competitive bike gaming. Where sprint races reward aggression and time trials reward precision, moto rally rewards balance — not just the physical balance of keeping the bike upright on loose surfaces, but the strategic balance between speed and survival across multi-stage events.</p><h3>Why Balance Beats Speed in Rally</h3><p>A moto rally stage abandoned due to a crash scores zero points and cannot be recovered. A stage completed at 85% pace scores proportionally to your overall event standing. Over four or five stages, the math consistently favors the rider who completes every stage cleanly over the rider who posts one fastest stage but DNFs two others.</p><p>The implication is that your throttle should feel slightly restrained throughout a rally event. If you are at your absolute maximum, you are one mistake from a DNF. The competitive target is 90% of your maximum.</p><h3>Physical Balance Techniques for Loose Surfaces</h3><ul><li>Shift body weight rearward on loose surface descents — prevents front wheel dive</li><li>Keep your outside foot down in corners to lower your center of gravity</li><li>Apply throttle progressively when exiting corners — sudden power causes rear slip</li><li>Look further ahead than normal — loose surface requires earlier preparation</li></ul><div class="tip-box"><strong>The Rally Mantra</strong>Finish first. Go fast second. In moto rally, a completed stage at 90% pace always beats an abandoned stage at 100% pace.</div><h3>Stage Strategy Across a Multi-Event Rally</h3><p>In multi-stage formats, track conditions change as more riders run the same stage. Middle-order starts often combine reasonable surface conditions with the benefit of watching early leaders\' stage times for benchmarking.</p>' },
+            { title: "Global Racing Leaderboards Reset", cat: "News", catKey: "news", date: "April 22, 2026", img: "images/car-racing-14.webp", author: "Sam Delray", read: "3 min read", tags: ["Leaderboard","Season Reset","News","Competitive"],
+              body: '<p>The Gaming Stackly seasonal leaderboard reset has taken effect across all competitive racing formats. All global rankings have returned to their starting positions, giving every driver and rider a fresh opportunity to establish their season standing from zero.</p><h3>What the Reset Means for Competitive Players</h3><p>Seasonal resets serve two purposes: they remove the advantage that highly active players accumulate over time, and they give new or returning players a realistic path to elite standings without requiring them to overcome a historically impossible points gap.</p><p>Players who perform well in the opening weeks establish a ranked buffer that they can defend across the remainder of the season. Players who start slowly face a difficult climb as point gaps compound. The urgency in the opening weeks is real.</p><h3>Season Protection System</h3><ul><li>Players ranked in the top 100 last season receive a 15% points carry-in to protect early season ranking</li><li>New players entering their first season start in the mid-division band, not at the absolute bottom</li><li>Season-end rewards have been expanded — more tiers receive exclusive cosmetics than in 2025</li><li>The reset does not affect tournament registration history or achievement records</li></ul><div class="tip-box"><strong>Opening Week Strategy</strong>Log your first ranked races within 48 hours of the reset. Early wins compound faster than late-season pushes because the field has not yet stratified into competitive divisions.</div><h3>Community Reaction</h3><p>The community response has been energetic, with participation in the first week up significantly versus the same period last year. The expanded reward tiers appear to be the primary motivator — more players see a realistic path to a meaningful season reward.</p>' },
+            { title: "Rider Rankings Highlight Consistency", cat: "Bike Games", catKey: "bike", date: "April 21, 2026", img: "images/bike-racing-14.webp", author: "Priya Voss", read: "4 min read", tags: ["Rankings","Consistency","Bike Games","Season"],
+              body: '<p>An analysis of the mid-season bike racing rankings has revealed a clear pattern: the riders occupying the top ten positions are not the riders who post the fastest individual laps. They are the riders who post the most consistent laps across all sessions. Lap time variance — not average pace — is the strongest predictor of final season ranking.</p><h3>The Consistency Data</h3><p>The top-ranked rider this season holds an average lap time 0.3 seconds slower than the fastest recorded lap in their division — but they produce that time on 94% of their laps. The current fastest-lap holder averages 0.8 seconds above their personal best due to higher variance, placing them significantly lower in the rankings despite superior raw pace.</p><p>Points systems in ranked racing consistently reward top-five finishes over fastest laps. Five second-place finishes score more than one win and four crashes.</p><h3>Training for Consistency</h3><ul><li>Track your lap time standard deviation in time trial mode — aim for under 0.5 seconds</li><li>Run 30-lap sessions rather than 10-lap sessions to expose consistency weaknesses</li><li>Monitor which sectors show the highest variance — those sectors need isolation practice</li><li>Reduce pace by 5% and rebuild — often the extra pace is coming from variance, not speed</li></ul><div class="tip-box"><strong>The Ranking Algorithm</strong>Gaming Stackly\'s ranking algorithm weights average finishing position over peak results by a factor of 2.4:1. A consistent mid-pack performer ranks higher than an inconsistent podium finisher over a full season.</div><h3>Implications for Season Planning</h3><p>Prioritize consistency in your everyday ranked sessions and save aggressive, high-variance attempts for time trial sessions where a crash has no ranking consequence. Use the ranked format to accumulate consistent points and the time trial format to develop speed.</p>' },
+            { title: "Final-Lap Pressure in Car Racing", cat: "Car Games", catKey: "car", date: "April 20, 2026", img: "images/car-racing-15.webp", author: "Alex Renn", read: "5 min read", tags: ["Final Lap","Pressure","Car Racing","Tactics"],
+              body: '<p>The final lap of a competitive car race is its own event. The physical demands of the race are behind you, but the mental and tactical demands compound into a single lap where every decision is amplified. Understanding how final laps work — and how to manage them under pressure — is the difference between converting a podium position and losing one on the last corner.</p><h3>Defending a Final Lap Position</h3><p>The defending driver has one clear advantage: they choose the line. The inside of every corner is the defending driver\'s property as long as they establish position before the braking zone. This requires moving to the inside of approaching corners earlier than you normally would, before the attacking driver has time to commit to an outside line.</p><p>The risk of early defensive positioning is that you sacrifice a small amount of exit speed. The calculation is whether the position protection is worth the 0.1–0.2 second exit speed loss. In a final lap with an attacker within 0.3 seconds, it almost always is.</p><h3>Attacking a Final Lap Position</h3><ul><li>Target the final complex corner, not the most obvious passing zone</li><li>Save all remaining boost for the final sector — do not use it fighting for a position mid-lap</li><li>Apply pressure early to force the defender into their defensive line — then attack the gap they leave</li><li>A failed late-lap dive bomb is still a position gain if it forces the defender wide on exit</li></ul><div class="tip-box"><strong>Boost Timing</strong>The most effective final-lap boost application is the moment you complete an overtake — not the moment you start one. Boost on the exit of a completed pass rather than the entry of an attempted pass.</div><h3>Managing Psychological Pressure</h3><p>The final lap creates physical symptoms in competitive players: faster breathing, increased grip pressure on the controller, tighter shoulders. These responses tighten your steering inputs. Consciously exhale and relax your grip before the final lap begins. The car drives better when you drive it looser.</p>' },
+            { title: "Last-Corner Bike Racing Wins", cat: "Bike Games", catKey: "bike", date: "April 19, 2026", img: "images/bike-racing-15.webp", author: "Priya Voss", read: "4 min read", tags: ["Last Corner","Bike Racing","Overtaking","Finish Line"],
+              body: '<p>Last-corner wins are the most dramatic moments in competitive bike racing. A rider who is behind with one corner remaining has one chance — and that corner has to be executed with enough precision to complete the pass before the line, not just start it.</p><h3>The Geometry of a Last-Corner Pass</h3><p>The final corner before the finish line is almost always a relatively slow corner at the end of the final straight. The braking zone into that corner is where the pass happens — the long straight that follows is the recovery zone, not the pass zone.</p><p>A successful last-corner pass requires arriving at the braking zone with more speed than the lead rider, braking later within your margin, and completing your corner line before the exit. A pass that completes but leaves you wide on the exit is vulnerable to a re-pass before the line.</p><h3>Executing the Pass Under Maximum Pressure</h3><ul><li>Use all remaining boost at the midpoint of the final straight — not the start or end</li><li>Commit to your braking point before you reach it — doubt causes lifted brakes</li><li>Aim for an apex that allows the widest possible exit, not the tightest corner entry</li><li>Protect the inside immediately after completing the pass — do not leave it open</li></ul><div class="tip-box"><strong>The 1.5-Second Rule</strong>A last-corner pass attempt requires at least 1.5 seconds of draft advantage entering the braking zone. Less than that and you are likely to arrive alongside rather than ahead — which is a completed pass only if the defending rider does not close the door.</div><h3>Defending the Last Corner</h3><p>Cover the inside of the last corner from the beginning of the final straight, not at the braking zone. If you are already covering the inside when the attacker starts their move, they have no room to complete the pass without risky contact. Let them make the mistake rather than giving them the space to make the move look clean.</p>' }
+        ];
+
+        /* ══════════════════════════════
+           ASSIGN data-idx to all posts
+        ══════════════════════════════ */
+        var allPosts = document.querySelectorAll('.blog-post');
+        allPosts.forEach(function (post, i) {
+            post.setAttribute('data-idx', i);
+            var rm = post.querySelector('.read-more');
+            if (rm) rm.setAttribute('data-idx', i);
+        });
+
+        /* ══════════════════════════════
+           MODAL LOGIC
+        ══════════════════════════════ */
+        var modal   = document.getElementById('artModal');
+        var overlay = document.getElementById('artOverlay');
+        var scroll  = document.getElementById('artScroll');
+        var backBtn = document.getElementById('artBackBtn');
+        var shareBtn= document.getElementById('artShareBtn');
+
+        function openArticle(idx) {
+            var p = POSTS[idx];
+            if (!p) return;
+
+            document.getElementById('artImg').src    = p.img;
+            document.getElementById('artImg').alt    = p.title;
+            document.getElementById('artCat').textContent  = p.cat;
+            document.getElementById('artDate').textContent = p.date;
+            document.getElementById('artRead').textContent = p.read;
+            document.getElementById('artTitle').textContent= p.title;
+            document.getElementById('artAuthor').textContent = p.author;
+            document.getElementById('artAvatar').textContent = p.author.split(' ').map(function(n){return n[0];}).join('');
+            document.getElementById('artBody').innerHTML    = p.body;
+
+            /* Tags */
+            var tagsEl = document.getElementById('artTags');
+            tagsEl.innerHTML = '';
+            p.tags.forEach(function (t) {
+                var s = document.createElement('span');
+                s.className = 'art-tag';
+                s.textContent = '#' + t;
+                tagsEl.appendChild(s);
+            });
+
+            /* Related posts — same category, different index */
+            var relEl = document.getElementById('artRelated');
+            relEl.innerHTML = '';
+            var related = [];
+            POSTS.forEach(function (rp, ri) {
+                if (ri !== idx && rp.catKey === p.catKey) related.push({ post: rp, idx: ri });
+            });
+            if (related.length === 0) {
+                POSTS.forEach(function (rp, ri) {
+                    if (ri !== idx) related.push({ post: rp, idx: ri });
+                });
+            }
+            related.slice(0, 3).forEach(function (r) {
+                var card = document.createElement('div');
+                card.className = 'art-rel-card';
+                card.setAttribute('data-idx', r.idx);
+                card.innerHTML = '<img src="' + r.post.img + '" alt="" loading="lazy"/><div class="art-rel-info"><span class="art-rel-cat">' + r.post.cat + '</span><span class="art-rel-name">' + r.post.title + '</span></div>';
+                card.addEventListener('click', function () { openArticle(r.idx); });
+                relEl.appendChild(card);
+            });
+
+            scroll.scrollTop = 0;
+            modal.setAttribute('aria-hidden', 'false');
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+
+            /* store current idx for share */
+            modal._currentIdx = idx;
+        }
+
+        function closeArticle() {
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            setTimeout(function () { document.getElementById('artImg').src = ''; }, 450);
+        }
+
+        /* Back button */
+        backBtn.addEventListener('click', closeArticle);
+        /* Overlay click */
+        overlay.addEventListener('click', closeArticle);
+        /* Escape key */
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.classList.contains('open')) closeArticle();
+        });
+
+        /* Share button */
+        shareBtn.addEventListener('click', function () {
+            var idx = modal._currentIdx;
+            var p = POSTS[idx] || {};
+            if (navigator.share) {
+                navigator.share({ title: p.title, text: p.title + ' — Gaming Stackly', url: window.location.href })
+                    .catch(function () {});
+            } else {
+                try { navigator.clipboard.writeText(window.location.href); } catch(e){}
+                shareBtn.textContent = '✓ Copied!';
+                setTimeout(function () { shareBtn.innerHTML = '&#8679; Share'; }, 1800);
+            }
+        });
+
+        /* ══════════════════════════════
+           EVENT DELEGATION on blog grid
+        ══════════════════════════════ */
+        var blogGrid = document.querySelector('.blog-grid');
+        if (blogGrid) {
+            blogGrid.addEventListener('click', function (e) {
+                var target = e.target;
+                /* Walk up to find the read-more link or blog-post */
+                while (target && target !== blogGrid) {
+                    if (target.classList.contains('read-more') || target.classList.contains('blog-post')) break;
+                    target = target.parentElement;
+                }
+                if (!target || target === blogGrid) return;
+                var idx = parseInt(target.getAttribute('data-idx') || target.closest('[data-idx]')?.getAttribute('data-idx'), 10);
+                if (!isNaN(idx)) { e.preventDefault(); openArticle(idx); }
+            });
+        }
+
+        /* Touch support */
+        if (blogGrid) {
+            blogGrid.addEventListener('touchend', function (e) {
+                var target = e.target;
+                while (target && target !== blogGrid) {
+                    if (target.classList.contains('read-more')) break;
+                    target = target.parentElement;
+                }
+                if (!target || target === blogGrid) return;
+                var idx = parseInt(target.getAttribute('data-idx'), 10);
+                if (!isNaN(idx)) { e.preventDefault(); openArticle(idx); }
+            }, { passive: false });
+        }
+
+        /* ══════════════════════════════
+           SEARCH + FILTER
+        ══════════════════════════════ */
+        var searchInput  = document.getElementById('searchBlog');
+        var catSelect    = document.getElementById('categoryFilter');
+
+        function filterPosts() {
+            var query = searchInput ? searchInput.value.toLowerCase() : '';
+            var cat   = catSelect  ? catSelect.value : 'all';
+            allPosts.forEach(function (post, i) {
+                var p = POSTS[i];
+                if (!p) return;
+                var matchCat   = cat === 'all' || p.catKey === cat;
+                var matchQuery = !query || p.title.toLowerCase().includes(query) || p.cat.toLowerCase().includes(query);
+                post.style.display = (matchCat && matchQuery) ? '' : 'none';
+            });
+        }
+
+        if (searchInput) searchInput.addEventListener('input', filterPosts);
+        if (catSelect)   catSelect.addEventListener('change', filterPosts);
+
+    })();
+    </script>
+</body>
+</html>

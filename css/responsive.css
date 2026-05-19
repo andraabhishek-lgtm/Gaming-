@@ -1,0 +1,590 @@
+/* Responsive Design */
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+    /* Navigation */
+    .nav-menu {
+        gap: 1rem;
+    }
+
+    .nav-menu a {
+        font-size: 0.9rem;
+    }
+
+    /* Text Sizes */
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    /* Hero */
+    .hero {
+        min-height: 60vh;
+        margin-top: 70px;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+        letter-spacing: 1px;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Footer */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    /* Forms */
+    .newsletter-form {
+        flex-direction: column;
+    }
+
+    .newsletter-form input {
+        min-width: 100%;
+    }
+
+    /* Contact */
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    /* Team Stats */
+    .team-stats {
+        grid-template-columns: 1fr;
+    }
+
+    /* Team Header */
+    .team-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    /* Blog Filters */
+    .blog-filters {
+        flex-direction: column;
+    }
+
+    .blog-filters input,
+    .blog-filters select {
+        width: 100%;
+    }
+
+    /* Tournament Filters */
+    .tournament-filters {
+        flex-direction: column;
+    }
+
+    .filter-btn {
+        width: 100%;
+    }
+
+    /* FAQ */
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Leadership */
+    .leadership-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Statistics */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    /* Page Header */
+    .page-header {
+        padding: 60px 0;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .page-header p {
+        font-size: 1rem;
+    }
+
+    /* CTA */
+    .cta {
+        padding: 40px 20px;
+        margin: 0 10px;
+    }
+
+    .cta h2 {
+        font-size: 2rem;
+    }
+
+    .cta p {
+        font-size: 1rem;
+    }
+
+    /* Statistics */
+    .stats-section {
+        padding: 40px 20px;
+        margin: 0 10px;
+    }
+
+    /* Table */
+    table {
+        font-size: 0.9rem;
+    }
+
+    table th,
+    table td {
+        padding: 10px;
+    }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+    /* Navigation */
+    .logo span {
+        display: none;
+    }
+
+    .nav-menu {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-menu.active {
+        display: none !important;
+    }
+
+    /* Text */
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    p {
+        font-size: 0.95rem;
+    }
+
+    /* Hero */
+    .hero {
+        min-height: 50vh;
+        margin-top: 70px;
+    }
+
+    .hero-title {
+        font-size: 1.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+
+    .hero-content {
+        padding: 20px;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    .btn-large {
+        padding: 12px 30px;
+    }
+
+    /* Sections */
+    section {
+        padding: 40px 0;
+    }
+
+    /* Grids */
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .game-slider {
+        grid-template-columns: 1fr;
+    }
+
+    .teams-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .leadership-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .partners-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Footer */
+    .footer-content {
+        gap: 20px;
+    }
+
+    .footer-section h4 {
+        font-size: 1rem;
+    }
+
+    /* Form */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    /* Cards */
+    .card {
+        padding: 20px;
+    }
+
+    /* Tournament Card */
+    .tournament-card img {
+        height: 150px;
+    }
+
+    .tournament-info {
+        padding: 15px;
+    }
+
+    /* Team Profile */
+    .team-profile {
+        padding: 20px;
+    }
+
+    .team-header img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .team-stats {
+        gap: 10px;
+    }
+
+    .stat {
+        padding: 10px;
+    }
+
+    /* Blog Post */
+    .blog-card img {
+        height: 150px;
+    }
+
+    .blog-card h3,
+    .blog-card p {
+        padding: 15px 15px 0 15px;
+    }
+
+    .blog-card p {
+        padding-bottom: 15px;
+    }
+
+    .read-more {
+        padding: 15px;
+    }
+
+    /* Contact */
+    .contact-wrapper {
+        gap: 30px;
+    }
+
+    .social-links {
+        flex-direction: column;
+    }
+
+    .social-link {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Blog Filters */
+    .blog-filters {
+        gap: 10px;
+    }
+
+    .blog-filters input,
+    .blog-filters select {
+        font-size: 16px;
+    }
+
+    /* Filter Buttons */
+    .tournament-filters {
+        gap: 10px;
+    }
+
+    .filter-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        flex: 1;
+    }
+
+    /* Pagination */
+    .pagination {
+        gap: 5px;
+    }
+
+    .page-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    /* Page Header */
+    .page-header {
+        padding: 40px 0;
+        margin-top: 70px;
+    }
+
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .page-header p {
+        font-size: 0.95rem;
+    }
+
+    /* CTA */
+    .cta {
+        padding: 30px 15px;
+        margin: 0 5px;
+    }
+
+    .cta h2 {
+        font-size: 1.3rem;
+    }
+
+    .cta p {
+        font-size: 0.95rem;
+    }
+
+    /* Stats Section */
+    .stats-section {
+        padding: 30px 15px;
+        margin: 0 5px;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    /* Newsletter */
+    .newsletter-form {
+        gap: 8px;
+    }
+
+    /* Table */
+    table {
+        font-size: 0.8rem;
+    }
+
+    table th,
+    table td {
+        padding: 8px 5px;
+    }
+
+    /* FAQ */
+    .faq-item {
+        padding: 20px 15px;
+    }
+
+    /* Leader Cards */
+    .leader-card img {
+        height: 200px;
+    }
+
+    /* Detail Card */
+    .detail-card {
+        padding: 20px;
+    }
+
+    /* Position text */
+    .position {
+        padding: 0 15px;
+    }
+
+    .bio {
+        padding: 0 15px 15px;
+    }
+
+    .team-game {
+        font-size: 0.9rem;
+    }
+
+    .team-region {
+        font-size: 0.85rem;
+    }
+
+    /* Info boxes */
+    .contact-info-box {
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+
+    .contact-info-box h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+
+    /* FocusFix for inputs */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+        font-size: 16px;
+    }
+
+    /* Container padding */
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Newsletter section */
+    .newsletter {
+        padding: 40px 0;
+    }
+
+    .newsletter h2 {
+        font-size: 1.3rem;
+    }
+
+    .newsletter p {
+        font-size: 0.95rem;
+    }
+
+    /* Prize pool text */
+    .prize-pool,
+    .teams-count,
+    .dates {
+        font-size: 0.9rem;
+    }
+}
+
+/* Extra Small Devices (320px and below) */
+@media (max-width: 320px) {
+    /* Text */
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    h2 {
+        font-size: 1.1rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    /* Hero */
+    .hero-title {
+        font-size: 1.2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.85rem;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+
+    /* Page Header */
+    .page-header h1 {
+        font-size: 1.2rem;
+    }
+
+    /* Container */
+    .container {
+        padding: 0 10px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-number {
+        font-size: 1.2rem;
+    }
+
+    /* CTA */
+    .cta {
+        padding: 20px 10px;
+    }
+
+    .cta h2 {
+        font-size: 1.1rem;
+    }
+
+    /* Navigation */
+    .logo {
+        font-size: 1rem;
+    }
+
+    .logo img {
+        height: 30px;
+    }
+}

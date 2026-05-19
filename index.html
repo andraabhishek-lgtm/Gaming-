@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming Stackly — Competitive Racing Esports Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e63946;
+            --purple: #a855f7;
+            --cyan: #06b6d4;
+            --green: #22c55e;
+            --amber: #f59e0b;
+            --bg-deep: #0a0a0f;
+            --bg-mid:  #0d0d14;
+            --bg-card: #111118;
+            --bg-card2:#13131f;
+            --border:  #1e1e30;
+            --text:    #e0e0ff;
+            --muted:   #6b7280;
+            --dim:     #9ca3af;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg-deep); color: var(--text); font-family: 'Rajdhani', 'Segoe UI', sans-serif; overflow-x: hidden; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        a { text-decoration: none; color: inherit; }
+        img { display: block; max-width: 100%; }
+
+        /* ── Section Headers ── */
+        .section-header { text-align: center; margin-bottom: 52px; }
+        .section-subtitle {
+            display: inline-block; color: var(--primary); font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px;
+            padding-left: 28px; position: relative; font-family: 'Orbitron', monospace;
+        }
+        .section-subtitle::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:18px; height:2px; background:var(--primary); }
+        .section-title { font-size: clamp(1.7rem,3vw,2.5rem); font-weight: 900; color:#fff; line-height:1.2; margin-bottom:12px; font-family:'Orbitron',monospace; }
+        .text-gradient { background:linear-gradient(90deg,#e63946,#ff6b6b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .text-gradient-cool { background:linear-gradient(90deg,#a855f7,#06b6d4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .section-desc { color:var(--muted); font-size:1rem; max-width:500px; margin:0 auto; }
+
+        /* ── Reveal Animations ── */
+        .reveal { opacity:0; transform:translateY(30px); transition:opacity .65s ease,transform .65s ease; }
+        .reveal.active { opacity:1; transform:translateY(0); }
+        .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity .65s ease,transform .65s ease; }
+        .reveal-left.active { opacity:1; transform:translateX(0); }
+        .reveal-right { opacity:0; transform:translateX(40px); transition:opacity .65s ease,transform .65s ease; }
+        .reveal-right.active { opacity:1; transform:translateX(0); }
+        .st1{transition-delay:.1s}.st2{transition-delay:.2s}.st3{transition-delay:.3s}.st4{transition-delay:.4s}.st5{transition-delay:.5s}
+
+        /* ════════════════════════════
+           NAVBAR
+        ════════════════════════════ */
+        .navbar {
+            position:fixed; top:0; left:0; right:0; z-index:1000;
+            height:68px; display:flex; align-items:center;
+            padding:0 40px;
+            background:rgba(10,10,15,0.75);
+            backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+            border-bottom:1px solid rgba(168,85,247,0.07);
+            transition:background .3s, border-color .3s;
+        }
+        .navbar.scrolled { background:rgba(10,10,15,0.97); border-bottom-color:rgba(168,85,247,0.18); }
+        .nav-container { width:100%; max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
+        .logo { display:flex; align-items:center; gap:10px; font-family:'Orbitron',monospace; font-size:1rem; font-weight:900; }
+        .logo img { width:34px; height:34px; object-fit:contain; border-radius:8px; }
+        .logo span { background:linear-gradient(90deg,#e63946,#ff6b6b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .nav-menu { list-style:none; display:flex; gap:4px; align-items:center; }
+        .nav-menu a {
+            color:var(--dim); font-size:0.72rem; font-weight:700; letter-spacing:1px;
+            padding:7px 13px; border-radius:6px; border:1px solid transparent;
+            font-family:'Orbitron',monospace;
+            transition:color .2s, background .2s, border-color .2s, box-shadow .2s;
+        }
+        .nav-menu a:hover { color:var(--purple); border-color:rgba(168,85,247,0.35); background:rgba(168,85,247,0.08); box-shadow:0 0 12px rgba(168,85,247,0.2); }
+        .nav-menu a.active { color:var(--cyan); border-color:rgba(6,182,212,0.3); background:rgba(6,182,212,0.06); }
+        .nav-cta { background:var(--primary)!important; color:#fff!important; border-color:var(--primary)!important; box-shadow:0 4px 16px rgba(230,57,70,.35)!important; }
+        .nav-cta:hover { background:#c0303c!important; box-shadow:0 6px 24px rgba(230,57,70,.5)!important; color:#fff!important; }
+
+        /* Hamburger */
+        .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; border:1px solid rgba(255,255,255,0.08); border-radius:8px; background:rgba(255,255,255,0.03); transition:border-color .2s, background .2s; }
+        .hamburger:hover { border-color:var(--purple); background:rgba(168,85,247,0.08); }
+        .hamburger span { display:block; width:22px; height:2px; background:#fff; border-radius:2px; transition:transform .3s, opacity .3s; }
+        .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity:0; }
+        .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+        /* Mobile menu */
+        .mobile-menu {
+            display:none; position:fixed; top:68px; left:0; right:0; z-index:998;
+            background:rgba(10,10,15,0.98); backdrop-filter:blur(24px);
+            border-bottom:1px solid var(--border);
+            padding:16px 20px 20px; flex-direction:column; gap:6px;
+        }
+        .mobile-menu.open { display:flex; animation:slideDown .22s ease; }
+        @keyframes slideDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+        .mobile-menu a { color:var(--dim); font-size:0.75rem; font-weight:700; padding:11px 14px; border-radius:8px; border:1px solid transparent; font-family:'Orbitron',monospace; letter-spacing:1px; transition:all .2s; }
+        .mobile-menu a:hover { color:var(--purple); border-color:rgba(168,85,247,0.3); background:rgba(168,85,247,0.06); }
+        .mobile-menu a.active { color:var(--cyan); border-color:rgba(6,182,212,0.25); }
+        .mobile-menu .mob-cta { background:var(--primary)!important; color:#fff!important; border-color:var(--primary)!important; text-align:center; margin-top:6px; }
+
+        /* ════════════════════════════
+           HERO SWIPER
+        ════════════════════════════ */
+        .hero-swiper-section { position:relative; height:100vh; min-height:620px; overflow:hidden; }
+        .hero-swiper, .hero-swiper .swiper-wrapper { height:100%; }
+        .swiper-slide { position:relative; overflow:hidden; }
+        .slide-bg {
+            position:absolute; inset:0;
+            background-size:cover; background-position:center;
+            filter:brightness(.28); transform:scale(1.06);
+            transition:transform 8s ease;
+        }
+        .swiper-slide-active .slide-bg { transform:scale(1.12); }
+        .slide-overlay {
+            position:absolute; inset:0;
+            background:linear-gradient(135deg, rgba(0,0,0,.78) 0%, rgba(168,85,247,.05) 50%, rgba(6,182,212,.04) 100%);
+        }
+        .slide-content {
+            position:relative; z-index:3; height:100%;
+            display:flex; align-items:center;
+            padding:0 40px; max-width:1200px; margin:0 auto;
+        }
+        .slide-inner { max-width:700px; }
+        .slide-badge {
+            display:inline-flex; align-items:center; gap:8px;
+            background:rgba(168,85,247,.12); border:1px solid rgba(168,85,247,.3);
+            color:#c084fc; font-size:.7rem; font-weight:700; letter-spacing:2.5px;
+            text-transform:uppercase; padding:7px 18px; border-radius:20px;
+            margin-bottom:26px; font-family:'Orbitron',monospace;
+            backdrop-filter:blur(8px); animation:fadeInDown .7s ease both;
+        }
+        .slide-badge i { color:var(--primary); }
+        .slide-title { font-size:clamp(2.2rem,6vw,5rem); font-weight:900; color:#fff; line-height:1.05; margin-bottom:20px; font-family:'Orbitron',monospace; animation:fadeInUp .7s .1s ease both; }
+        .slide-title .gr { background:linear-gradient(90deg,#e63946,#ff6b6b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .slide-title .gc { background:linear-gradient(90deg,#a855f7,#06b6d4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .slide-desc { color:rgba(224,224,255,.7); font-size:clamp(.95rem,2vw,1.15rem); line-height:1.7; margin-bottom:36px; animation:fadeInUp .7s .2s ease both; }
+        .slide-btns { display:flex; gap:14px; flex-wrap:wrap; animation:fadeInUp .7s .3s ease both; }
+        .btn-sp { padding:13px 30px; border-radius:8px; font-size:.82rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:8px; font-family:'Orbitron',monospace; letter-spacing:1px; transition:all .22s; border:none; }
+        .btn-sp-red { background:var(--primary); color:#fff; box-shadow:0 6px 22px rgba(230,57,70,.4); }
+        .btn-sp-red:hover { background:#c0303c; transform:translateY(-3px); box-shadow:0 12px 34px rgba(230,57,70,.5); }
+        .btn-sp-glass { background:rgba(255,255,255,.06); color:#fff; border:1px solid rgba(255,255,255,.2); backdrop-filter:blur(8px); }
+        .btn-sp-glass:hover { background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.4); transform:translateY(-3px); }
+
+        /* Swiper custom */
+        .hero-swiper .swiper-pagination { bottom:30px; }
+        .hero-swiper .swiper-pagination-bullet { width:28px; height:3px; border-radius:2px; background:rgba(255,255,255,.3); opacity:1; transition:all .3s; }
+        .hero-swiper .swiper-pagination-bullet-active { width:52px; background:var(--primary); box-shadow:0 0 8px rgba(230,57,70,.5); }
+        .hero-swiper .swiper-button-next, .hero-swiper .swiper-button-prev { width:44px; height:44px; border-radius:50%; background:rgba(17,17,24,.75); border:1px solid rgba(168,85,247,.3); backdrop-filter:blur(8px); color:#fff; transition:all .2s; }
+        .hero-swiper .swiper-button-next:hover, .hero-swiper .swiper-button-prev:hover { background:rgba(168,85,247,.2); border-color:var(--purple); box-shadow:0 0 16px rgba(168,85,247,.3); }
+        .hero-swiper .swiper-button-next::after, .hero-swiper .swiper-button-prev::after { font-size:13px; font-weight:900; }
+        .hero-scroll { position:absolute; bottom:34px; right:56px; z-index:10; display:flex; flex-direction:column; align-items:center; gap:5px; color:rgba(255,255,255,.3); font-size:.65rem; letter-spacing:2px; text-transform:uppercase; font-family:'Orbitron',monospace; animation:bounce 2s infinite; }
+        @keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeInUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
+        @keyframes bounce     { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+        /* ════════════════════════════
+           LIVE TICKER
+        ════════════════════════════ */
+        .live-ticker { background:#0b0b12; border-top:1px solid var(--border); border-bottom:1px solid var(--border); display:flex; align-items:stretch; overflow:hidden; }
+        .ticker-label { flex-shrink:0; display:flex; align-items:center; gap:7px; padding:11px 20px; background:var(--primary); color:#fff; font-size:.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; font-family:'Orbitron',monospace; white-space:nowrap; }
+        .ticker-dot { width:7px; height:7px; border-radius:50%; background:#fff; animation:tPulse 1.2s ease-in-out infinite; }
+        @keyframes tPulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+        .ticker-track-wrap { flex:1; overflow:hidden; display:flex; align-items:center; -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 4%,#000 96%,transparent 100%); mask-image:linear-gradient(to right,transparent 0%,#000 4%,#000 96%,transparent 100%); }
+        .ticker-track { display:flex; width:max-content; animation:tickerScroll 34s linear infinite; }
+        @keyframes tickerScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+        .t-item { display:flex; align-items:center; gap:7px; padding:11px 28px 11px 0; font-size:.8rem; color:var(--dim); white-space:nowrap; }
+        .t-item i { color:var(--primary); font-size:.68rem; }
+        .t-item .t-live { color:var(--green); }
+        .t-item strong { color:#fff; }
+        .t-sep { color:#1e1e30; padding:0 14px; font-size:1.2rem; user-select:none; }
+
+        /* ════════════════════════════
+           STATS STRIP
+        ════════════════════════════ */
+        .stats-strip { background:var(--bg-mid); padding:60px 0; border-bottom:1px solid var(--border); }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); }
+        .stat-item { text-align:center; padding:10px 20px; border-right:1px solid var(--border); }
+        .stat-item:last-child { border-right:none; }
+        .stat-num { font-size:2.5rem; font-weight:900; color:var(--primary); line-height:1; margin-bottom:8px; font-family:'Orbitron',monospace; }
+        .stat-lbl { color:var(--muted); font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; }
+
+        /* ════════════════════════════
+           LIVE RACES
+        ════════════════════════════ */
+        .live-races { padding:90px 0 110px; background:var(--bg-deep); position:relative; }
+        .live-races-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+        .lrc {
+            background:var(--bg-card); border:1px solid var(--border); border-radius:16px;
+            overflow:hidden; cursor:pointer;
+            transition:transform .3s, border-color .3s, box-shadow .3s;
+        }
+        .lrc:hover { transform:translateY(-6px); border-color:rgba(168,85,247,.4); box-shadow:0 16px 48px rgba(168,85,247,.12); }
+        .lrc-thumb { position:relative; height:188px; overflow:hidden; }
+        .lrc-thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s; }
+        .lrc:hover .lrc-thumb img { transform:scale(1.07); }
+        .lrc-thumb .lrc-dim { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.1) 55%); }
+        .lrc-status { position:absolute; top:12px; left:12px; display:flex; align-items:center; gap:5px; font-size:.65rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:4px 10px; border-radius:20px; font-family:'Orbitron',monospace; }
+        .s-live { background:rgba(34,197,94,.13); border:1px solid rgba(34,197,94,.4); color:#22c55e; }
+        .s-live::before { content:''; width:6px; height:6px; border-radius:50%; background:#22c55e; animation:livePulse 1.2s ease infinite; flex-shrink:0; }
+        .s-open { background:rgba(230,57,70,.12); border:1px solid rgba(230,57,70,.35); color:#ff8080; }
+        .s-soon { background:rgba(168,85,247,.12); border:1px solid rgba(168,85,247,.35); color:#c084fc; }
+        @keyframes livePulse { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.45)} 50%{box-shadow:0 0 0 6px rgba(34,197,94,0)} }
+        .lrc-viewers { position:absolute; top:12px; right:12px; display:flex; align-items:center; gap:5px; background:rgba(0,0,0,.65); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.1); color:#fff; font-size:.7rem; padding:3px 9px; border-radius:20px; font-family:'Orbitron',monospace; }
+        .lrc-viewers i { color:var(--primary); font-size:.62rem; }
+        .lrc-disc { position:absolute; bottom:12px; left:12px; background:rgba(168,85,247,.15); border:1px solid rgba(168,85,247,.35); color:#c084fc; font-size:.62rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:3px 9px; border-radius:5px; font-family:'Orbitron',monospace; }
+        .lrc-body { padding:16px 20px 20px; }
+        .lrc-body h3 { color:#fff; font-family:'Orbitron',monospace; font-size:.85rem; font-weight:700; letter-spacing:.5px; margin-bottom:8px; }
+        .lrc-teams { display:flex; align-items:center; gap:9px; margin-bottom:12px; }
+        .lrc-team { color:var(--dim); font-size:.82rem; font-weight:600; }
+        .lrc-vs { color:var(--primary); font-size:.7rem; font-weight:700; font-family:'Orbitron',monospace; background:rgba(230,57,70,.1); border:1px solid rgba(230,57,70,.25); padding:2px 7px; border-radius:4px; }
+        .lrc-meta { display:flex; gap:14px; margin-bottom:12px; }
+        .lrc-meta-i { display:flex; align-items:center; gap:5px; color:var(--muted); font-size:.76rem; }
+        .lrc-meta-i i { color:var(--purple); font-size:.65rem; }
+        .lrc-prize { color:var(--primary); font-weight:700; font-size:.83rem; font-family:'Orbitron',monospace; margin-bottom:10px; display:block; }
+        .lrc-watch { display:flex; align-items:center; gap:6px; color:var(--cyan); font-size:.76rem; font-weight:700; font-family:'Orbitron',monospace; letter-spacing:.5px; transition:gap .2s, color .2s; }
+        .lrc:hover .lrc-watch { gap:10px; color:#fff; }
+
+        /* ════════════════════════════
+           GAME CATEGORIES SWIPER
+        ════════════════════════════ */
+        .game-categories { padding:90px 0 110px; background:var(--bg-mid); position:relative; }
+        .gc-wrap { position:relative; padding:0 10px; }
+        .games-swiper { padding-bottom:52px!important; }
+        .gc-card { position:relative; border-radius:18px; overflow:hidden; height:355px; cursor:pointer; border:1px solid var(--border); transition:border-color .3s; display:block; }
+        .gc-card:hover { border-color:rgba(168,85,247,.45); }
+        .gc-card img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .55s ease; }
+        .gc-card:hover img { transform:scale(1.08); }
+        .gc-dim { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.93) 0%,rgba(0,0,0,.05) 55%); transition:background .3s; }
+        .gc-card:hover .gc-dim { background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(168,85,247,.1) 100%); }
+        .gc-info { position:absolute; bottom:0; left:0; right:0; padding:22px 20px; }
+        .gc-tag { display:inline-block; background:var(--primary); color:#fff; font-size:.62rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:3px 9px; border-radius:5px; margin-bottom:7px; font-family:'Orbitron',monospace; }
+        .gc-card h3 { color:#fff; font-family:'Orbitron',monospace; font-size:.88rem; font-weight:800; letter-spacing:.5px; margin-bottom:5px; }
+        .gc-card p { color:rgba(224,224,255,.6); font-size:.8rem; margin-bottom:12px; }
+        .gc-enter { display:inline-flex; align-items:center; gap:6px; color:var(--cyan); font-size:.75rem; font-weight:700; font-family:'Orbitron',monospace; opacity:0; transform:translateY(8px); transition:opacity .3s, transform .3s; }
+        .gc-card:hover .gc-enter { opacity:1; transform:translateY(0); }
+        .games-swiper .swiper-pagination-bullet { background:rgba(255,255,255,.3); opacity:1; }
+        .games-swiper .swiper-pagination-bullet-active { background:var(--purple); box-shadow:0 0 8px rgba(168,85,247,.5); width:20px; border-radius:3px; }
+        .games-swiper .swiper-button-next, .games-swiper .swiper-button-prev { width:40px; height:40px; border-radius:50%; background:rgba(17,17,24,.88); border:1px solid var(--border); color:#fff; top:44%; transition:all .2s; }
+        .games-swiper .swiper-button-next:hover, .games-swiper .swiper-button-prev:hover { border-color:var(--purple); box-shadow:0 0 14px rgba(168,85,247,.3); }
+        .games-swiper .swiper-button-next::after, .games-swiper .swiper-button-prev::after { font-size:13px; font-weight:900; }
+
+        /* ════════════════════════════
+           LEADERBOARD
+        ════════════════════════════ */
+        .leaderboard-section { padding:90px 0 110px; background:var(--bg-deep); position:relative; }
+        .lb-grid { display:grid; grid-template-columns:1.6fr 1fr; gap:36px; align-items:start; }
+        .lb-wrap { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+        .lb-head { display:grid; grid-template-columns:48px 1fr 80px 90px 80px; padding:13px 18px; background:rgba(168,85,247,.06); border-bottom:1px solid var(--border); }
+        .lb-head span { color:var(--muted); font-size:.65rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; font-family:'Orbitron',monospace; }
+        .lb-row { display:grid; grid-template-columns:48px 1fr 80px 90px 80px; padding:13px 18px; border-bottom:1px solid rgba(30,30,48,.5); align-items:center; transition:background .2s; }
+        .lb-row:last-child { border-bottom:none; }
+        .lb-row:hover { background:rgba(168,85,247,.05); }
+        .lb-rank { font-family:'Orbitron',monospace; font-size:.82rem; font-weight:700; }
+        .r1{color:#f59e0b} .r2{color:#9ca3af} .r3{color:#cd7f32} .rn{color:var(--muted)}
+        .lb-driver { display:flex; align-items:center; gap:10px; }
+        .lb-av { width:30px; height:30px; border-radius:50%; border:2px solid var(--border); flex-shrink:0; background:#1e1e30; display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:700; color:var(--muted); font-family:'Orbitron',monospace; object-fit:cover; overflow:hidden; }
+        .lb-info .dn { color:#fff; font-size:.85rem; font-weight:700; display:block; }
+        .lb-info .dt { color:var(--muted); font-size:.7rem; }
+        .lb-tier { display:inline-flex; align-items:center; gap:4px; font-size:.62rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:2px 8px; border-radius:4px; font-family:'Orbitron',monospace; }
+        .td { background:rgba(6,182,212,.1); color:#06b6d4; border:1px solid rgba(6,182,212,.3); }
+        .tp { background:rgba(168,85,247,.1); color:#c084fc; border:1px solid rgba(168,85,247,.3); }
+        .tg { background:rgba(245,158,11,.1); color:#f59e0b; border:1px solid rgba(245,158,11,.3); }
+        .lb-pts { color:var(--primary); font-family:'Orbitron',monospace; font-size:.85rem; font-weight:700; }
+        .lb-trend { display:flex; align-items:center; gap:4px; font-size:.75rem; font-family:'Orbitron',monospace; }
+        .tu{color:var(--green)} .td2{color:var(--primary)} .ts{color:var(--muted)}
+
+        /* Rank Tiers Card */
+        .tier-card { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:26px 22px; }
+        .tier-card h3 { color:#fff; font-family:'Orbitron',monospace; font-size:.85rem; font-weight:700; letter-spacing:1px; margin-bottom:20px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+        .tier-row { display:flex; align-items:center; gap:13px; padding:11px 0; border-bottom:1px solid rgba(30,30,48,.5); }
+        .tier-row:last-child { border-bottom:none; }
+        .tier-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.05rem; flex-shrink:0; }
+        .ti-champ  { background:rgba(245,158,11,.1); border:1px solid rgba(245,158,11,.3); }
+        .ti-dia    { background:rgba(6,182,212,.1);  border:1px solid rgba(6,182,212,.3); }
+        .ti-plat   { background:rgba(168,85,247,.1); border:1px solid rgba(168,85,247,.3); }
+        .ti-gold   { background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25); }
+        .ti-silv   { background:rgba(156,163,175,.1);border:1px solid rgba(156,163,175,.25); }
+        .ti-brnz   { background:rgba(205,127,50,.1); border:1px solid rgba(205,127,50,.25); }
+        .tier-info .tn { color:#fff; font-size:.85rem; font-weight:700; font-family:'Orbitron',monospace; display:block; }
+        .tier-info .tp2 { color:var(--muted); font-size:.72rem; margin-top:2px; }
+        .tier-count { margin-left:auto; color:var(--muted); font-size:.75rem; font-family:'Orbitron',monospace; }
+
+        /* ════════════════════════════
+           ABOUT PREVIEW
+        ════════════════════════════ */
+        .about-preview { padding:90px 0 110px; background:var(--bg-mid); position:relative; }
+        .apg { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center; }
+        .ap-img { position:relative; }
+        .ap-img .img-frame { border-radius:20px; overflow:hidden; box-shadow:0 28px 72px rgba(0,0,0,.5), 0 0 0 1px var(--border); }
+        .ap-img img { width:100%; height:450px; object-fit:cover; display:block; transition:transform .5s; }
+        .ap-img:hover img { transform:scale(1.04); }
+        .exp-badge { position:absolute; bottom:26px; right:-20px; background:var(--primary); color:#fff; border-radius:14px; padding:17px 22px; text-align:center; box-shadow:0 10px 36px rgba(230,57,70,.4), 0 0 0 4px rgba(230,57,70,.1); min-width:116px; }
+        .exp-badge .big { display:block; font-size:2.2rem; font-weight:900; line-height:1; margin-bottom:4px; font-family:'Orbitron',monospace; }
+        .exp-badge .sm  { display:block; font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; line-height:1.4; }
+        .ap-content .section-subtitle { display:inline-block; margin-bottom:12px; }
+        .ap-content .section-title { margin-bottom:16px; }
+        .ap-content p { color:var(--muted); font-size:.96rem; line-height:1.8; margin-bottom:13px; }
+        .ap-feats { display:flex; flex-direction:column; gap:11px; margin-top:26px; }
+        .ap-feat { display:flex; align-items:flex-start; gap:13px; padding:14px 16px; background:rgba(17,17,24,.7); border:1px solid var(--border); border-radius:12px; backdrop-filter:blur(8px); transition:border-color .3s, transform .3s, box-shadow .3s; }
+        .ap-feat:hover { border-color:rgba(168,85,247,.4); transform:translateX(6px); box-shadow:0 4px 20px rgba(168,85,247,.08); }
+        .ap-ico { flex-shrink:0; width:40px; height:40px; background:rgba(230,57,70,.1); border:1px solid rgba(230,57,70,.2); border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--primary); font-size:.95rem; }
+        .ap-feat h4 { color:#fff; font-size:.8rem; font-weight:700; margin-bottom:3px; font-family:'Orbitron',monospace; }
+        .ap-feat p  { color:var(--muted); font-size:.78rem; line-height:1.5; margin:0; }
+
+        /* ════════════════════════════
+           AURORA PLATFORM FEATURES
+        ════════════════════════════ */
+        .aurora-section { padding:90px 0 110px; background:var(--bg-deep); position:relative; }
+        .aurora-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+        .ac {
+            position:relative; border-radius:18px; background:var(--bg-card);
+            padding:26px 24px; cursor:pointer; isolation:isolate;
+            transition:transform .3s, box-shadow .3s;
+        }
+        .ac::before { content:''; position:absolute; inset:-1px; border-radius:19px; background:conic-gradient(from 0deg,#a855f7,#06b6d4,#e63946,#a855f7); z-index:-2; opacity:0; transition:opacity .4s; }
+        .ac::after  { content:''; position:absolute; inset:1px; border-radius:17px; background:var(--bg-card); z-index:-1; }
+        .ac:hover { transform:translateY(-6px); box-shadow:0 16px 48px rgba(168,85,247,.1); }
+        .ac:hover::before { opacity:1; }
+        .ac-icon { width:50px; height:50px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; margin-bottom:18px; transition:transform .3s; }
+        .ac:hover .ac-icon { transform:scale(1.1) rotate(-5deg); }
+        .ic-p { background:rgba(168,85,247,.12); border:1px solid rgba(168,85,247,.25); color:#a855f7; }
+        .ic-c { background:rgba(6,182,212,.12);  border:1px solid rgba(6,182,212,.25);  color:#06b6d4; }
+        .ic-r { background:rgba(230,57,70,.12);  border:1px solid rgba(230,57,70,.25);  color:#e63946; }
+        .ic-g { background:rgba(34,197,94,.12);  border:1px solid rgba(34,197,94,.25);  color:#22c55e; }
+        .ic-a { background:rgba(245,158,11,.12); border:1px solid rgba(245,158,11,.25); color:#f59e0b; }
+        .ac h3 { color:#fff; font-size:.88rem; font-weight:700; margin-bottom:9px; font-family:'Orbitron',monospace; letter-spacing:.5px; }
+        .ac p  { color:var(--muted); font-size:.83rem; line-height:1.65; margin-bottom:14px; }
+        .ac-badge { display:inline-flex; align-items:center; gap:5px; font-size:.65rem; font-weight:700; letter-spacing:1px; padding:3px 9px; border-radius:4px; font-family:'Orbitron',monospace; }
+        .ab-p { background:rgba(168,85,247,.1); color:#a855f7; border:1px solid rgba(168,85,247,.25); }
+        .ab-c { background:rgba(6,182,212,.1);  color:#06b6d4; border:1px solid rgba(6,182,212,.25); }
+        .ab-r { background:rgba(230,57,70,.1);  color:#ff8080; border:1px solid rgba(230,57,70,.25); }
+        .ab-g { background:rgba(34,197,94,.1);  color:#22c55e; border:1px solid rgba(34,197,94,.25); }
+        .ab-a { background:rgba(245,158,11,.1); color:#f59e0b; border:1px solid rgba(245,158,11,.25); }
+
+        /* ════════════════════════════
+           SPONSORS SCROLL
+        ════════════════════════════ */
+        .sponsors-strip { padding:56px 0 70px; background:var(--bg-mid); overflow:hidden; position:relative; }
+        .sponsors-label { text-align:center; margin-bottom:30px; color:#28283a; font-size:.68rem; font-weight:700; letter-spacing:3.5px; text-transform:uppercase; font-family:'Orbitron',monospace; }
+        .logos-track-wrapper { overflow:hidden; -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%); mask-image:linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%); }
+        .logos-track { display:flex; align-items:center; gap:18px; width:max-content; animation:scrollLogos 32s linear infinite; }
+        .logos-track:hover { animation-play-state:paused; }
+        @keyframes scrollLogos { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+        .logo-item { flex-shrink:0; width:168px; height:98px; border-radius:12px; overflow:hidden; border:1px solid var(--border); background:var(--bg-card); transition:border-color .3s, transform .3s, box-shadow .3s; }
+        .logo-item:hover { border-color:rgba(168,85,247,.4); transform:scale(1.05); box-shadow:0 0 20px rgba(168,85,247,.12); }
+        .logo-item img { width:100%; height:100%; object-fit:cover; filter:grayscale(70%) brightness(.65); transition:filter .4s; }
+        .logo-item:hover img { filter:grayscale(0%) brightness(.88); }
+
+        /* ════════════════════════════
+           TEAMS PREVIEW
+        ════════════════════════════ */
+        .teams-preview { padding:90px 0 110px; background:var(--bg-deep); position:relative; }
+        .teams-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+        .tp-card { background:var(--bg-card); border:1px solid var(--border); border-radius:18px; overflow:hidden; transition:transform .3s, border-color .3s, box-shadow .3s; }
+        .tp-card:hover { transform:translateY(-7px); border-color:rgba(168,85,247,.4); box-shadow:0 20px 50px rgba(168,85,247,.1); }
+        .tp-cover { position:relative; height:192px; overflow:hidden; }
+        .tp-cover img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s; }
+        .tp-card:hover .tp-cover img { transform:scale(1.07); }
+        .tp-cover .tp-dim { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.05) 60%); }
+        .tp-disc { position:absolute; bottom:13px; left:16px; background:rgba(168,85,247,.18); border:1px solid rgba(168,85,247,.4); color:#c084fc; font-size:.62rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:3px 9px; border-radius:5px; font-family:'Orbitron',monospace; }
+        .tp-body { padding:18px 20px 20px; }
+        .tp-body h3 { color:#fff; font-size:.88rem; font-weight:800; margin-bottom:4px; font-family:'Orbitron',monospace; letter-spacing:.5px; }
+        .tp-role { color:var(--primary); font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:9px; display:block; font-family:'Orbitron',monospace; }
+        .tp-body p { color:var(--muted); font-size:.8rem; line-height:1.6; margin-bottom:14px; }
+        .tp-stats { display:flex; gap:16px; padding-top:12px; border-top:1px solid var(--border); }
+        .tp-stat .v { color:#fff; font-size:1rem; font-weight:800; display:block; font-family:'Orbitron',monospace; }
+        .tp-stat .l { color:#444455; font-size:.65rem; text-transform:uppercase; letter-spacing:.8px; }
+
+        /* ════════════════════════════
+           BLOG PREVIEW
+        ════════════════════════════ */
+        .blog-preview { padding:90px 0 110px; background:var(--bg-mid); position:relative; }
+        .blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+        .blog-card { background:var(--bg-card); border:1px solid var(--border); border-radius:18px; overflow:hidden; cursor:pointer; transition:transform .3s, border-color .3s, box-shadow .3s; }
+        .blog-card:hover { transform:translateY(-6px); border-color:rgba(168,85,247,.4); box-shadow:0 16px 45px rgba(168,85,247,.08); }
+        .blog-thumb { position:relative; height:200px; overflow:hidden; }
+        .blog-thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s; }
+        .blog-card:hover .blog-thumb img { transform:scale(1.06); }
+        .blog-cat { position:absolute; top:13px; left:13px; background:var(--primary); color:#fff; font-size:.62rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:3px 9px; border-radius:5px; font-family:'Orbitron',monospace; }
+        .blog-body { padding:18px 20px 20px; }
+        .blog-meta { display:flex; align-items:center; gap:13px; margin-bottom:10px; color:#35354a; font-size:.74rem; }
+        .blog-meta i { color:var(--purple); font-size:.65rem; }
+        .blog-body h3 { color:#fff; font-size:.82rem; font-weight:700; line-height:1.45; margin-bottom:9px; font-family:'Orbitron',monospace; }
+        .blog-body p  { color:var(--muted); font-size:.8rem; line-height:1.6; margin-bottom:14px; }
+        .blog-read { display:inline-flex; align-items:center; gap:6px; color:var(--cyan); font-size:.75rem; font-weight:700; font-family:'Orbitron',monospace; transition:gap .2s; }
+        .blog-card:hover .blog-read { gap:10px; }
+
+        /* ════════════════════════════
+           CTA
+        ════════════════════════════ */
+        .cta-section { position:relative; padding:110px 0; overflow:hidden; text-align:center; }
+        .cta-bg { position:absolute; inset:0; background:url('images/tournament.webp') center/cover no-repeat; filter:brightness(.2); transform:scale(1.04); }
+        .cta-overlay { position:absolute; inset:0; background:linear-gradient(135deg,rgba(168,85,247,.08) 0%,rgba(0,0,0,.6) 50%,rgba(6,182,212,.05) 100%); }
+        .cta-inner { position:relative; z-index:2; }
+        .cta-badge { display:inline-block; background:rgba(168,85,247,.12); border:1px solid rgba(168,85,247,.3); color:#c084fc; font-size:.7rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; padding:6px 18px; border-radius:20px; margin-bottom:22px; font-family:'Orbitron',monospace; backdrop-filter:blur(8px); }
+        .cta-inner h2 { font-size:clamp(2rem,5vw,3.5rem); font-weight:900; color:#fff; margin-bottom:16px; line-height:1.15; font-family:'Orbitron',monospace; }
+        .cta-inner h2 span { background:linear-gradient(90deg,#e63946,#ff6b6b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .cta-inner p { color:rgba(224,224,255,.65); font-size:1.05rem; max-width:500px; margin:0 auto 34px; line-height:1.7; }
+        .cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+        .btn-cta-p { padding:14px 36px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-size:.9rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .22s; box-shadow:0 8px 28px rgba(230,57,70,.4); font-family:'Orbitron',monospace; letter-spacing:1px; }
+        .btn-cta-p:hover { background:#c0303c; transform:translateY(-3px); }
+        .btn-cta-o { padding:14px 36px; background:transparent; color:#fff; border:1px solid rgba(255,255,255,.2); border-radius:8px; font-size:.9rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .22s; backdrop-filter:blur(8px); font-family:'Orbitron',monospace; letter-spacing:1px; }
+        .btn-cta-o:hover { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.45); transform:translateY(-3px); }
+
+        /* ════════════════════════════
+           FOOTER
+        ════════════════════════════ */
+        .site-footer { background:#060609; position:relative; }
+        .footer-wave-top { line-height:0; overflow:hidden; }
+        .footer-wave-top svg { display:block; width:100%; }
+        .footer-container { max-width:1200px; margin:0 auto; padding:0 24px; }
+        .footer-inner { display:grid; grid-template-columns:260px 1fr; gap:80px; padding:50px 0 42px; border-bottom:1px solid rgba(30,30,48,.6); }
+        .footer-left { display:flex; flex-direction:column; gap:16px; }
+        .footer-logo { display:flex; align-items:center; gap:10px; font-family:'Orbitron',monospace; font-size:.95rem; font-weight:900; }
+        .footer-logo img { width:32px; height:32px; object-fit:contain; border-radius:8px; }
+        .footer-logo span { background:linear-gradient(90deg,#e63946,#ff6b6b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .footer-tagline { color:#28283a; font-size:.85rem; font-family:'Orbitron',monospace; }
+        .footer-socials { display:flex; gap:9px; flex-wrap:wrap; }
+        .footer-socials a { width:36px; height:36px; border-radius:50%; background:rgba(17,17,24,.8); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color:#44445a; font-size:.85rem; transition:all .2s; }
+        .footer-socials a:hover { background:var(--primary); color:#fff; border-color:var(--primary); transform:translateY(-3px); box-shadow:0 4px 14px rgba(230,57,70,.35); }
+        .footer-right { display:grid; grid-template-columns:repeat(3,1fr); gap:36px; }
+        .fcol-title { display:block; color:#28283a; font-size:.65rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; margin-bottom:20px; font-family:'Orbitron',monospace; }
+        .footer-col ul { list-style:none; padding:0; display:flex; flex-direction:column; gap:12px; }
+        .footer-col ul li a { color:#44445a; font-size:.88rem; font-weight:600; transition:color .2s; }
+        .footer-col ul li a:hover { color:#fff; }
+        .footer-bar { display:flex; align-items:center; justify-content:space-between; padding:18px 0; flex-wrap:wrap; gap:10px; }
+        .footer-bar > p { color:#28283a; font-size:.75rem; font-family:'Orbitron',monospace; }
+        .footer-legal { display:flex; gap:18px; }
+        .footer-legal a { color:#28283a; font-size:.75rem; font-family:'Orbitron',monospace; transition:color .2s; }
+        .footer-legal a:hover { color:#fff; }
+
+        /* ════════════════════════════
+           RESPONSIVE
+        ════════════════════════════ */
+        @media (max-width:1100px) {
+            .live-races-grid { grid-template-columns:repeat(2,1fr); }
+            .aurora-grid { grid-template-columns:repeat(2,1fr); }
+            .lb-grid { grid-template-columns:1fr; }
+        }
+        @media (max-width:900px) {
+            .apg { grid-template-columns:1fr; gap:40px; }
+            .exp-badge { right:14px; bottom:14px; }
+            .teams-grid, .blog-grid { grid-template-columns:repeat(2,1fr); }
+            .stats-grid { grid-template-columns:repeat(2,1fr); }
+            .stat-item:nth-child(2) { border-right:none; }
+            .stat-item:nth-child(3) { border-top:1px solid var(--border); }
+            .footer-inner { grid-template-columns:1fr; gap:32px; }
+            .lb-head, .lb-row { grid-template-columns:42px 1fr 70px 78px; }
+            .lb-head span:last-child, .lb-row > *:last-child { display:none; }
+        }
+        @media (max-width:768px) {
+            .navbar { padding:0 20px; }
+            .nav-menu { display:none; }
+            .hamburger { display:flex; }
+            .live-races-grid { grid-template-columns:1fr; }
+            .aurora-grid { grid-template-columns:1fr; }
+            .slide-content { padding:0 20px; }
+        }
+        @media (max-width:640px) {
+            .teams-grid, .blog-grid { grid-template-columns:1fr; }
+            .footer-right { grid-template-columns:1fr 1fr; }
+            .footer-bar { flex-direction:column; text-align:center; }
+            .lb-head, .lb-row { grid-template-columns:36px 1fr 58px; }
+            .lb-head span:nth-child(3), .lb-row > *:nth-child(3),
+            .lb-head span:nth-child(4), .lb-row > *:nth-child(4) { display:none; }
+        }
+        @media (max-width:480px) {
+            .hero-swiper-section { min-height:520px; }
+            .hero-scroll { display:none; }
+            .slide-btns { flex-direction:column; align-items:flex-start; }
+            .btn-sp { padding:11px 22px; font-size:.78rem; }
+            .stats-grid { grid-template-columns:1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <img src="images/Logo.png" alt="Gaming Stackly">
+            <span>Gaming Stackly</span>
+        </a>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="tournaments.html">Tournaments</a></li>
+            <li><a href="teams.html">Teams</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="tournaments.html" class="nav-cta">Join Now</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="active">Home</a>
+    <a href="tournaments.html">Tournaments</a>
+    <a href="teams.html">Teams</a>
+    <a href="blog.html">Blog</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="tournaments.html" class="mob-cta">Join Now</a>
+</div>
+
+<!-- ══ HERO SWIPER ══ -->
+<section class="hero-swiper-section">
+    <div class="swiper hero-swiper">
+        <div class="swiper-wrapper">
+
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+                <div class="slide-bg" style="background-image:url('images/car-racing-01.webp')"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content container">
+                    <div class="slide-inner">
+                        <div class="slide-badge"><i class="fas fa-flag-checkered"></i> Racing Esports &bull; 2026 Season Live</div>
+                        <h1 class="slide-title">Race. Compete.<br><span class="gr">Dominate.</span></h1>
+                        <p class="slide-desc">The world's premier competitive racing esports platform. Tournaments, teams, and titles — all in one place.</p>
+                        <div class="slide-btns">
+                            <a href="tournaments.html" class="btn-sp btn-sp-red"><i class="fas fa-trophy"></i> Join Tournament</a>
+                            <a href="teams.html" class="btn-sp btn-sp-glass"><i class="fas fa-users"></i> View Teams</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+                <div class="slide-bg" style="background-image:url('images/bike-racing-12.webp')"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content container">
+                    <div class="slide-inner">
+                        <div class="slide-badge"><i class="fas fa-motorcycle"></i> MotoGP Esports &bull; Registration Open</div>
+                        <h1 class="slide-title">Ride Fast.<br><span class="gc">Ride First.</span></h1>
+                        <p class="slide-desc">Enter the MotoGP Esports Championship — superbikes, world-class circuits, and $500K on the line every season.</p>
+                        <div class="slide-btns">
+                            <a href="tournaments.html" class="btn-sp btn-sp-red"><i class="fas fa-flag"></i> Register Now</a>
+                            <a href="about.html" class="btn-sp btn-sp-glass"><i class="fas fa-info-circle"></i> Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+                <div class="slide-bg" style="background-image:url('images/car-racing-14.webp')"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content container">
+                    <div class="slide-inner">
+                        <div class="slide-badge"><i class="fas fa-car-side"></i> Formula Series &bull; Season Finale</div>
+                        <h1 class="slide-title">Win Big.<br><span class="gr">Race Bigger.</span></h1>
+                        <p class="slide-desc">Formula World Finals — 32 drivers, one champion, $1.2 million prize pool. Are you ready for the grid?</p>
+                        <div class="slide-btns">
+                            <a href="tournaments.html" class="btn-sp btn-sp-red"><i class="fas fa-crown"></i> Enter Finals</a>
+                            <a href="blog.html" class="btn-sp btn-sp-glass"><i class="fas fa-newspaper"></i> Race News</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="swiper-slide">
+                <div class="slide-bg" style="background-image:url('images/car-racing-05.webp')"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content container">
+                    <div class="slide-inner">
+                        <div class="slide-badge"><i class="fas fa-globe"></i> Global Platform &bull; 150+ Countries</div>
+                        <h1 class="slide-title"><span class="gc">Season 2026</span><br>Is Live.</h1>
+                        <p class="slide-desc">Over 350 events across Formula, MotoGP, Rally, and Sim Racing — $50M total prize money this season alone.</p>
+                        <div class="slide-btns">
+                            <a href="tournaments.html" class="btn-sp btn-sp-red"><i class="fas fa-calendar-alt"></i> View Schedule</a>
+                            <a href="teams.html" class="btn-sp btn-sp-glass"><i class="fas fa-users"></i> Browse Teams</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="swiper-slide">
+                <div class="slide-bg" style="background-image:url('images/bike-racing-13.webp')"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content container">
+                    <div class="slide-inner">
+                        <div class="slide-badge"><i class="fas fa-bolt"></i> Off-Road Rally &bull; New Discipline</div>
+                        <h1 class="slide-title">Go<br><span class="gr">Off-Road.</span></h1>
+                        <p class="slide-desc">Rally Extreme Series just launched — dirt, mud, night stages, and pure adrenaline. 847 spots available.</p>
+                        <div class="slide-btns">
+                            <a href="tournaments.html" class="btn-sp btn-sp-red"><i class="fas fa-map-marked-alt"></i> Join Rally</a>
+                            <a href="contact.html" class="btn-sp btn-sp-glass"><i class="fas fa-headset"></i> Get Support</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+    <div class="hero-scroll"><i class="fas fa-chevron-down"></i><span>Scroll</span></div>
+</section>
+
+<!-- ══ LIVE TICKER ══ -->
+<div class="live-ticker">
+    <div class="ticker-label"><div class="ticker-dot"></div> Live Updates</div>
+    <div class="ticker-track-wrap">
+        <div class="ticker-track">
+            <span class="t-item"><i class="fas fa-circle t-live"></i> <strong>LIVE:</strong>&nbsp;Red Shift Racing leads Monaco GP Round 3 — Lap 42/58</span>
+            <span class="t-sep">·</span>
+            <span class="t-item"><i class="fas fa-circle t-live"></i> <strong>LIVE:</strong>&nbsp;Moto Thunder leads by 3.2s — Suzuka MotoGP Round 7</span>
+            <span class="t-sep">·</span>
+            <span class="t-item"><i class="fas fa-trophy"></i> <strong>RESULT:</strong>&nbsp;Drift Kings win Touring Cup S6 — $420K claimed</span>
+            <span class="t-sep">·</span>
+            <span class="t-item"><i class="fas fa-calendar-check"></i> <strong>UPCOMING:</strong>&nbsp;Formula World Finals — Starts in 2h 15m</span>
+            <span class="t-sep">·</span>
+            <span class="t-item"><i class="fas fa-user-plus"></i> <strong>NEW:</strong>&nbsp;MotoGP Open Registration · 847 spots remaining</span>
+            <span class="t-sep">·</span>
+            <span class="t-item"><i class="fas fa-medal"></i> <strong>TOP LAP:</strong>&nbsp;V_Ramirez sets new Monza lap record — 1:19.347</span>
+            <span class="t-sep">·</span>
+            <!-- duplicates for seamless loop -->
+            <span class="t-item"><i class="fas fa-circle t-live"></i> <strong>LIVE:</strong>&nbsp;Red Shift Racing leads Monaco GP Round 3 — Lap 42/58</span>
+            <span class="t-sep">·</span>
+            <span class="t-item"><i class="fas fa-circle t-live"></i> <strong>LIVE:</strong>&nbsp;Moto Thunder leads by 3.2s — Suzuka MotoGP Round 7</span>
+            <span class="t-sep">·</span>
+            <span class="t-item"><i class="fas fa-trophy"></i> <strong>RESULT:</strong>&nbsp;Drift Kings win Touring Cup S6 — $420K claimed</span>
+            <span class="t-sep">·</span>
+            <span class="t-item"><i class="fas fa-calendar-check"></i> <strong>UPCOMING:</strong>&nbsp;Formula World Finals — Starts in 2h 15m</span>
+            <span class="t-sep">·</span>
+            <span class="t-item"><i class="fas fa-user-plus"></i> <strong>NEW:</strong>&nbsp;MotoGP Open Registration · 847 spots remaining</span>
+            <span class="t-sep">·</span>
+            <span class="t-item"><i class="fas fa-medal"></i> <strong>TOP LAP:</strong>&nbsp;V_Ramirez sets new Monza lap record — 1:19.347</span>
+            <span class="t-sep">·</span>
+        </div>
+    </div>
+</div>
+
+<!-- ══ STATS STRIP ══ -->
+<section class="stats-strip">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item reveal"><div class="stat-num">500K+</div><div class="stat-lbl">Registered Racers</div></div>
+            <div class="stat-item reveal st1"><div class="stat-num">350+</div><div class="stat-lbl">Tournaments / Year</div></div>
+            <div class="stat-item reveal st2"><div class="stat-num">$50M+</div><div class="stat-lbl">Total Prize Money</div></div>
+            <div class="stat-item reveal st3"><div class="stat-num">150+</div><div class="stat-lbl">Countries on Grid</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ LIVE RACES ══ -->
+<section class="live-races">
+    <div class="container">
+        <div class="section-header reveal">
+            <p class="section-subtitle">Happening Now</p>
+            <h2 class="section-title">Live <span class="text-gradient">Race Feed</span></h2>
+            <p class="section-desc">Real-time action from active tournaments — watch, cheer, and bet on your favourite driver.</p>
+        </div>
+        <div class="live-races-grid">
+
+            <div class="lrc reveal st1">
+                <div class="lrc-thumb">
+                    <img src="images/car-racing-06.webp" alt="Monaco Grand Prix Esports">
+                    <div class="lrc-dim"></div>
+                    <div class="lrc-status s-live"><span></span> Live</div>
+                    <div class="lrc-viewers"><i class="fas fa-eye"></i> 18.4K</div>
+                    <div class="lrc-disc">Formula</div>
+                </div>
+                <div class="lrc-body">
+                    <h3>Monaco GP Esports Round 3</h3>
+                    <div class="lrc-teams">
+                        <span class="lrc-team">Red Shift</span>
+                        <span class="lrc-vs">VS</span>
+                        <span class="lrc-team">Speed Demons</span>
+                    </div>
+                    <div class="lrc-meta">
+                        <div class="lrc-meta-i"><i class="fas fa-road"></i> Lap 42 / 58</div>
+                        <div class="lrc-meta-i"><i class="fas fa-users"></i> 24 Drivers</div>
+                    </div>
+                    <span class="lrc-prize">Prize: $320,000</span>
+                    <a href="tournaments.html" class="lrc-watch"><i class="fas fa-play-circle"></i> Watch Live <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="lrc reveal st2">
+                <div class="lrc-thumb">
+                    <img src="images/bike-racing-09.webp" alt="Suzuka MotoGP Esports">
+                    <div class="lrc-dim"></div>
+                    <div class="lrc-status s-live"><span></span> Live</div>
+                    <div class="lrc-viewers"><i class="fas fa-eye"></i> 9.2K</div>
+                    <div class="lrc-disc">MotoGP</div>
+                </div>
+                <div class="lrc-body">
+                    <h3>Suzuka MotoGP Esports Round 7</h3>
+                    <div class="lrc-teams">
+                        <span class="lrc-team">Moto Thunder</span>
+                        <span class="lrc-vs">VS</span>
+                        <span class="lrc-team">Apex Riders</span>
+                    </div>
+                    <div class="lrc-meta">
+                        <div class="lrc-meta-i"><i class="fas fa-road"></i> Lap 18 / 25</div>
+                        <div class="lrc-meta-i"><i class="fas fa-users"></i> 16 Riders</div>
+                    </div>
+                    <span class="lrc-prize">Prize: $185,000</span>
+                    <a href="tournaments.html" class="lrc-watch"><i class="fas fa-play-circle"></i> Watch Live <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="lrc reveal st3">
+                <div class="lrc-thumb">
+                    <img src="images/car-racing-03.webp" alt="Formula World Finals">
+                    <div class="lrc-dim"></div>
+                    <div class="lrc-status s-soon">Upcoming</div>
+                    <div class="lrc-viewers"><i class="fas fa-bell"></i> 2h 15m</div>
+                    <div class="lrc-disc">Formula</div>
+                </div>
+                <div class="lrc-body">
+                    <h3>Formula World Finals — Season 2026</h3>
+                    <div class="lrc-teams">
+                        <span class="lrc-team">32 Drivers</span>
+                        <span class="lrc-vs">·</span>
+                        <span class="lrc-team">1 Champion</span>
+                    </div>
+                    <div class="lrc-meta">
+                        <div class="lrc-meta-i"><i class="fas fa-clock"></i> Starts 20:00 UTC</div>
+                        <div class="lrc-meta-i"><i class="fas fa-globe"></i> Global</div>
+                    </div>
+                    <span class="lrc-prize">Prize: $1,200,000</span>
+                    <a href="tournaments.html" class="lrc-watch"><i class="fas fa-calendar-check"></i> Set Reminder <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══ GAME CATEGORIES SWIPER ══ -->
+<section class="game-categories">
+    <div class="container">
+        <div class="section-header reveal">
+            <p class="section-subtitle">Choose Your Discipline</p>
+            <h2 class="section-title">Featured <span class="text-gradient-cool">Race Categories</span></h2>
+            <p class="section-desc">Pick your discipline and hit the grid — elite tournaments running every week across all formats.</p>
+        </div>
+        <div class="gc-wrap">
+            <div class="swiper games-swiper">
+                <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                        <div class="gc-card">
+                            <img src="images/car-racing-13.webp" alt="Formula Racing">
+                            <div class="gc-dim"></div>
+                            <div class="gc-info">
+                                <span class="gc-tag">Formula</span>
+                                <h3>Open-Wheel Racing</h3>
+                                <p>High-speed formula tournaments, global leaderboards</p>
+                                <a href="tournaments.html" class="gc-enter"><i class="fas fa-play"></i> Enter Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="gc-card">
+                            <img src="images/bike-racing-10.webp" alt="MotoGP Racing">
+                            <div class="gc-dim"></div>
+                            <div class="gc-info">
+                                <span class="gc-tag">MotoGP</span>
+                                <h3>Motorcycle Leagues</h3>
+                                <p>Superbike championships from street to circuit</p>
+                                <a href="tournaments.html" class="gc-enter"><i class="fas fa-play"></i> Enter Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="gc-card">
+                            <img src="images/car-racing-11.webp" alt="Touring Car">
+                            <div class="gc-dim"></div>
+                            <div class="gc-info">
+                                <span class="gc-tag">Touring</span>
+                                <h3>Touring Car Series</h3>
+                                <p>Close-contact racing, bump drafts, last-lap drama</p>
+                                <a href="tournaments.html" class="gc-enter"><i class="fas fa-play"></i> Enter Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="gc-card">
+                            <img src="images/bike-racing-11.webp" alt="Extreme Bikes">
+                            <div class="gc-dim"></div>
+                            <div class="gc-info">
+                                <span class="gc-tag">Extreme</span>
+                                <h3>Off-Road Rally</h3>
+                                <p>Dirt, mud, and pure adrenaline — rally at its wildest</p>
+                                <a href="tournaments.html" class="gc-enter"><i class="fas fa-play"></i> Enter Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="gc-card">
+                            <img src="images/car-racing-15.webp" alt="Sim Racing">
+                            <div class="gc-dim"></div>
+                            <div class="gc-info">
+                                <span class="gc-tag">Sim Racing</span>
+                                <h3>Simulation Cups</h3>
+                                <p>Ultra-realistic sim racing with precision physics</p>
+                                <a href="tournaments.html" class="gc-enter"><i class="fas fa-play"></i> Enter Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="gc-card">
+                            <img src="images/bike-racing-08.webp" alt="Drift">
+                            <div class="gc-dim"></div>
+                            <div class="gc-info">
+                                <span class="gc-tag">Drift</span>
+                                <h3>Drift Championships</h3>
+                                <p>Style meets speed — sideways entries and genuine podiums</p>
+                                <a href="tournaments.html" class="gc-enter"><i class="fas fa-play"></i> Enter Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ LEADERBOARD ══ -->
+<section class="leaderboard-section">
+    <div class="container">
+        <div class="section-header reveal">
+            <p class="section-subtitle">Top Performers</p>
+            <h2 class="section-title">Global <span class="text-gradient">Driver Rankings</span></h2>
+            <p class="section-desc">Season 2026 standings — updated in real-time after every race weekend.</p>
+        </div>
+        <div class="lb-grid">
+            <!-- Table -->
+            <div class="lb-wrap reveal">
+                <div class="lb-head">
+                    <span>#</span>
+                    <span>Driver</span>
+                    <span>Tier</span>
+                    <span>Points</span>
+                    <span>Trend</span>
+                </div>
+                <div class="lb-row">
+                    <div class="lb-rank r1"><i class="fas fa-crown" style="font-size:.75rem"></i> 1</div>
+                    <div class="lb-driver"><div class="lb-av">VR</div><div class="lb-info"><span class="dn">V_Ramirez</span><span class="dt">Red Shift Racing</span></div></div>
+                    <div><span class="lb-tier td">Diamond</span></div>
+                    <div class="lb-pts">4,820</div>
+                    <div class="lb-trend tu"><i class="fas fa-arrow-up"></i> +3</div>
+                </div>
+                <div class="lb-row">
+                    <div class="lb-rank r2">2</div>
+                    <div class="lb-driver"><div class="lb-av">KT</div><div class="lb-info"><span class="dn">K_Takahashi</span><span class="dt">Moto Thunder</span></div></div>
+                    <div><span class="lb-tier td">Diamond</span></div>
+                    <div class="lb-pts">4,614</div>
+                    <div class="lb-trend ts"><i class="fas fa-minus"></i> 0</div>
+                </div>
+                <div class="lb-row">
+                    <div class="lb-rank r3">3</div>
+                    <div class="lb-driver"><div class="lb-av">AM</div><div class="lb-info"><span class="dn">A_Mueller</span><span class="dt">Drift Kings</span></div></div>
+                    <div><span class="lb-tier tp">Platinum</span></div>
+                    <div class="lb-pts">4,389</div>
+                    <div class="lb-trend tu"><i class="fas fa-arrow-up"></i> +1</div>
+                </div>
+                <div class="lb-row">
+                    <div class="lb-rank rn">4</div>
+                    <div class="lb-driver"><div class="lb-av">JC</div><div class="lb-info"><span class="dn">J_Chen</span><span class="dt">Apex Riders</span></div></div>
+                    <div><span class="lb-tier tp">Platinum</span></div>
+                    <div class="lb-pts">4,210</div>
+                    <div class="lb-trend td2"><i class="fas fa-arrow-down"></i> -2</div>
+                </div>
+                <div class="lb-row">
+                    <div class="lb-rank rn">5</div>
+                    <div class="lb-driver"><div class="lb-av">LS</div><div class="lb-info"><span class="dn">L_Santos</span><span class="dt">Turbo Syndicate</span></div></div>
+                    <div><span class="lb-tier tg">Gold</span></div>
+                    <div class="lb-pts">3,987</div>
+                    <div class="lb-trend tu"><i class="fas fa-arrow-up"></i> +5</div>
+                </div>
+                <div class="lb-row">
+                    <div class="lb-rank rn">6</div>
+                    <div class="lb-driver"><div class="lb-av">PW</div><div class="lb-info"><span class="dn">P_Williams</span><span class="dt">Night Fuel RC</span></div></div>
+                    <div><span class="lb-tier tg">Gold</span></div>
+                    <div class="lb-pts">3,845</div>
+                    <div class="lb-trend ts"><i class="fas fa-minus"></i> 0</div>
+                </div>
+                <div class="lb-row">
+                    <div class="lb-rank rn">7</div>
+                    <div class="lb-driver"><div class="lb-av">DK</div><div class="lb-info"><span class="dn">D_Kim</span><span class="dt">Speed Demons</span></div></div>
+                    <div><span class="lb-tier tg">Gold</span></div>
+                    <div class="lb-pts">3,702</div>
+                    <div class="lb-trend td2"><i class="fas fa-arrow-down"></i> -1</div>
+                </div>
+            </div>
+
+            <!-- Rank Tiers -->
+            <div class="tier-card reveal st1">
+                <h3><i class="fas fa-shield-alt" style="color:var(--purple);margin-right:8px"></i> Rank Tiers</h3>
+                <div class="tier-row">
+                    <div class="tier-icon ti-champ"><i class="fas fa-crown" style="color:#f59e0b"></i></div>
+                    <div class="tier-info"><span class="tn">Champion</span><span class="tp2">5,000+ Points</span></div>
+                    <span class="tier-count">12 Drivers</span>
+                </div>
+                <div class="tier-row">
+                    <div class="tier-icon ti-dia"><i class="fas fa-gem" style="color:#06b6d4"></i></div>
+                    <div class="tier-info"><span class="tn">Diamond</span><span class="tp2">4,000 – 4,999</span></div>
+                    <span class="tier-count">87 Drivers</span>
+                </div>
+                <div class="tier-row">
+                    <div class="tier-icon ti-plat"><i class="fas fa-star" style="color:#a855f7"></i></div>
+                    <div class="tier-info"><span class="tn">Platinum</span><span class="tp2">3,000 – 3,999</span></div>
+                    <span class="tier-count">340 Drivers</span>
+                </div>
+                <div class="tier-row">
+                    <div class="tier-icon ti-gold"><i class="fas fa-medal" style="color:#f59e0b"></i></div>
+                    <div class="tier-info"><span class="tn">Gold</span><span class="tp2">2,000 – 2,999</span></div>
+                    <span class="tier-count">1.2K Drivers</span>
+                </div>
+                <div class="tier-row">
+                    <div class="tier-icon ti-silv"><i class="fas fa-circle" style="color:#9ca3af"></i></div>
+                    <div class="tier-info"><span class="tn">Silver</span><span class="tp2">1,000 – 1,999</span></div>
+                    <span class="tier-count">8.4K Drivers</span>
+                </div>
+                <div class="tier-row">
+                    <div class="tier-icon ti-brnz"><i class="fas fa-circle" style="color:#cd7f32"></i></div>
+                    <div class="tier-info"><span class="tn">Bronze</span><span class="tp2">0 – 999 Points</span></div>
+                    <span class="tier-count">490K Drivers</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ ABOUT PREVIEW ══ -->
+<section class="about-preview">
+    <div class="container">
+        <div class="apg">
+            <div class="ap-img reveal-left">
+                <div class="img-frame">
+                    <img src="images/racing-car.webp" alt="Gaming Stackly Racing">
+                </div>
+                <div class="exp-badge">
+                    <span class="big">10+</span>
+                    <span class="sm">Years of<br>Excellence</span>
+                </div>
+            </div>
+            <div class="ap-content reveal-right">
+                <p class="section-subtitle">Who We Are</p>
+                <h2 class="section-title">The Leading<br><span class="text-gradient">Racing Esports Platform</span></h2>
+                <p>Founded in 2016, Gaming Stackly has grown from a passionate racing community into the world's premier competitive racing esports organization — hosting events across every discipline on every continent.</p>
+                <p>We give every racer — from weekend sim enthusiasts to professional circuit drivers — a stage to compete, grow, and win.</p>
+                <div class="ap-feats">
+                    <div class="ap-feat">
+                        <div class="ap-ico"><i class="fas fa-trophy"></i></div>
+                        <div><h4>Championship Tournaments</h4><p>World-class events with massive prize pools running year-round</p></div>
+                    </div>
+                    <div class="ap-feat">
+                        <div class="ap-ico"><i class="fas fa-flag-checkered"></i></div>
+                        <div><h4>Global Racing Community</h4><p>500,000+ racers from 150+ countries competing together</p></div>
+                    </div>
+                    <div class="ap-feat">
+                        <div class="ap-ico"><i class="fas fa-rocket"></i></div>
+                        <div><h4>Next-Gen Sim Technology</h4><p>Cutting-edge simulation and broadcast platform innovation</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ AURORA PLATFORM FEATURES ══ -->
+<section class="aurora-section">
+    <div class="container">
+        <div class="section-header reveal">
+            <p class="section-subtitle">Platform Power</p>
+            <h2 class="section-title">Built for <span class="text-gradient-cool">Serious Racers</span></h2>
+            <p class="section-desc">Every feature engineered to give competitive drivers the edge they need to win.</p>
+        </div>
+        <div class="aurora-grid">
+            <div class="ac reveal st1">
+                <div class="ac-icon ic-p"><i class="fas fa-bolt"></i></div>
+                <h3>Real-Time Matchmaking</h3>
+                <p>Instant skill-based matching across all disciplines. Never wait more than 60 seconds to find a fair race.</p>
+                <span class="ac-badge ab-p"><i class="fas fa-check"></i> Sub-60s Queue</span>
+            </div>
+            <div class="ac reveal st2">
+                <div class="ac-icon ic-c"><i class="fas fa-video"></i></div>
+                <h3>Live Race Streaming</h3>
+                <p>Watch any race live in 4K with multi-cam director view, telemetry overlay, and real-time commentator audio.</p>
+                <span class="ac-badge ab-c"><i class="fas fa-check"></i> 4K 60fps</span>
+            </div>
+            <div class="ac reveal st3">
+                <div class="ac-icon ic-r"><i class="fas fa-shield-alt"></i></div>
+                <h3>Anti-Cheat System</h3>
+                <p>Industry-leading detection — zero tolerance for wall-riding, speed hacks, or input manipulation. Clean racing only.</p>
+                <span class="ac-badge ab-r"><i class="fas fa-check"></i> Zero Tolerance</span>
+            </div>
+            <div class="ac reveal st4">
+                <div class="ac-icon ic-g"><i class="fas fa-chart-line"></i></div>
+                <h3>Global Leaderboards</h3>
+                <p>Real-time rankings updated after every lap. Track your position across season, discipline, and country filters.</p>
+                <span class="ac-badge ab-g"><i class="fas fa-check"></i> Real-Time</span>
+            </div>
+            <div class="ac reveal st5">
+                <div class="ac-icon ic-a"><i class="fas fa-wallet"></i></div>
+                <h3>Instant Prize Payouts</h3>
+                <p>Race, win, and get paid — prize money transferred within 24 hours to verified driver accounts, no exceptions.</p>
+                <span class="ac-badge ab-a"><i class="fas fa-check"></i> 24h Payout</span>
+            </div>
+            <div class="ac reveal st1">
+                <div class="ac-icon ic-p"><i class="fas fa-tachometer-alt"></i></div>
+                <h3>Driver Analytics</h3>
+                <p>Deep performance insights — lap time breakdowns, sector analysis, consistency ratings, and improvement suggestions.</p>
+                <span class="ac-badge ab-p"><i class="fas fa-check"></i> Pro Telemetry</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ SPONSORS SCROLL ══ -->
+<section class="sponsors-strip">
+    <div class="sponsors-label">&#9632;&nbsp;&nbsp;Official Racing Partners &amp; Sponsors&nbsp;&nbsp;&#9632;</div>
+    <div class="logos-track-wrapper">
+        <div class="logos-track">
+            <div class="logo-item"><img src="images/car-racing-15.webp" alt="Sponsor"></div>
+            <div class="logo-item"><img src="images/bike-racing-14.webp" alt="Sponsor"></div>
+            <div class="logo-item"><img src="images/bike-racing-15.webp" alt="Sponsor"></div>
+            <div class="logo-item"><img src="images/blog-bike.webp" alt="Sponsor"></div>
+            <div class="logo-item"><img src="images/car-racing-02.webp" alt="Sponsor"></div>
+            <div class="logo-item"><img src="images/bike-racing-02.webp" alt="Sponsor"></div>
+            <div class="logo-item"><img src="images/car-racing-07.webp" alt="Sponsor"></div>
+            <!-- duplicates -->
+            <div class="logo-item"><img src="images/car-racing-15.webp" alt="Sponsor"></div>
+            <div class="logo-item"><img src="images/bike-racing-14.webp" alt="Sponsor"></div>
+            <div class="logo-item"><img src="images/bike-racing-15.webp" alt="Sponsor"></div>
+            <div class="logo-item"><img src="images/blog-bike.webp" alt="Sponsor"></div>
+            <div class="logo-item"><img src="images/car-racing-02.webp" alt="Sponsor"></div>
+            <div class="logo-item"><img src="images/bike-racing-02.webp" alt="Sponsor"></div>
+            <div class="logo-item"><img src="images/car-racing-07.webp" alt="Sponsor"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ TEAMS PREVIEW ══ -->
+<section class="teams-preview">
+    <div class="container">
+        <div class="section-header reveal">
+            <p class="section-subtitle">On the Grid</p>
+            <h2 class="section-title">Top <span class="text-gradient">Racing Teams</span></h2>
+            <p class="section-desc">The fastest, most decorated racing squads competing on our platform.</p>
+        </div>
+        <div class="teams-grid">
+            <div class="tp-card reveal st1">
+                <div class="tp-cover">
+                    <img src="images/car-racing-08.webp" alt="Red Shift Racing">
+                    <div class="tp-dim"></div>
+                    <span class="tp-disc">Formula</span>
+                </div>
+                <div class="tp-body">
+                    <h3>Red Shift Racing</h3>
+                    <span class="tp-role">Formula Esports Series</span>
+                    <p>The undisputed kings of open-wheel esports. Multi-season champions with blistering lap times and tactical race mastery.</p>
+                    <div class="tp-stats">
+                        <div class="tp-stat"><span class="v">18</span><span class="l">Wins</span></div>
+                        <div class="tp-stat"><span class="v">6</span><span class="l">Drivers</span></div>
+                        <div class="tp-stat"><span class="v">$2.4M</span><span class="l">Earnings</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tp-card reveal st2">
+                <div class="tp-cover">
+                    <img src="images/bike-racing-07.webp" alt="Moto Thunder">
+                    <div class="tp-dim"></div>
+                    <span class="tp-disc">MotoGP</span>
+                </div>
+                <div class="tp-body">
+                    <h3>Moto Thunder</h3>
+                    <span class="tp-role">MotoGP Esports League</span>
+                    <p>Two-wheel dominators known for fearless cornering and explosive straight-line speed on every circuit.</p>
+                    <div class="tp-stats">
+                        <div class="tp-stat"><span class="v">12</span><span class="l">Wins</span></div>
+                        <div class="tp-stat"><span class="v">4</span><span class="l">Riders</span></div>
+                        <div class="tp-stat"><span class="v">$1.1M</span><span class="l">Earnings</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tp-card reveal st3">
+                <div class="tp-cover">
+                    <img src="images/car-racing-10.webp" alt="Drift Kings">
+                    <div class="tp-dim"></div>
+                    <span class="tp-disc">Drift</span>
+                </div>
+                <div class="tp-body">
+                    <h3>Drift Kings</h3>
+                    <span class="tp-role">Touring Car Championship</span>
+                    <p>Style meets speed — Drift Kings combine crowd-pleasing sideways entries with genuine podium results.</p>
+                    <div class="tp-stats">
+                        <div class="tp-stat"><span class="v">9</span><span class="l">Wins</span></div>
+                        <div class="tp-stat"><span class="v">5</span><span class="l">Drivers</span></div>
+                        <div class="tp-stat"><span class="v">$870K</span><span class="l">Earnings</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ BLOG PREVIEW ══ -->
+<section class="blog-preview">
+    <div class="container">
+        <div class="section-header reveal">
+            <p class="section-subtitle">Latest News</p>
+            <h2 class="section-title">From the <span class="text-gradient-cool">Pit Lane</span></h2>
+            <p class="section-desc">Race news, driver interviews, tournament recaps — straight from the source.</p>
+        </div>
+        <div class="blog-grid">
+            <article class="blog-card reveal st1">
+                <div class="blog-thumb">
+                    <img src="images/blog-1.webp" alt="Season 2026">
+                    <span class="blog-cat">Tournament</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta"><span><i class="fas fa-calendar-alt"></i> May 10, 2026</span><span><i class="fas fa-clock"></i> 4 min</span></div>
+                    <h3>Racing Season 2026 — Full Schedule Announced</h3>
+                    <p>The complete 2026 racing esports calendar is here. Over 350 events and $20M in prize money.</p>
+                    <a href="blog.html" class="blog-read">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            <article class="blog-card reveal st2">
+                <div class="blog-thumb">
+                    <img src="images/blog-racing.webp" alt="Pro Tips">
+                    <span class="blog-cat">Tips</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta"><span><i class="fas fa-calendar-alt"></i> May 7, 2026</span><span><i class="fas fa-clock"></i> 6 min</span></div>
+                    <h3>5 Pro Sim-Racing Setup Tips That Actually Work</h3>
+                    <p>Wheel settings, pedal calibration, and FOV tuning — everything that separates good from great.</p>
+                    <a href="blog.html" class="blog-read">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            <article class="blog-card reveal st3">
+                <div class="blog-thumb">
+                    <img src="images/blog-bike.webp" alt="Interview">
+                    <span class="blog-cat">Interview</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta"><span><i class="fas fa-calendar-alt"></i> May 3, 2026</span><span><i class="fas fa-clock"></i> 5 min</span></div>
+                    <h3>Inside the Helmet: MotoGP Esports Champion Speaks</h3>
+                    <p>Exclusive sit-down with the reigning MotoGP Esports Series champion — mindset, training, and the road to the title.</p>
+                    <a href="blog.html" class="blog-read">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="cta-section">
+    <div class="cta-bg"></div>
+    <div class="cta-overlay"></div>
+    <div class="cta-inner container">
+        <div class="cta-badge">Limited Spots Available</div>
+        <h2>Ready to Hit the <span>Track?</span></h2>
+        <p>Join 500,000+ racers already competing for glory and prize money on the world's fastest growing esports platform.</p>
+        <div class="cta-btns">
+            <a href="tournaments.html" class="btn-cta-p"><i class="fas fa-flag-checkered"></i> Register Now</a>
+            <a href="about.html" class="btn-cta-o"><i class="fas fa-info-circle"></i> Learn More</a>
+        </div>
+    </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+    <div class="footer-wave-top" style="background:var(--bg-mid);">
+        <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0 70V30C360 5 720 0 1080 20C1260 30 1380 38 1440 40V70H0Z" fill="#060609"/>
+        </svg>
+    </div>
+    <div class="footer-container">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <a href="index.html" class="footer-logo">
+                    <img src="images/Logo.png" alt="Gaming Stackly">
+                    <span>Gaming Stackly</span>
+                </a>
+                <p class="footer-tagline">Let the Race Begin.</p>
+                <div class="footer-socials">
+                    <a href="404.html" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="404.html" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="404.html" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="404.html" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="404.html" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-col">
+                    <span class="fcol-title">Popular</span>
+                    <ul>
+                        <li><a href="tournaments.html">Car Racing</a></li>
+                        <li><a href="tournaments.html">Bike Racing</a></li>
+                        <li><a href="tournaments.html">Formula Esports</a></li>
+                        <li><a href="tournaments.html">Sim Racing Cups</a></li>
+                        <li><a href="tournaments.html">Off-Road Rally</a></li>
+                        <li><a href="tournaments.html">All Tournaments</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <span class="fcol-title">Help &amp; Support</span>
+                    <ul>
+                        <li><a href="contact.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="404.html">Privacy Center</a></li>
+                        <li><a href="404.html">Terms of Service</a></li>
+                        <li><a href="contact.html">Support Ticket</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <span class="fcol-title">Get to Know Us</span>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="teams.html">Teams</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="404.html">Careers</a></li>
+                        <li><a href="404.html">Press &amp; Media</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bar">
+            <p>&copy; 2026 Gaming Stackly. All rights reserved.</p>
+            <div class="footer-legal">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    // ── Hero Swiper ──
+    const heroSwiper = new Swiper('.hero-swiper', {
+        loop: true,
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        autoplay: { delay: 5500, disableOnInteraction: false },
+        speed: 900,
+        pagination: { el: '.hero-swiper .swiper-pagination', clickable: true },
+        navigation: {
+            nextEl: '.hero-swiper .swiper-button-next',
+            prevEl: '.hero-swiper .swiper-button-prev'
+        }
+    });
+
+    // ── Games Swiper ──
+    const gamesSwiper = new Swiper('.games-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 22,
+        loop: true,
+        pagination: { el: '.games-swiper .swiper-pagination', clickable: true },
+        navigation: {
+            nextEl: '.games-swiper .swiper-button-next',
+            prevEl: '.games-swiper .swiper-button-prev'
+        },
+        breakpoints: {
+            480:  { slidesPerView: 1.3 },
+            640:  { slidesPerView: 2 },
+            900:  { slidesPerView: 3 },
+            1200: { slidesPerView: 4 }
+        }
+    });
+
+    // ── Hamburger ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+    });
+    // Close on link click
+    mobileMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            hamburger.classList.remove('open');
+            mobileMenu.classList.remove('open');
+        });
+    });
+
+    // ── Navbar scroll ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ── Reveal animations ──
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const revealObs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>

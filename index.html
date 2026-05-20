@@ -24,8 +24,8 @@
             --dim:     #9ca3af;
         }
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        body { background: var(--bg-deep); color: var(--text); font-family: 'Rajdhani', 'Segoe UI', sans-serif; overflow-x: hidden; line-height: 1.6; }
+        html { scroll-behavior: smooth; overflow-x: hidden; width: 100%; }
+        body { background: var(--bg-deep); color: var(--text); font-family: 'Rajdhani', 'Segoe UI', sans-serif; overflow-x: hidden; width: 100%; line-height: 1.6; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         a { text-decoration: none; color: inherit; }
         img { display: block; max-width: 100%; }
@@ -1288,7 +1288,10 @@
         fadeEffect: { crossFade: true },
         autoplay: { delay: 5500, disableOnInteraction: false },
         speed: 900,
-        pagination: { el: '.hero-swiper .swiper-pagination', clickable: true }
+        pagination: { el: '.hero-swiper .swiper-pagination', clickable: true },
+        observer: true,
+        observeParents: true,
+        resizeObserver: true
     });
 
     // ── Games Swiper ──
@@ -1302,7 +1305,26 @@
             640:  { slidesPerView: 2 },
             900:  { slidesPerView: 3 },
             1200: { slidesPerView: 4 }
-        }
+        },
+        observer: true,
+        observeParents: true,
+        resizeObserver: true
+    });
+
+    // ── First-load reflow fix ──
+    // Fires after all assets (images, fonts) are ready so Swiper gets correct dimensions.
+    window.addEventListener('load', function () {
+        heroSwiper.updateSize();
+        heroSwiper.updateSlides();
+        heroSwiper.update();
+        gamesSwiper.update();
+        window.dispatchEvent(new Event('resize'));
+
+        // Second pass — covers slow mobile renders and Chrome DevTools viewport stabilisation
+        setTimeout(function () {
+            window.dispatchEvent(new Event('resize'));
+            heroSwiper.update();
+        }, 150);
     });
 
     // ── Hamburger ──

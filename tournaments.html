@@ -112,10 +112,13 @@
             border: 1px solid #252525;
             border-radius: 20px;
             overflow: hidden;
-            transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+            transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease, opacity .28s ease;
             display: flex; flex-direction: column;
         }
         .tournament-card:hover { transform: translateY(-8px); border-color: #e63946; box-shadow: 0 20px 55px rgba(230,57,70,.14); }
+        /* filter animation states */
+        .tournament-card.tc-hide { opacity: 0; transform: scale(0.88) translateY(16px); pointer-events: none; }
+        .tournament-card.tc-gone { display: none; }
 
         /* Cover */
         .tc-cover { position: relative; height: 200px; overflow: hidden; flex-shrink: 0; }
@@ -308,6 +311,65 @@
         @media (max-width: 900px) { .stats-strip-grid { grid-template-columns: repeat(2,1fr); } .stat-strip-item:nth-child(2){border-right:none} .stat-strip-item:nth-child(3){border-top:1px solid #1e1e1e} .rules-grid { grid-template-columns: 1fr 1fr; } .steps-grid { grid-template-columns: 1fr 1fr; gap: 32px; } .footer-inner { grid-template-columns: 1fr; gap: 36px; } }
         @media (max-width: 640px) { .tournaments-grid,.rules-grid { grid-template-columns: 1fr; } .steps-grid { grid-template-columns: 1fr; } .stats-strip-grid { grid-template-columns: 1fr 1fr; } .footer-right { grid-template-columns: 1fr 1fr; } .footer-bottom-bar { flex-direction: column; text-align: center; } }
 
+        /* ── DISCIPLINE SPOTLIGHT ── */
+        .discipline-section { padding: 80px 0 60px; background: #0a0a0f; }
+        .disc-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 16px; margin-top: 48px; }
+        .disc-card { background: #0f0f1a; border: 1px solid #1e1e2a; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform .22s, box-shadow .22s, border-color .22s; }
+        .disc-card:hover { transform: translateY(-6px); }
+        .disc-card[data-disc="formula"]    { --dc:#e63946; }
+        .disc-card[data-disc="motogp"]     { --dc:#f97316; }
+        .disc-card[data-disc="touring"]    { --dc:#06b6d4; }
+        .disc-card[data-disc="sim"]        { --dc:#a855f7; }
+        .disc-card[data-disc="rally"]      { --dc:#22c55e; }
+        .disc-card:hover { border-color: var(--dc); box-shadow: 0 8px 32px color-mix(in srgb, var(--dc) 25%, transparent); }
+        .disc-cover { position: relative; height: 140px; overflow: hidden; }
+        .disc-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+        .disc-card:hover .disc-cover img { transform: scale(1.06); }
+        .disc-cover-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 30%, rgba(10,10,15,.92) 100%); }
+        .disc-badge { position: absolute; top: 10px; left: 10px; padding: 4px 10px; border-radius: 20px; font-family: 'Orbitron', monospace; font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: var(--dc); color: #fff; }
+        .disc-icon { position: absolute; bottom: 10px; right: 12px; font-size: 22px; filter: drop-shadow(0 2px 8px rgba(0,0,0,.6)); }
+        .disc-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        .disc-name { font-family: 'Orbitron', monospace; font-size: 12px; font-weight: 800; color: #fff; line-height: 1.3; }
+        .disc-desc { font-size: 12px; color: #888; line-height: 1.55; flex: 1; }
+        .disc-stats { display: flex; flex-direction: column; gap: 6px; border-top: 1px solid #1e1e2a; padding-top: 10px; }
+        .disc-stat { display: flex; align-items: center; justify-content: space-between; font-size: 11px; }
+        .disc-stat-label { color: #555; font-weight: 600; }
+        .disc-stat-val { color: var(--dc); font-weight: 700; font-family: 'Orbitron', monospace; font-size: 10px; }
+        .disc-btn { margin: 0 16px 16px; padding: 9px 0; border: 1px solid var(--dc); border-radius: 8px; background: transparent; color: var(--dc); font-family: 'Orbitron', monospace; font-size: 9px; font-weight: 700; letter-spacing: .08em; cursor: pointer; transition: background .18s, color .18s; text-align: center; }
+        .disc-btn:hover { background: var(--dc); color: #fff; }
+        .disc-card.disc-active { border-color: var(--dc); box-shadow: 0 0 0 2px var(--dc), 0 8px 32px color-mix(in srgb, var(--dc) 20%, transparent); transform: translateY(-4px); }
+        .disc-card.disc-active .disc-btn { background: var(--dc); color: #fff; }
+        @media (max-width: 1050px) { .disc-grid { grid-template-columns: repeat(3,1fr); } }
+        @media (max-width: 640px)  { .disc-grid { grid-template-columns: repeat(2,1fr); } }
+        @media (max-width: 420px)  { .disc-grid { grid-template-columns: 1fr; } }
+        /* related panel */
+        .disc-panel { margin-top: 44px; animation: fadeUp .4s ease both; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        .disc-panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid #1e1e2a; }
+        .disc-panel-title { font-family: 'Orbitron', monospace; font-size: 14px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .disc-panel-accent { width: 4px; height: 18px; border-radius: 2px; background: var(--dc-panel, #e63946); flex-shrink: 0; }
+        .disc-panel-count { font-size: 11px; color: #888; background: #1e1e2a; padding: 4px 12px; border-radius: 20px; }
+        .disc-rel-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+        .disc-rel-card { background: #0f0f1a; border: 1px solid #1e1e2a; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: border-color .2s, transform .2s; }
+        .disc-rel-card:hover { border-color: #333; transform: translateY(-3px); }
+        .disc-rel-cover { position: relative; height: 130px; overflow: hidden; }
+        .disc-rel-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+        .disc-rel-card:hover .disc-rel-cover img { transform: scale(1.05); }
+        .disc-rel-cover-ov { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 35%, rgba(10,10,15,.9) 100%); }
+        .disc-rel-body { padding: 14px 16px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .disc-rel-name { font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700; color: #fff; line-height: 1.4; }
+        .disc-rel-prize { font-family: 'Orbitron', monospace; font-size: 15px; font-weight: 800; color: var(--dc-panel, #e63946); }
+        .disc-rel-meta { font-size: 11px; color: #666; display: flex; align-items: center; gap: 6px; }
+        .disc-rel-meta i { width: 12px; text-align: center; color: #444; }
+        .disc-rel-progress { background: #1a1a2a; border-radius: 4px; height: 4px; overflow: hidden; margin-top: 2px; }
+        .disc-rel-fill { height: 100%; background: var(--dc-panel, #e63946); border-radius: 4px; }
+        .disc-rel-reg { font-size: 10px; color: #555; margin-top: 1px; }
+        .disc-rel-footer { padding: 0 16px 16px; }
+        .disc-rel-btn { width: 100%; padding: 10px 0; background: linear-gradient(135deg, var(--dc-panel, #e63946), color-mix(in srgb, var(--dc-panel, #e63946) 70%, #000)); border: none; border-radius: 8px; color: #fff; font-family: 'Orbitron', monospace; font-size: 9px; font-weight: 700; letter-spacing: .07em; cursor: pointer; transition: opacity .18s, transform .18s; }
+        .disc-rel-btn:hover { opacity: .88; transform: translateY(-1px); }
+        @media (max-width: 900px) { .disc-rel-grid { grid-template-columns: repeat(2,1fr); } }
+        @media (max-width: 500px) { .disc-rel-grid { grid-template-columns: 1fr; } }
+
         /* ── REGISTRATION MODAL ── */
         #regModal{display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:16px}
         #regModal.open{display:flex}
@@ -401,11 +463,11 @@
         <div class="container">
             <div class="filter-bar">
                 <button class="filter-btn active" data-filter="all"><i class="fas fa-th-large"></i> All</button>
-                <button class="filter-btn" data-filter="formula"><i class="fas fa-car"></i> Formula</button>
-                <button class="filter-btn" data-filter="motogp"><i class="fas fa-motorcycle"></i> MotoGP</button>
-                <button class="filter-btn" data-filter="touring"><i class="fas fa-road"></i> Touring Car</button>
-                <button class="filter-btn" data-filter="sim"><i class="fas fa-gamepad"></i> Sim Racing</button>
-                <button class="filter-btn" data-filter="rally"><i class="fas fa-mountain"></i> Rally</button>
+                <button class="filter-btn" data-filter="formula" data-category="formula"><i class="fas fa-car"></i> Formula</button>
+                <button class="filter-btn" data-filter="motogp" data-category="motogp"><i class="fas fa-motorcycle"></i> MotoGP</button>
+                <button class="filter-btn" data-filter="touring" data-category="touring"><i class="fas fa-road"></i> Touring Car</button>
+                <button class="filter-btn" data-filter="sim" data-category="simracing"><i class="fas fa-gamepad"></i> Sim Racing</button>
+                <button class="filter-btn" data-filter="rally" data-category="rally"><i class="fas fa-mountain"></i> Rally</button>
             </div>
         </div>
     </section>
@@ -416,7 +478,7 @@
             <div class="tournaments-grid">
 
                 <!-- Card 1 — Formula Grand Prix -->
-                <div class="tournament-card reveal stagger-1 active" data-filter="formula">
+                <div class="tournament-card reveal stagger-1 active" data-filter="formula" data-category="formula">
                     <div class="tc-cover">
                         <img src="images/car-racing-06.webp" alt="Formula Grand Prix">
                         <div class="tc-overlay"></div>
@@ -449,7 +511,7 @@
                 </div>
 
                 <!-- Card 2 — MotoGP Esports -->
-                <div class="tournament-card reveal stagger-2 active" data-filter="motogp">
+                <div class="tournament-card reveal stagger-2 active" data-filter="motogp" data-category="motogp">
                     <div class="tc-cover">
                         <img src="images/bike-racing-09.webp" alt="MotoGP Esports League">
                         <div class="tc-overlay"></div>
@@ -482,7 +544,7 @@
                 </div>
 
                 <!-- Card 3 — Touring Car -->
-                <div class="tournament-card reveal stagger-3 active" data-filter="touring">
+                <div class="tournament-card reveal stagger-3 active" data-filter="touring" data-category="touring">
                     <div class="tc-cover">
                         <img src="images/car-racing-08.webp" alt="Touring Car Championship">
                         <div class="tc-overlay"></div>
@@ -515,7 +577,7 @@
                 </div>
 
                 <!-- Card 4 — Sim Racing -->
-                <div class="tournament-card reveal stagger-4 active" data-filter="sim">
+                <div class="tournament-card reveal stagger-4 active" data-filter="sim" data-category="simracing">
                     <div class="tc-cover">
                         <img src="images/car-racing-09.webp" alt="Sim Racing Cup">
                         <div class="tc-overlay"></div>
@@ -548,7 +610,7 @@
                 </div>
 
                 <!-- Card 5 — Off-Road Rally -->
-                <div class="tournament-card reveal stagger-5 active" data-filter="rally">
+                <div class="tournament-card reveal stagger-5 active" data-filter="rally" data-category="rally">
                     <div class="tc-cover">
                         <img src="images/bike-racing-10.webp" alt="Off-Road Rally Cup">
                         <div class="tc-overlay"></div>
@@ -581,7 +643,7 @@
                 </div>
 
                 <!-- Card 6 — Superbike -->
-                <div class="tournament-card reveal stagger-6 active" data-filter="motogp">
+                <div class="tournament-card reveal stagger-6 active" data-filter="motogp" data-category="motogp">
                     <div class="tc-cover">
                         <img src="images/bike-racing-11.webp" alt="Superbike Championship">
                         <div class="tc-overlay"></div>
@@ -613,12 +675,428 @@
                     </div>
                 </div>
 
+
+                <!-- Card 7 — Formula E Sprint -->
+                <div class="tournament-card reveal stagger-1 active" data-filter="formula" data-category="formula">
+                    <div class="tc-cover">
+                        <img src="images/car-racing-07.webp" alt="Formula E Sprint Series">
+                        <div class="tc-overlay"></div>
+                        <span class="tc-status open">Open</span>
+                        <span class="tc-discipline">Formula</span>
+                    </div>
+                    <div class="tc-body">
+                        <h3 class="tc-name">Formula E Sprint Series 2026</h3>
+                        <div class="tc-prize-row">
+                            <span class="tc-prize-label">Prize Pool</span>
+                            <span class="tc-prize-amount">$75,000</span>
+                        </div>
+                        <div class="tc-progress">
+                            <div class="tc-progress-header">
+                                <span class="tc-progress-label">Registration</span>
+                                <span class="tc-progress-count">30 / 56 Drivers</span>
+                            </div>
+                            <div class="tc-progress-bar"><div class="tc-progress-fill" style="width:54%"></div></div>
+                        </div>
+                        <div class="tc-meta">
+                            <div class="tc-meta-row"><i class="fas fa-calendar-alt"></i> July 5 – Aug 20, 2026</div>
+                            <div class="tc-meta-row"><i class="fas fa-map-marker-alt"></i> Europe Division</div>
+                            <div class="tc-meta-row"><i class="fas fa-users"></i> 26 Slots Remaining</div>
+                        </div>
+                    </div>
+                    <div class="tc-footer">
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-details"><i class="fas fa-info"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 8 — GT3 Open Challenge -->
+                <div class="tournament-card reveal stagger-2 active" data-filter="formula" data-category="formula">
+                    <div class="tc-cover">
+                        <img src="images/car-racing-10.webp" alt="GT3 Open Challenge">
+                        <div class="tc-overlay"></div>
+                        <span class="tc-status upcoming">Upcoming</span>
+                        <span class="tc-discipline">Formula</span>
+                    </div>
+                    <div class="tc-body">
+                        <h3 class="tc-name">GT3 Pro Open Challenge</h3>
+                        <div class="tc-prize-row">
+                            <span class="tc-prize-label">Prize Pool</span>
+                            <span class="tc-prize-amount">$50,000</span>
+                        </div>
+                        <div class="tc-progress">
+                            <div class="tc-progress-header">
+                                <span class="tc-progress-label">Registration</span>
+                                <span class="tc-progress-count">5 / 48 Teams</span>
+                            </div>
+                            <div class="tc-progress-bar"><div class="tc-progress-fill" style="width:10%"></div></div>
+                        </div>
+                        <div class="tc-meta">
+                            <div class="tc-meta-row"><i class="fas fa-calendar-alt"></i> Sept 1 – Oct 15, 2026</div>
+                            <div class="tc-meta-row"><i class="fas fa-map-marker-alt"></i> Americas Region</div>
+                            <div class="tc-meta-row"><i class="fas fa-users"></i> 43 Slots Remaining</div>
+                        </div>
+                    </div>
+                    <div class="tc-footer">
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-details"><i class="fas fa-info"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 9 — Moto2 Rising Stars -->
+                <div class="tournament-card reveal stagger-3 active" data-filter="motogp" data-category="motogp">
+                    <div class="tc-cover">
+                        <img src="images/bike-racing-12.webp" alt="Moto2 Rising Stars Cup">
+                        <div class="tc-overlay"></div>
+                        <span class="tc-status open">Open</span>
+                        <span class="tc-discipline">MotoGP</span>
+                    </div>
+                    <div class="tc-body">
+                        <h3 class="tc-name">Moto2 Rising Stars Cup</h3>
+                        <div class="tc-prize-row">
+                            <span class="tc-prize-label">Prize Pool</span>
+                            <span class="tc-prize-amount">$40,000</span>
+                        </div>
+                        <div class="tc-progress">
+                            <div class="tc-progress-header">
+                                <span class="tc-progress-label">Registration</span>
+                                <span class="tc-progress-count">18 / 40 Riders</span>
+                            </div>
+                            <div class="tc-progress-bar"><div class="tc-progress-fill" style="width:45%"></div></div>
+                        </div>
+                        <div class="tc-meta">
+                            <div class="tc-meta-row"><i class="fas fa-calendar-alt"></i> July 10 – Aug 25, 2026</div>
+                            <div class="tc-meta-row"><i class="fas fa-map-marker-alt"></i> Asia Pacific Leagues</div>
+                            <div class="tc-meta-row"><i class="fas fa-users"></i> 22 Slots Remaining</div>
+                        </div>
+                    </div>
+                    <div class="tc-footer">
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-details"><i class="fas fa-info"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 10 — DTM Digital Masters -->
+                <div class="tournament-card reveal stagger-4 active" data-filter="touring" data-category="touring">
+                    <div class="tc-cover">
+                        <img src="images/car-racing-11.webp" alt="DTM Digital Masters">
+                        <div class="tc-overlay"></div>
+                        <span class="tc-status live">Live</span>
+                        <span class="tc-discipline">Touring</span>
+                    </div>
+                    <div class="tc-body">
+                        <h3 class="tc-name">DTM Digital Masters Series</h3>
+                        <div class="tc-prize-row">
+                            <span class="tc-prize-label">Prize Pool</span>
+                            <span class="tc-prize-amount">$55,000</span>
+                        </div>
+                        <div class="tc-progress">
+                            <div class="tc-progress-header">
+                                <span class="tc-progress-label">Registration</span>
+                                <span class="tc-progress-count">44 / 50 Teams</span>
+                            </div>
+                            <div class="tc-progress-bar"><div class="tc-progress-fill" style="width:88%"></div></div>
+                        </div>
+                        <div class="tc-meta">
+                            <div class="tc-meta-row"><i class="fas fa-calendar-alt"></i> May 28 – June 30, 2026</div>
+                            <div class="tc-meta-row"><i class="fas fa-map-marker-alt"></i> European Circuits</div>
+                            <div class="tc-meta-row"><i class="fas fa-users"></i> 6 Slots Remaining</div>
+                        </div>
+                    </div>
+                    <div class="tc-footer">
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-details"><i class="fas fa-info"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 11 — BTCC Esports -->
+                <div class="tournament-card reveal stagger-5 active" data-filter="touring" data-category="touring">
+                    <div class="tc-cover">
+                        <img src="images/car-racing-12.webp" alt="BTCC Esports Series">
+                        <div class="tc-overlay"></div>
+                        <span class="tc-status upcoming">Upcoming</span>
+                        <span class="tc-discipline">Touring</span>
+                    </div>
+                    <div class="tc-body">
+                        <h3 class="tc-name">BTCC Esports Invitational</h3>
+                        <div class="tc-prize-row">
+                            <span class="tc-prize-label">Prize Pool</span>
+                            <span class="tc-prize-amount">$38,000</span>
+                        </div>
+                        <div class="tc-progress">
+                            <div class="tc-progress-header">
+                                <span class="tc-progress-label">Registration</span>
+                                <span class="tc-progress-count">9 / 36 Drivers</span>
+                            </div>
+                            <div class="tc-progress-bar"><div class="tc-progress-fill" style="width:25%"></div></div>
+                        </div>
+                        <div class="tc-meta">
+                            <div class="tc-meta-row"><i class="fas fa-calendar-alt"></i> Aug 5 – Sept 10, 2026</div>
+                            <div class="tc-meta-row"><i class="fas fa-map-marker-alt"></i> UK &amp; Ireland Divisions</div>
+                            <div class="tc-meta-row"><i class="fas fa-users"></i> 27 Slots Remaining</div>
+                        </div>
+                    </div>
+                    <div class="tc-footer">
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-details"><i class="fas fa-info"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 12 — iRacing Weekly Challenge -->
+                <div class="tournament-card reveal stagger-6 active" data-filter="sim" data-category="simracing">
+                    <div class="tc-cover">
+                        <img src="images/car-racing-13.webp" alt="iRacing Weekly Challenge">
+                        <div class="tc-overlay"></div>
+                        <span class="tc-status open">Open</span>
+                        <span class="tc-discipline">Sim Racing</span>
+                    </div>
+                    <div class="tc-body">
+                        <h3 class="tc-name">iRacing Weekly Elite Challenge</h3>
+                        <div class="tc-prize-row">
+                            <span class="tc-prize-label">Prize Pool</span>
+                            <span class="tc-prize-amount">$30,000</span>
+                        </div>
+                        <div class="tc-progress">
+                            <div class="tc-progress-header">
+                                <span class="tc-progress-label">Registration</span>
+                                <span class="tc-progress-count">52 / 80 Drivers</span>
+                            </div>
+                            <div class="tc-progress-bar"><div class="tc-progress-fill" style="width:65%"></div></div>
+                        </div>
+                        <div class="tc-meta">
+                            <div class="tc-meta-row"><i class="fas fa-calendar-alt"></i> June 10 – July 31, 2026</div>
+                            <div class="tc-meta-row"><i class="fas fa-map-marker-alt"></i> PC / Console — Global</div>
+                            <div class="tc-meta-row"><i class="fas fa-users"></i> 28 Slots Remaining</div>
+                        </div>
+                    </div>
+                    <div class="tc-footer">
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-details"><i class="fas fa-info"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 13 — GT Sport Nations Cup -->
+                <div class="tournament-card reveal stagger-1 active" data-filter="sim" data-category="simracing">
+                    <div class="tc-cover">
+                        <img src="images/car-racing-14.webp" alt="GT Sport Nations Cup">
+                        <div class="tc-overlay"></div>
+                        <span class="tc-status upcoming">Upcoming</span>
+                        <span class="tc-discipline">Sim Racing</span>
+                    </div>
+                    <div class="tc-body">
+                        <h3 class="tc-name">GT Sport Nations Cup 2026</h3>
+                        <div class="tc-prize-row">
+                            <span class="tc-prize-label">Prize Pool</span>
+                            <span class="tc-prize-amount">$65,000</span>
+                        </div>
+                        <div class="tc-progress">
+                            <div class="tc-progress-header">
+                                <span class="tc-progress-label">Registration</span>
+                                <span class="tc-progress-count">7 / 64 Teams</span>
+                            </div>
+                            <div class="tc-progress-bar"><div class="tc-progress-fill" style="width:11%"></div></div>
+                        </div>
+                        <div class="tc-meta">
+                            <div class="tc-meta-row"><i class="fas fa-calendar-alt"></i> Sept 15 – Nov 1, 2026</div>
+                            <div class="tc-meta-row"><i class="fas fa-map-marker-alt"></i> PlayStation / Xbox Open</div>
+                            <div class="tc-meta-row"><i class="fas fa-users"></i> 57 Slots Remaining</div>
+                        </div>
+                    </div>
+                    <div class="tc-footer">
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-details"><i class="fas fa-info"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 14 — Dakar Digital Rally -->
+                <div class="tournament-card reveal stagger-2 active" data-filter="rally" data-category="rally">
+                    <div class="tc-cover">
+                        <img src="images/bike-racing-14.webp" alt="Dakar Digital Rally">
+                        <div class="tc-overlay"></div>
+                        <span class="tc-status open">Open</span>
+                        <span class="tc-discipline">Rally</span>
+                    </div>
+                    <div class="tc-body">
+                        <h3 class="tc-name">Dakar Digital Rally Challenge</h3>
+                        <div class="tc-prize-row">
+                            <span class="tc-prize-label">Prize Pool</span>
+                            <span class="tc-prize-amount">$48,000</span>
+                        </div>
+                        <div class="tc-progress">
+                            <div class="tc-progress-header">
+                                <span class="tc-progress-label">Registration</span>
+                                <span class="tc-progress-count">15 / 32 Drivers</span>
+                            </div>
+                            <div class="tc-progress-bar"><div class="tc-progress-fill" style="width:47%"></div></div>
+                        </div>
+                        <div class="tc-meta">
+                            <div class="tc-meta-row"><i class="fas fa-calendar-alt"></i> July 20 – Aug 30, 2026</div>
+                            <div class="tc-meta-row"><i class="fas fa-map-marker-alt"></i> Africa &amp; Middle East Stages</div>
+                            <div class="tc-meta-row"><i class="fas fa-users"></i> 17 Slots Remaining</div>
+                        </div>
+                    </div>
+                    <div class="tc-footer">
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-details"><i class="fas fa-info"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 15 — WRC Online Stage Series -->
+                <div class="tournament-card reveal stagger-3 active" data-filter="rally" data-category="rally">
+                    <div class="tc-cover">
+                        <img src="images/car-racing-15.webp" alt="WRC Online Stage Series">
+                        <div class="tc-overlay"></div>
+                        <span class="tc-status upcoming">Upcoming</span>
+                        <span class="tc-discipline">Rally</span>
+                    </div>
+                    <div class="tc-body">
+                        <h3 class="tc-name">WRC Online Stage Series</h3>
+                        <div class="tc-prize-row">
+                            <span class="tc-prize-label">Prize Pool</span>
+                            <span class="tc-prize-amount">$55,000</span>
+                        </div>
+                        <div class="tc-progress">
+                            <div class="tc-progress-header">
+                                <span class="tc-progress-label">Registration</span>
+                                <span class="tc-progress-count">4 / 44 Teams</span>
+                            </div>
+                            <div class="tc-progress-bar"><div class="tc-progress-fill" style="width:9%"></div></div>
+                        </div>
+                        <div class="tc-meta">
+                            <div class="tc-meta-row"><i class="fas fa-calendar-alt"></i> Oct 1 – Nov 15, 2026</div>
+                            <div class="tc-meta-row"><i class="fas fa-map-marker-alt"></i> Europe &amp; Scandinavia</div>
+                            <div class="tc-meta-row"><i class="fas fa-users"></i> 40 Slots Remaining</div>
+                        </div>
+                    </div>
+                    <div class="tc-footer">
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-details"><i class="fas fa-info"></i></button>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="wave-divider" style="position:relative;margin-top:80px;">
             <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 80L60 73C120 67 240 53 360 47C480 40 600 40 720 43C840 47 960 53 1080 57C1200 60 1320 60 1380 60L1440 60V80H0Z" fill="#111"/>
             </svg>
+        </div>
+    </section>
+
+    <!-- ── Discipline Spotlight ── -->
+    <section class="discipline-section">
+        <div class="container">
+            <div class="section-header reveal active">
+                <p class="section-subtitle">Race Categories</p>
+                <h2 class="section-title">Explore Every <span class="text-gradient">Discipline</span></h2>
+                <p class="section-desc">From open-wheel formula cars to off-road rally beasts — find the category that matches your style.</p>
+            </div>
+            <div class="disc-grid">
+
+                <!-- Formula -->
+                <div class="disc-card reveal stagger-1 active" data-disc="formula">
+                    <div class="disc-cover">
+                        <img src="images/car-racing-06.webp" alt="Formula Racing">
+                        <div class="disc-cover-overlay"></div>
+                        <span class="disc-badge">Formula</span>
+                        <span class="disc-icon">🏎️</span>
+                    </div>
+                    <div class="disc-body">
+                        <div class="disc-name">Formula Racing</div>
+                        <div class="disc-desc">Open-wheel single-seater championships pushing the limits of speed and precision on iconic circuits worldwide.</div>
+                        <div class="disc-stats">
+                            <div class="disc-stat"><span class="disc-stat-label">Active Events</span><span class="disc-stat-val">3</span></div>
+                            <div class="disc-stat"><span class="disc-stat-label">Top Prize</span><span class="disc-stat-val">$120,000</span></div>
+                            <div class="disc-stat"><span class="disc-stat-label">Drivers</span><span class="disc-stat-val">168+</span></div>
+                        </div>
+                    </div>
+                    <button class="disc-btn" data-filter="formula" data-category="formula">Browse Formula →</button>
+                </div>
+
+                <!-- MotoGP -->
+                <div class="disc-card reveal stagger-2 active" data-disc="motogp">
+                    <div class="disc-cover">
+                        <img src="images/bike-racing-09.webp" alt="MotoGP Racing">
+                        <div class="disc-cover-overlay"></div>
+                        <span class="disc-badge">MotoGP</span>
+                        <span class="disc-icon">🏍️</span>
+                    </div>
+                    <div class="disc-body">
+                        <div class="disc-name">MotoGP & Superbike</div>
+                        <div class="disc-desc">High-speed motorcycle prototype racing — lean angles, tyre management and razor-sharp reflexes decide the winner.</div>
+                        <div class="disc-stats">
+                            <div class="disc-stat"><span class="disc-stat-label">Active Events</span><span class="disc-stat-val">3</span></div>
+                            <div class="disc-stat"><span class="disc-stat-label">Top Prize</span><span class="disc-stat-val">$95,000</span></div>
+                            <div class="disc-stat"><span class="disc-stat-label">Riders</span><span class="disc-stat-val">120+</span></div>
+                        </div>
+                    </div>
+                    <button class="disc-btn" data-filter="motogp" data-category="motogp">Browse MotoGP →</button>
+                </div>
+
+                <!-- Touring Car -->
+                <div class="disc-card reveal stagger-3 active" data-disc="touring">
+                    <div class="disc-cover">
+                        <img src="images/car-racing-08.webp" alt="Touring Car Racing">
+                        <div class="disc-cover-overlay"></div>
+                        <span class="disc-badge">Touring</span>
+                        <span class="disc-icon">🚗</span>
+                    </div>
+                    <div class="disc-body">
+                        <div class="disc-name">Touring Car</div>
+                        <div class="disc-desc">Production-based saloon car battles with door-to-door action. Tactical racecraft matters as much as raw speed.</div>
+                        <div class="disc-stats">
+                            <div class="disc-stat"><span class="disc-stat-label">Active Events</span><span class="disc-stat-val">3</span></div>
+                            <div class="disc-stat"><span class="disc-stat-label">Top Prize</span><span class="disc-stat-val">$60,000</span></div>
+                            <div class="disc-stat"><span class="disc-stat-label">Teams</span><span class="disc-stat-val">99+</span></div>
+                        </div>
+                    </div>
+                    <button class="disc-btn" data-filter="touring" data-category="touring">Browse Touring →</button>
+                </div>
+
+                <!-- Sim Racing -->
+                <div class="disc-card reveal stagger-4 active" data-disc="sim">
+                    <div class="disc-cover">
+                        <img src="images/car-racing-09.webp" alt="Sim Racing">
+                        <div class="disc-cover-overlay"></div>
+                        <span class="disc-badge">Sim Racing</span>
+                        <span class="disc-icon">🎮</span>
+                    </div>
+                    <div class="disc-body">
+                        <div class="disc-name">Sim Racing</div>
+                        <div class="disc-desc">PC and console racing simulation at the highest level — physics-accurate cars, real tracks and global leaderboards.</div>
+                        <div class="disc-stats">
+                            <div class="disc-stat"><span class="disc-stat-label">Active Events</span><span class="disc-stat-val">3</span></div>
+                            <div class="disc-stat"><span class="disc-stat-label">Top Prize</span><span class="disc-stat-val">$65,000</span></div>
+                            <div class="disc-stat"><span class="disc-stat-label">Drivers</span><span class="disc-stat-val">244+</span></div>
+                        </div>
+                    </div>
+                    <button class="disc-btn" data-filter="sim" data-category="simracing">Browse Sim Racing →</button>
+                </div>
+
+                <!-- Rally -->
+                <div class="disc-card reveal stagger-5 active" data-disc="rally">
+                    <div class="disc-cover">
+                        <img src="images/bike-racing-10.webp" alt="Rally Racing">
+                        <div class="disc-cover-overlay"></div>
+                        <span class="disc-badge">Rally</span>
+                        <span class="disc-icon">🏔️</span>
+                    </div>
+                    <div class="disc-body">
+                        <div class="disc-name">Rally &amp; Off-Road</div>
+                        <div class="disc-desc">Grueling stage-by-stage off-road racing across deserts, forests and mountains. Endurance meets explosive pace.</div>
+                        <div class="disc-stats">
+                            <div class="disc-stat"><span class="disc-stat-label">Active Events</span><span class="disc-stat-val">3</span></div>
+                            <div class="disc-stat"><span class="disc-stat-label">Top Prize</span><span class="disc-stat-val">$70,000</span></div>
+                            <div class="disc-stat"><span class="disc-stat-label">Teams</span><span class="disc-stat-val">76+</span></div>
+                        </div>
+                    </div>
+                    <button class="disc-btn" data-filter="rally" data-category="rally">Browse Rally →</button>
+                </div>
+
+            </div><!-- /disc-grid -->
+
+            <!-- Related Tournaments Panel (populated by JS) -->
+            <div id="discPanel" style="display:none"></div>
+
         </div>
     </section>
 
@@ -898,6 +1376,75 @@
     <script src="js/main.js"></script>
     <script src="js/animations.js"></script>
     <script>
+        // ── Discipline card → show related tournaments panel ──
+        var dcColors = { formula:'#e63946', motogp:'#f97316', touring:'#06b6d4', sim:'#a855f7', rally:'#22c55e' };
+        var dcLabels = { formula:'Formula Racing', motogp:'MotoGP & Superbike', touring:'Touring Car', sim:'Sim Racing', rally:'Rally & Off-Road' };
+
+        function buildRelatedPanel(filter) {
+            var color = dcColors[filter] || '#e63946';
+            var label = dcLabels[filter] || filter;
+            var cards = document.querySelectorAll('.tournament-card[data-filter="' + filter + '"]');
+            var html = '<div class="disc-panel" style="--dc-panel:' + color + '">' +
+                '<div class="disc-panel-head">' +
+                '<div class="disc-panel-title"><div class="disc-panel-accent"></div>' + label + ' Tournaments</div>' +
+                '<span class="disc-panel-count">' + cards.length + ' events</span>' +
+                '</div>' +
+                '<div class="disc-rel-grid">';
+            cards.forEach(function(tc) {
+                var img = tc.querySelector('.tc-cover img');
+                var imgSrc = img ? img.getAttribute('src') : '';
+                var statusEl = tc.querySelector('.tc-status');
+                var statusClass = statusEl ? statusEl.className : 'tc-status';
+                var statusTxt = statusEl ? statusEl.textContent : '';
+                var name = tc.querySelector('.tc-name') ? tc.querySelector('.tc-name').textContent : '';
+                var prize = tc.querySelector('.tc-prize-amount') ? tc.querySelector('.tc-prize-amount').textContent : '';
+                var fillEl = tc.querySelector('.tc-progress-fill');
+                var fillW = fillEl ? fillEl.style.width : '0%';
+                var countEl = tc.querySelector('.tc-progress-count');
+                var countTxt = countEl ? countEl.textContent : '';
+                var metas = tc.querySelectorAll('.tc-meta-row');
+                var date = metas[0] ? metas[0].textContent.trim() : '';
+                var loc  = metas[1] ? metas[1].textContent.trim() : '';
+                html += '<div class="disc-rel-card">' +
+                    '<div class="disc-rel-cover"><img src="' + imgSrc + '" alt="' + name + '"><div class="disc-rel-cover-ov"></div>' +
+                    '<span class="' + statusClass + '">' + statusTxt + '</span></div>' +
+                    '<div class="disc-rel-body">' +
+                    '<div class="disc-rel-name">' + name + '</div>' +
+                    '<div class="disc-rel-prize">' + prize + '</div>' +
+                    '<div class="disc-rel-meta"><i class="fas fa-calendar-alt"></i>' + date + '</div>' +
+                    '<div class="disc-rel-meta"><i class="fas fa-map-marker-alt"></i>' + loc + '</div>' +
+                    '<div class="disc-rel-progress"><div class="disc-rel-fill" style="width:' + fillW + '"></div></div>' +
+                    '<div class="disc-rel-reg">' + countTxt + '</div>' +
+                    '</div>' +
+                    '<div class="disc-rel-footer"><button class="disc-rel-btn btn-register" type="button" data-name="' + name + '"><i class="fas fa-flag-checkered"></i> Register Now</button></div>' +
+                    '</div>';
+            });
+            html += '</div></div>';
+            return html;
+        }
+
+        document.querySelectorAll('.disc-card').forEach(function(card) {
+            card.addEventListener('click', function() {
+                var filter = card.dataset.disc;
+                // Toggle: if already active, close panel
+                var wasActive = card.classList.contains('disc-active');
+                document.querySelectorAll('.disc-card').forEach(function(c){ c.classList.remove('disc-active'); });
+                var panel = document.getElementById('discPanel');
+                if (wasActive) { panel.style.display = 'none'; panel.innerHTML = ''; return; }
+                card.classList.add('disc-active');
+                panel.innerHTML = buildRelatedPanel(filter);
+                panel.style.display = '';
+                setTimeout(function(){ panel.scrollIntoView({ behavior:'smooth', block:'nearest' }); }, 80);
+                // Wire register buttons inside panel to open reg modal
+                panel.querySelectorAll('.disc-rel-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        openReg(btn.dataset.name || '');
+                    });
+                });
+            });
+        });
+
         // ── Registration Modal ──
         (function() {
           var modal = document.getElementById('regModal');
@@ -916,7 +1463,7 @@
           var tournamentLabel = document.getElementById('regTournamentName');
           var successMsg = document.getElementById('regSuccessMsg');
 
-          function openReg(tournamentName) {
+          window.openReg = function openReg(tournamentName) {
             step1.style.display = '';
             step2.style.display = 'none';
             nameInput.value = '';
@@ -988,18 +1535,61 @@
           });
         })();
 
-        // Filter functionality
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const cards = document.querySelectorAll('.tournament-card');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const f = btn.dataset.filter;
-                cards.forEach(card => {
-                    const match = f === 'all' || card.dataset.filter === f;
-                    card.style.display = match ? '' : 'none';
-                    if (match) setTimeout(() => card.classList.add('active'), 10);
+        // ── Tournament Filter (smooth animated) ──
+        // Runs on DOMContentLoaded so it fires AFTER main.js's setupTournamentFilter.
+        // Cloning the filter-bar removes all previously attached click handlers (incl.
+        // main.js's broken handler that uses card.dataset.game).
+        document.addEventListener('DOMContentLoaded', function () {
+            var origBar = document.querySelector('.filter-bar');
+            if (!origBar) return;
+
+            // Clone → replaces old node, stripping all stale listeners
+            var freshBar = origBar.cloneNode(true);
+            origBar.parentNode.replaceChild(freshBar, origBar);
+
+            var btns     = freshBar.querySelectorAll('.filter-btn');
+            var allCards = document.querySelectorAll('.tournament-card');
+
+            function applyFilter(f) {
+                var showIdx = 0;
+                allCards.forEach(function (card) {
+                    var match = (f === 'all') || (card.dataset.filter === f);
+
+                    if (match) {
+                        // 1. Make visible in DOM (remove display:none)
+                        card.style.display = '';
+                        card.classList.remove('tc-gone');
+                        // 2. After browser has laid it out, animate in with stagger
+                        (function (delay, c) {
+                            requestAnimationFrame(function () {
+                                requestAnimationFrame(function () {
+                                    c.style.transitionDelay = delay + 'ms';
+                                    c.classList.remove('tc-hide');
+                                    // Clear the delay after animation finishes
+                                    setTimeout(function () { c.style.transitionDelay = ''; }, delay + 360);
+                                });
+                            });
+                        })(showIdx++ * 55, card);
+
+                    } else {
+                        // Fade + scale out, then hide from layout
+                        card.style.transitionDelay = '';
+                        card.classList.add('tc-hide');
+                        setTimeout(function () {
+                            if (card.classList.contains('tc-hide')) {
+                                card.classList.add('tc-gone');
+                                card.style.display = 'none'; // belt-and-suspenders
+                            }
+                        }, 295);
+                    }
+                });
+            }
+
+            btns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    btns.forEach(function (b) { b.classList.remove('active'); });
+                    btn.classList.add('active');
+                    applyFilter(btn.dataset.filter);
                 });
             });
         });

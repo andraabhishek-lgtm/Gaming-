@@ -865,7 +865,7 @@
   'use strict';
 
   /* ── Swiper background ── */
-  new Swiper('.bg-swiper', {
+  var bgSwiper = new Swiper('.bg-swiper', {
     effect: 'fade',
     fadeEffect: { crossFade: true },
     autoplay: { delay: 5000, disableOnInteraction: false },
@@ -874,6 +874,16 @@
     allowTouchMove: false,
     preloadImages: false,
     lazy: { loadPrevNext: true },
+    observer: true,
+    observeParents: true,
+    resizeObserver: true,
+  });
+
+  /* ── First-load reflow fix ── */
+  window.addEventListener('load', function () {
+    bgSwiper.update();
+    window.dispatchEvent(new Event('resize'));
+    setTimeout(function () { window.dispatchEvent(new Event('resize')); }, 150);
   });
 
   /* ── Role tabs ── */

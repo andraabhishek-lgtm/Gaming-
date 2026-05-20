@@ -15,12 +15,16 @@
 
 html {
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
 body {
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
   min-width: 320px;
 }
 
@@ -1222,4 +1226,113 @@ p, h1, h2, h3, h4, h5, h6, a, span, td, th, li {
     justify-content: center;
   }
   .podium-bar-wrap { width: 70px; }
+}
+
+
+/* ──────────────────────────────────────────────
+   34. FIRST-LOAD MOBILE RENDERING HARDENING
+       Prevents broken layout in Chrome DevTools
+       and on real devices before reflow triggers.
+   ────────────────────────────────────────────── */
+
+/* Force every element to respect viewport width */
+*,
+*::before,
+*::after {
+  max-width: 100%;
+}
+
+/* Exclude elements that legitimately exceed viewport (positioned layers, etc.) */
+.swiper-wrapper,
+.logos-track,
+.ticker-track,
+[style*="position: fixed"],
+[style*="position:fixed"] {
+  max-width: none;
+}
+
+/* Hero height: dvh is stable on mobile (ignores browser chrome) */
+.hero-swiper-section {
+  height: 100dvh;
+  height: 100svh; /* svh = small viewport height — final fallback */
+  min-height: 480px;
+}
+
+/* Auth / login / signup full-height wrapper */
+.auth-wrapper,
+.login-wrapper,
+.signup-wrapper {
+  min-height: 100dvh;
+}
+
+/* Swiper GPU compositing — prevents paint jank on first render */
+.swiper-slide {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Prevent the hero bg from overflowing during Swiper init */
+.hero-swiper,
+.bg-swiper {
+  width: 100% !important;
+  max-width: 100vw;
+}
+
+/* Ensure Swiper wrapper never wider than container */
+.swiper-wrapper {
+  width: 100%;
+}
+
+/* Force images inside hero/bg swipers to fill properly */
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Remove any transform that Chrome DevTools viewport triggers */
+@media (max-width: 768px) {
+  .swiper-slide-active .slide-bg {
+    will-change: transform;
+  }
+
+  /* Prevent section overflow flash on first render */
+  .hero-swiper-section,
+  .filter-section,
+  .tournaments-section,
+  .game-categories,
+  .about-story,
+  .contact-section {
+    overflow-x: hidden;
+  }
+}
+
+/* Guarantee container never causes horizontal scroll */
+.container {
+  width: 100%;
+  max-width: min(1200px, 100%);
+  box-sizing: border-box;
+}
+
+/* Images never force layout wider than viewport */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent fixed-size elements causing overflow on 360px devices */
+@media (max-width: 400px) {
+  .navbar,
+  .topbar {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 }

@@ -307,6 +307,34 @@
         @media (max-width: 1050px) { .tournaments-grid { grid-template-columns: repeat(2,1fr); } .prize-grid { grid-template-columns: 1fr; } .steps-grid::before { display:none; } }
         @media (max-width: 900px) { .stats-strip-grid { grid-template-columns: repeat(2,1fr); } .stat-strip-item:nth-child(2){border-right:none} .stat-strip-item:nth-child(3){border-top:1px solid #1e1e1e} .rules-grid { grid-template-columns: 1fr 1fr; } .steps-grid { grid-template-columns: 1fr 1fr; gap: 32px; } .footer-inner { grid-template-columns: 1fr; gap: 36px; } }
         @media (max-width: 640px) { .tournaments-grid,.rules-grid { grid-template-columns: 1fr; } .steps-grid { grid-template-columns: 1fr; } .stats-strip-grid { grid-template-columns: 1fr 1fr; } .footer-right { grid-template-columns: 1fr 1fr; } .footer-bottom-bar { flex-direction: column; text-align: center; } }
+
+        /* ── REGISTRATION MODAL ── */
+        #regModal{display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:16px}
+        #regModal.open{display:flex}
+        .reg-overlay{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px)}
+        .reg-card{position:relative;background:#0f0f1a;border:1px solid rgba(230,57,70,.25);border-radius:18px;padding:32px 28px 28px;width:100%;max-width:460px;box-shadow:0 0 48px rgba(230,57,70,.18);transform:translateY(28px) scale(.96);opacity:0;transition:transform .32s cubic-bezier(.22,1,.36,1),opacity .28s ease}
+        #regModal.open .reg-card{transform:translateY(0) scale(1);opacity:1}
+        .reg-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.06);border:none;color:#888;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s,color .18s}
+        .reg-close:hover{background:rgba(230,57,70,.15);color:#e63946}
+        .reg-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#e63946,#a855f7);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 14px}
+        .reg-icon--success{background:linear-gradient(135deg,#22c55e,#16a34a)}
+        .reg-title{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;text-align:center;margin-bottom:4px;color:#f0f0f5}
+        .reg-sub{font-size:13px;color:rgba(240,240,245,.5);text-align:center;margin-bottom:22px;line-height:1.5}
+        .reg-tournament{font-family:'Orbitron',sans-serif;font-size:11px;color:#e63946;text-align:center;letter-spacing:.06em;margin-bottom:20px;padding:7px 14px;background:rgba(230,57,70,.08);border-radius:8px;border:1px solid rgba(230,57,70,.18)}
+        .reg-field{margin-bottom:14px}
+        .reg-label{display:block;font-size:11px;font-weight:700;color:rgba(240,240,245,.6);letter-spacing:.06em;margin-bottom:6px;font-family:'Orbitron',sans-serif}
+        .reg-input{width:100%;padding:10px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#f0f0f5;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;outline:none;transition:border-color .18s,box-shadow .18s;box-sizing:border-box}
+        .reg-input:focus{border-color:rgba(230,57,70,.5);box-shadow:0 0 0 3px rgba(230,57,70,.12)}
+        .reg-input.is-error{border-color:#e63946}
+        .reg-err{font-size:11px;color:#e63946;margin-top:4px;display:none}
+        .reg-err.show{display:block}
+        .reg-btn{width:100%;margin-top:6px;padding:12px;background:linear-gradient(135deg,#e63946,#b02132);border:none;border-radius:12px;color:#fff;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;cursor:pointer;transition:opacity .18s,transform .18s}
+        .reg-btn:hover{opacity:.9;transform:translateY(-1px)}
+        .reg-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+        .reg-success-msg{font-size:13px;color:rgba(240,240,245,.65);text-align:center;line-height:1.6;margin-bottom:20px}
+        .reg-done-btn{width:100%;padding:12px;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;border-radius:12px;color:#fff;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:opacity .18s}
+        .reg-done-btn:hover{opacity:.9}
+        @media(max-width:480px){.reg-card{padding:26px 18px 22px}.reg-title{font-size:14px}}
     </style>
     <link rel="stylesheet" href="css/responsive-fix.css">
 </head>
@@ -415,7 +443,7 @@
                         </div>
                     </div>
                     <div class="tc-footer">
-                        <button class="btn-register"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
                         <button class="btn-details"><i class="fas fa-info"></i></button>
                     </div>
                 </div>
@@ -448,7 +476,7 @@
                         </div>
                     </div>
                     <div class="tc-footer">
-                        <button class="btn-register"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
                         <button class="btn-details"><i class="fas fa-info"></i></button>
                     </div>
                 </div>
@@ -481,7 +509,7 @@
                         </div>
                     </div>
                     <div class="tc-footer">
-                        <button class="btn-register"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
                         <button class="btn-details"><i class="fas fa-info"></i></button>
                     </div>
                 </div>
@@ -514,7 +542,7 @@
                         </div>
                     </div>
                     <div class="tc-footer">
-                        <button class="btn-register"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
                         <button class="btn-details"><i class="fas fa-info"></i></button>
                     </div>
                 </div>
@@ -547,7 +575,7 @@
                         </div>
                     </div>
                     <div class="tc-footer">
-                        <button class="btn-register"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
                         <button class="btn-details"><i class="fas fa-info"></i></button>
                     </div>
                 </div>
@@ -580,7 +608,7 @@
                         </div>
                     </div>
                     <div class="tc-footer">
-                        <button class="btn-register"><i class="fas fa-flag-checkered"></i> Register Now</button>
+                        <button class="btn-register" type="button"><i class="fas fa-flag-checkered"></i> Register Now</button>
                         <button class="btn-details"><i class="fas fa-info"></i></button>
                     </div>
                 </div>
@@ -829,9 +857,137 @@
         </div>
     </footer>
 
+    <!-- Registration Modal -->
+    <div id="regModal" role="dialog" aria-modal="true" aria-labelledby="regModalTitle">
+      <div class="reg-overlay" id="regOverlay"></div>
+      <div class="reg-card">
+        <button class="reg-close" id="regClose" aria-label="Close">&#x2715;</button>
+        <!-- Step 1: Form -->
+        <div id="regStep1">
+          <div class="reg-icon">&#127937;</div>
+          <div class="reg-title" id="regModalTitle">Tournament Registration</div>
+          <div class="reg-sub">Fill in your details to secure your slot</div>
+          <div class="reg-tournament" id="regTournamentName">Formula Grand Prix Championship</div>
+          <div class="reg-field">
+            <label class="reg-label" for="regName">Full Name</label>
+            <input class="reg-input" id="regName" type="text" placeholder="Enter your full name" autocomplete="name"/>
+            <div class="reg-err" id="regNameErr">Please enter your full name.</div>
+          </div>
+          <div class="reg-field">
+            <label class="reg-label" for="regEmail">Email Address</label>
+            <input class="reg-input" id="regEmail" type="email" placeholder="your@email.com" autocomplete="email"/>
+            <div class="reg-err" id="regEmailErr">Please enter a valid email address.</div>
+          </div>
+          <div class="reg-field">
+            <label class="reg-label" for="regTeam">Team / Driver Name</label>
+            <input class="reg-input" id="regTeam" type="text" placeholder="Your team or driver alias"/>
+            <div class="reg-err" id="regTeamErr">Please enter your team or driver name.</div>
+          </div>
+          <button class="reg-btn" id="regSubmit" type="button">&#127937; Register Now</button>
+        </div>
+        <!-- Step 2: Success -->
+        <div id="regStep2" style="display:none;text-align:center">
+          <div class="reg-icon reg-icon--success">&#10003;</div>
+          <div class="reg-title">Registration Confirmed!</div>
+          <div class="reg-success-msg" id="regSuccessMsg">You have successfully registered for the tournament. Check your email for confirmation details.</div>
+          <button class="reg-done-btn" id="regDone" type="button">Done</button>
+        </div>
+      </div>
+    </div>
+
     <script src="js/main.js"></script>
     <script src="js/animations.js"></script>
     <script>
+        // ── Registration Modal ──
+        (function() {
+          var modal = document.getElementById('regModal');
+          var overlay = document.getElementById('regOverlay');
+          var closeBtn = document.getElementById('regClose');
+          var submitBtn = document.getElementById('regSubmit');
+          var doneBtn = document.getElementById('regDone');
+          var step1 = document.getElementById('regStep1');
+          var step2 = document.getElementById('regStep2');
+          var nameInput = document.getElementById('regName');
+          var emailInput = document.getElementById('regEmail');
+          var teamInput = document.getElementById('regTeam');
+          var nameErr = document.getElementById('regNameErr');
+          var emailErr = document.getElementById('regEmailErr');
+          var teamErr = document.getElementById('regTeamErr');
+          var tournamentLabel = document.getElementById('regTournamentName');
+          var successMsg = document.getElementById('regSuccessMsg');
+
+          function openReg(tournamentName) {
+            step1.style.display = '';
+            step2.style.display = 'none';
+            nameInput.value = '';
+            emailInput.value = '';
+            teamInput.value = '';
+            [nameInput, emailInput, teamInput].forEach(function(i){ i.classList.remove('is-error'); });
+            [nameErr, emailErr, teamErr].forEach(function(e){ e.classList.remove('show'); });
+            tournamentLabel.textContent = tournamentName || 'Tournament';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '&#127937; Register Now';
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            setTimeout(function(){ nameInput.focus(); }, 350);
+          }
+
+          function closeReg() {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+          }
+
+          function validate() {
+            var ok = true;
+            var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!nameInput.value.trim()) {
+              nameInput.classList.add('is-error'); nameErr.classList.add('show'); ok = false;
+            }
+            if (!emailRe.test(emailInput.value.trim())) {
+              emailInput.classList.add('is-error'); emailErr.classList.add('show'); ok = false;
+            }
+            if (!teamInput.value.trim()) {
+              teamInput.classList.add('is-error'); teamErr.classList.add('show'); ok = false;
+            }
+            return ok;
+          }
+
+          [nameInput, emailInput, teamInput].forEach(function(inp) {
+            inp.addEventListener('input', function() {
+              inp.classList.remove('is-error');
+              if (inp === nameInput) nameErr.classList.remove('show');
+              if (inp === emailInput) emailErr.classList.remove('show');
+              if (inp === teamInput) teamErr.classList.remove('show');
+            });
+          });
+
+          submitBtn.addEventListener('click', function() {
+            if (!validate()) return;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Registering…';
+            setTimeout(function() {
+              step1.style.display = 'none';
+              step2.style.display = '';
+              successMsg.textContent = 'You have successfully registered for ' + tournamentLabel.textContent + '. A confirmation will be sent to ' + emailInput.value.trim() + '.';
+            }, 900);
+          });
+
+          doneBtn.addEventListener('click', closeReg);
+          closeBtn.addEventListener('click', closeReg);
+          overlay.addEventListener('click', closeReg);
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('open')) closeReg();
+          });
+
+          document.querySelectorAll('.btn-register').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+              var card = btn.closest('.tournament-card');
+              var name = card ? (card.querySelector('.tc-name') || {}).textContent : '';
+              openReg(name.trim());
+            });
+          });
+        })();
+
         // Filter functionality
         const filterBtns = document.querySelectorAll('.filter-btn');
         const cards = document.querySelectorAll('.tournament-card');

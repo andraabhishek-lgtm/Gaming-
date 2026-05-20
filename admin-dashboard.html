@@ -53,12 +53,14 @@
     /* ── LAYOUT ── */
     .main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh;min-width:0}
     .topbar{height:62px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 22px;gap:14px;position:sticky;top:0;z-index:50;flex-shrink:0}
-    .topbar-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;flex:1}
+    .topbar-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .topbar-title span{color:var(--gold)}
-    .tb-search{display:flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--border);border-radius:9px;padding:7px 13px;width:200px}
-    .tb-search input{background:none;border:none;outline:none;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;width:100%}
-    .tb-search input::placeholder{color:var(--muted)}
-    .tb-actions{display:flex;align-items:center;gap:9px}
+    .tb-actions{display:flex;align-items:center;gap:9px;flex-shrink:0}
+    /* ── user chip ── */
+    .tb-user-chip{display:flex;flex-direction:column;justify-content:center;min-width:0;max-width:clamp(120px,18vw,220px);padding-left:12px;margin-left:4px;border-left:1px solid var(--border);flex-shrink:1;overflow:hidden}
+    .tb-user-chip-name{font-weight:700;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);line-height:1.3;font-family:'Orbitron',sans-serif}
+    @media(max-width:900px){.tb-user-chip{max-width:clamp(90px,14vw,160px)}}
+    @media(max-width:580px){.tb-user-chip{display:none}}
     .tb-status{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--green)}
     .tb-status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green)}
     .tb-btn{width:36px;height:36px;border-radius:8px;background:var(--glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--muted);transition:all .18s;text-decoration:none;position:relative}
@@ -261,13 +263,13 @@
     /* ── RESPONSIVE ── */
     @media(max-width:1200px){.stats-grid,.mini-row,.um-stats-row{grid-template-columns:repeat(2,1fr)}.analytics-grid,.tourn-list-grid,.report-card-grid{grid-template-columns:1fr}.tc-form{grid-template-columns:1fr 1fr}}
     @media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.tb-hamburger{display:flex}}
-    @media(max-width:600px){.stats-grid,.mini-row,.um-stats-row{grid-template-columns:1fr 1fr}.tb-search{display:none}.page{padding:14px}.tc-form{grid-template-columns:1fr}}
+    @media(max-width:600px){.stats-grid,.mini-row,.um-stats-row{grid-template-columns:1fr 1fr}.page{padding:14px}.tc-form{grid-template-columns:1fr}}
     @media(max-width:480px){
       .gs-toast{min-width:min(260px,calc(100vw - 40px));right:16px;bottom:16px}
       .page{padding:10px}
       .stat-val,.mini-val{font-size:18px}
       .topbar{padding:0 14px}
-      .tb-live,.tb-email{display:none}
+      .tb-live{display:none}
     }
     @media(max-width:400px){
       .topbar{padding:0 10px}
@@ -321,15 +323,17 @@
   <header class="topbar">
     <div class="tb-hamburger" id="hamburger" onclick="openSidebar()"><span></span><span></span><span></span></div>
     <div class="topbar-title">Admin <span>Control Panel</span></div>
-    <div class="tb-search">
-      <span style="color:var(--muted);font-size:13px">🔍</span>
-      <input type="text" placeholder="Search users, tournaments..."/>
-    </div>
     <div class="tb-actions">
       <div class="tb-status"><div class="tb-status-dot"></div>All Systems OK</div>
+
+      <!-- user chip: name + email from session -->
+      <div class="tb-user-chip">
+        <div class="tb-user-chip-name js-admin-name">Admin</div>
+      </div>
+
       <a class="tb-btn" href="#">🔔<div class="tb-notif-dot"></div></a>
       <a class="tb-btn" href="#">💬</a>
-      <div class="tb-avatar">AD</div>
+      <div class="tb-avatar js-admin-initials">AD</div>
     </div>
   </header>
 
@@ -1149,6 +1153,20 @@
 </div>
 
 <script>
+  /* ── Admin identity from session ── */
+  (function hydrateAdminIdentity() {
+    var email = localStorage.getItem('gamingStacklyEmail') || '';
+    var storedName = localStorage.getItem('gamingStacklyName') || '';
+    var rawName = storedName || (email ? email.split('@')[0] : 'Admin');
+    var cleanName = rawName.replace(/[._-]+/g, ' ').replace(/[^a-zA-Z0-9 ]/g, '').trim() || 'Admin';
+    var displayName = cleanName.replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+    var initials = displayName.split(/\s+/).filter(Boolean).slice(0,2).map(function(p){ return p[0]; }).join('').toUpperCase() || 'AD';
+
+    document.querySelectorAll('.js-admin-name').forEach(function(el){ el.textContent = displayName; el.title = email || displayName; });
+    document.querySelectorAll('.js-admin-email').forEach(function(el){ el.textContent = email || '—'; el.title = email || ''; });
+    document.querySelectorAll('.js-admin-initials').forEach(function(el){ el.textContent = initials; el.title = email || displayName; });
+  })();
+
   /* ── Sidebar ── */
   function openSidebar(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
   function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }

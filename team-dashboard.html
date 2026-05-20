@@ -53,20 +53,20 @@
     /* ── LAYOUT ── */
     .main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh;min-width:0}
     .topbar{width:100%;height:62px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 22px;gap:14px;position:sticky;top:0;z-index:50;flex-shrink:0}
-    .topbar-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;flex:1;min-width:0}
+    .topbar-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .topbar-title span{color:var(--purple)}
-    .tb-search{display:flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--border);border-radius:9px;padding:7px 13px;width:200px}
-    .tb-search input{background:none;border:none;outline:none;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;width:100%}
-    .tb-search input::placeholder{color:var(--muted)}
     .tb-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px;margin-left:auto;flex-shrink:0}
-    .tb-live{display:flex;align-items:center;gap:5px;font-size:10px;font-family:'Orbitron',sans-serif;color:var(--purple);letter-spacing:.1em}
+    .tb-live{display:flex;align-items:center;gap:5px;font-size:10px;font-family:'Orbitron',sans-serif;color:var(--purple);letter-spacing:.1em;flex-shrink:0}
     .tb-live-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);animation:pulse 1.4s infinite}
     @keyframes pulse{0%,100%{box-shadow:0 0 4px var(--purple)}50%{box-shadow:0 0 14px var(--purple)}}
     .tb-btn{width:36px;height:36px;border-radius:8px;background:var(--glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--muted);transition:all .18s;text-decoration:none;position:relative}
     .tb-btn:hover{background:var(--card);color:var(--text)}
     .tb-notif-dot{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 5px var(--red)}
-    .tb-user{display:flex;align-items:center;justify-content:flex-end;gap:8px;min-width:0}
-    .tb-email{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:700;color:rgba(240,240,245,.72)}
+    /* ── user chip ── */
+    .tb-user-chip{display:flex;flex-direction:column;justify-content:center;min-width:0;max-width:clamp(120px,18vw,220px);padding-left:12px;margin-left:4px;border-left:1px solid var(--border);flex-shrink:1;overflow:hidden}
+    .tb-user-chip-name{font-weight:700;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);line-height:1.3;font-family:'Orbitron',sans-serif}
+    @media(max-width:900px){.tb-user-chip{max-width:clamp(90px,14vw,160px)}}
+    @media(max-width:580px){.tb-user-chip{display:none}}
     .tb-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:700;font-size:12px;border:2px solid rgba(168,85,247,.35);cursor:pointer;flex-shrink:0}
     .tb-hamburger{display:none;width:36px;height:36px;border-radius:8px;background:var(--glass);border:1px solid var(--border);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;flex-direction:column;gap:5px;padding:9px}
     .tb-hamburger span{display:block;width:100%;height:2px;background:var(--text);border-radius:2px}
@@ -286,9 +286,9 @@
 
     /* ── RESPONSIVE ── */
     @media(max-width:1200px){.stats-grid,.roster-perf-grid,.scrim-stats-grid{grid-template-columns:repeat(2,1fr)}.rs-form{grid-template-columns:1fr 1fr}}
-    @media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.topbar{width:100%;height:64px;padding:0 16px}.tb-hamburger{display:flex}.topbar-title{flex:0 1 auto;line-height:1.25}.tb-search{display:none}.tb-actions{margin-left:auto}.ov-grid,.ov-bottom,.map-perf-grid{grid-template-columns:1fr}.team-stats{display:none}.rs-form{grid-template-columns:1fr}}
+    @media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.topbar{width:100%;height:64px;padding:0 16px}.tb-hamburger{display:flex}.topbar-title{flex:0 1 auto;line-height:1.25}.tb-actions{margin-left:auto}.ov-grid,.ov-bottom,.map-perf-grid{grid-template-columns:1fr}.team-stats{display:none}.rs-form{grid-template-columns:1fr}}
     @media(max-width:600px){.stats-grid,.roster-perf-grid,.scrim-stats-grid{grid-template-columns:1fr 1fr}.page{padding:14px}.cal-grid{display:none}.upcoming-card{grid-template-columns:58px minmax(0,1fr) 72px;gap:10px;padding:12px}.uc-countdown{width:58px;min-width:58px;padding:8px 4px}.uc-countdown .days{font-size:20px}.uc-game-icon{width:28px;height:28px;border-radius:8px;font-size:15px}.uc-team,.uc-opp{font-size:14px}.uc-meta{font-size:11px}.uc-actions{width:72px;flex-direction:column;gap:6px}.uc-actions button{width:100%;min-width:0;padding:7px 6px!important;font-size:9px!important;letter-spacing:0}}
-    @media(max-width:420px){.topbar{padding:0 12px;gap:10px}.topbar-title{font-size:13px}.tb-actions{gap:7px}.tb-live{display:none}.tb-email{display:none}.tb-btn,.tb-avatar,.tb-hamburger{width:36px;height:36px}.upcoming-card{grid-template-columns:52px minmax(0,1fr) 64px;gap:8px;padding:10px}.uc-countdown{width:52px;min-width:52px}.uc-countdown .days{font-size:18px}.uc-countdown .dlbl{font-size:8px}.uc-game-icon{width:24px;height:24px;font-size:14px}.uc-team,.uc-opp{font-size:13px}.uc-type-badge{max-width:74px;font-size:8px;padding:2px 5px}.uc-meta{font-size:10px}.uc-actions{width:64px}.uc-actions button{padding:6px 4px!important;font-size:8px!important}}
+    @media(max-width:420px){.topbar{padding:0 12px;gap:10px}.topbar-title{font-size:13px}.tb-actions{gap:7px}.tb-live{display:none}.tb-btn,.tb-avatar,.tb-hamburger{width:36px;height:36px}.upcoming-card{grid-template-columns:52px minmax(0,1fr) 64px;gap:8px;padding:10px}.uc-countdown{width:52px;min-width:52px}.uc-countdown .days{font-size:18px}.uc-countdown .dlbl{font-size:8px}.uc-game-icon{width:24px;height:24px;font-size:14px}.uc-team,.uc-opp{font-size:13px}.uc-type-badge{max-width:74px;font-size:8px;padding:2px 5px}.uc-meta{font-size:10px}.uc-actions{width:64px}.uc-actions button{padding:6px 4px!important;font-size:8px!important}}
     @media(max-width:380px){
       .stats-grid,.roster-perf-grid,.scrim-stats-grid{grid-template-columns:1fr}
       .gs-toast{min-width:min(260px,calc(100vw - 40px));right:16px;bottom:16px}
@@ -344,18 +344,14 @@
   <header class="topbar">
     <div class="tb-hamburger" id="hamburger" onclick="openSidebar()"><span></span><span></span><span></span></div>
     <div class="topbar-title">Team <span>Dashboard</span></div>
-    <div class="tb-search">
-      <span style="color:var(--muted);font-size:13px">🔍</span>
-      <input type="text" placeholder="Search players, matches..."/>
-    </div>
     <div class="tb-actions">
       <div class="tb-live"><div class="tb-live-dot"></div>ONLINE</div>
+      <div class="tb-user-chip">
+        <div class="tb-user-chip-name js-team-name">Team</div>
+      </div>
       <a class="tb-btn" href="#">🔔<div class="tb-notif-dot"></div></a>
       <a class="tb-btn" href="#">💬</a>
-      <div class="tb-user">
-        <span class="tb-email js-team-email">captain@stormbreakers.gg</span>
-        <div class="tb-avatar js-team-initials">SB</div>
-      </div>
+      <div class="tb-avatar js-team-initials">SB</div>
     </div>
   </header>
 
@@ -1219,7 +1215,8 @@
       .replace(/[._-]+/g, ' ')
       .replace(/[^a-zA-Z0-9 ]/g, '')
       .trim() || 'Team';
-    const initials = cleanName
+    const displayName = cleanName.replace(/\b\w/g, c => c.toUpperCase());
+    const initials = displayName
       .split(/\s+/)
       .filter(Boolean)
       .slice(0, 2)
@@ -1227,6 +1224,10 @@
       .join('')
       .toUpperCase() || 'TM';
 
+    document.querySelectorAll('.js-team-name').forEach(el => {
+      el.textContent = displayName;
+      el.title = email || displayName;
+    });
     document.querySelectorAll('.js-team-email').forEach(el => {
       el.textContent = email;
       el.title = email;

@@ -347,7 +347,7 @@
     <div class="tb-actions">
       <div class="tb-live"><div class="tb-live-dot"></div>ONLINE</div>
       <div class="tb-user-chip">
-        <div class="tb-user-chip-name js-team-name">Team</div>
+        <div class="tb-user-chip-name js-team-email">—</div>
       </div>
       <a class="tb-btn" href="#">🔔<div class="tb-notif-dot"></div></a>
       <a class="tb-btn" href="#">💬</a>
@@ -1229,8 +1229,8 @@
       el.title = email || displayName;
     });
     document.querySelectorAll('.js-team-email').forEach(el => {
-      el.textContent = email;
-      el.title = email;
+      el.textContent = email || '—';
+      el.title = email || '';
     });
     document.querySelectorAll('.js-team-initials').forEach(el => {
       el.textContent = initials;

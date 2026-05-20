@@ -601,6 +601,76 @@
         align-items: center;
       }
     }
+  /* ── Forgot Password Modal ── */
+  .fp-modal {
+    position: fixed; inset: 0; z-index: 5000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    pointer-events: none; visibility: hidden;
+  }
+  .fp-modal.open { pointer-events: all; visibility: visible; }
+  .fp-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
+    opacity: 0; transition: opacity 0.28s ease;
+    cursor: pointer;
+  }
+  .fp-modal.open .fp-overlay { opacity: 1; }
+  .fp-card {
+    position: relative;
+    background: #0e0e18;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 40px 36px 36px;
+    width: 100%; max-width: 420px;
+    text-align: center;
+    transform: translateY(28px) scale(0.96);
+    opacity: 0;
+    transition: transform 0.34s cubic-bezier(0.22,1,0.36,1), opacity 0.28s ease;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  }
+  .fp-modal.open .fp-card { transform: translateY(0) scale(1); opacity: 1; }
+  .fp-close {
+    position: absolute; top: 14px; right: 16px;
+    background: none; border: none; cursor: pointer;
+    color: rgba(255,255,255,0.4); font-size: 1.5rem; line-height: 1;
+    padding: 6px; border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .fp-close:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  .fp-icon {
+    width: 58px; height: 58px; border-radius: 50%;
+    background: rgba(230,57,70,0.12); border: 1px solid rgba(230,57,70,0.25);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px; color: #e63946;
+  }
+  .fp-icon--success { background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.25); color: #22c55e; }
+  .fp-title { font-family: 'Orbitron', monospace; font-size: 1.15rem; font-weight: 900; color: #fff; margin-bottom: 10px; }
+  .fp-sub { color: rgba(255,255,255,0.5); font-size: 0.9rem; line-height: 1.6; margin-bottom: 24px; }
+  .fp-sub strong { color: rgba(255,255,255,0.75); }
+  .fp-field { text-align: left; margin-bottom: 20px; }
+  .fp-label { display: block; color: rgba(255,255,255,0.6); font-size: 0.78rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .fp-input {
+    width: 100%; padding: 13px 16px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 10px; color: #fff; font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .fp-input:focus { border-color: rgba(230,57,70,0.65); box-shadow: 0 0 0 3px rgba(230,57,70,0.15); }
+  .fp-input.is-error { border-color: #ff5c6a; }
+  .fp-err { display: block; color: #ff5c6a; font-size: 0.78rem; margin-top: 5px; min-height: 1em; }
+  .fp-btn {
+    width: 100%; padding: 14px; border: none; border-radius: 12px; cursor: pointer;
+    background: linear-gradient(135deg, #e63946, #b02132);
+    color: #fff; font-family: 'Orbitron', monospace; font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    transition: opacity 0.2s, transform 0.18s;
+  }
+  .fp-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .fp-btn:active { transform: translateY(0); }
+  .fp-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
   </style>
   <link rel="stylesheet" href="css/responsive-fix.css">
 </head>
@@ -713,7 +783,7 @@
           <input type="checkbox" id="rememberMe" name="remember"/>
           Remember me
         </label>
-        <a href="#" class="forgot-link">Forgot password?</a>
+        <a href="#" class="forgot-link" id="forgotPasswordLink">Forgot password?</a>
       </div>
 
       <!-- Submit -->
@@ -748,6 +818,44 @@
       <p>New to the arena? <a href="signup.html">Create account</a></p>
     </div>
 
+  </div>
+</div>
+
+<!-- Forgot Password Modal -->
+<div id="forgotModal" class="fp-modal" role="dialog" aria-modal="true" aria-labelledby="fpTitle" aria-hidden="true">
+  <div class="fp-overlay" id="fpOverlay"></div>
+  <div class="fp-card" id="fpCard">
+    <button class="fp-close" id="fpClose" aria-label="Close">&times;</button>
+
+    <!-- Step 1: enter email -->
+    <div id="fpStep1">
+      <div class="fp-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <h2 class="fp-title" id="fpTitle">Reset Password</h2>
+      <p class="fp-sub">Enter your account email and we'll send you a reset link.</p>
+      <div class="fp-field">
+        <label class="fp-label" for="fpEmail">Email Address</label>
+        <input class="fp-input" type="email" id="fpEmail" placeholder="you@example.com" autocomplete="email"/>
+        <span class="fp-err" id="fpEmailErr"></span>
+      </div>
+      <button class="fp-btn" id="fpSendBtn">Send Reset Link</button>
+    </div>
+
+    <!-- Step 2: confirmation -->
+    <div id="fpStep2" style="display:none;">
+      <div class="fp-icon fp-icon--success">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h2 class="fp-title">Check your inbox</h2>
+      <p class="fp-sub" id="fpConfirmMsg">A reset link has been sent to <strong id="fpSentEmail"></strong>. Check your spam folder if it doesn't arrive within a few minutes.</p>
+      <button class="fp-btn" id="fpDoneBtn">Back to Login</button>
+    </div>
   </div>
 </div>
 
@@ -893,6 +1001,82 @@
   var style = document.createElement('style');
   style.textContent = '@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}';
   document.head.appendChild(style);
+
+  /* ── Forgot Password Modal ── */
+  var fpModal    = document.getElementById('forgotModal');
+  var fpOverlay  = document.getElementById('fpOverlay');
+  var fpClose    = document.getElementById('fpClose');
+  var fpLink     = document.getElementById('forgotPasswordLink');
+  var fpEmailIn  = document.getElementById('fpEmail');
+  var fpEmailErr = document.getElementById('fpEmailErr');
+  var fpSendBtn  = document.getElementById('fpSendBtn');
+  var fpDoneBtn  = document.getElementById('fpDoneBtn');
+  var fpStep1    = document.getElementById('fpStep1');
+  var fpStep2    = document.getElementById('fpStep2');
+  var fpSentEmail= document.getElementById('fpSentEmail');
+
+  function openFP() {
+    fpStep1.style.display = '';
+    fpStep2.style.display = 'none';
+    fpEmailIn.value = '';
+    fpEmailErr.textContent = '';
+    fpEmailIn.classList.remove('is-error');
+    fpModal.setAttribute('aria-hidden', 'false');
+    fpModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function () { fpEmailIn.focus(); }, 350);
+  }
+
+  function closeFP() {
+    fpModal.classList.remove('open');
+    fpModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  fpLink.addEventListener('click', function (e) { e.preventDefault(); openFP(); });
+  fpOverlay.addEventListener('click', closeFP);
+  fpClose.addEventListener('click', closeFP);
+  fpDoneBtn.addEventListener('click', closeFP);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && fpModal.classList.contains('open')) closeFP();
+  });
+
+  fpSendBtn.addEventListener('click', function () {
+    var val = fpEmailIn.value.trim();
+    if (!val) {
+      fpEmailIn.classList.add('is-error');
+      fpEmailErr.textContent = 'Email address is required.';
+      fpEmailIn.focus();
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val)) {
+      fpEmailIn.classList.add('is-error');
+      fpEmailErr.textContent = 'Please enter a valid email address.';
+      fpEmailIn.focus();
+      return;
+    }
+    fpSendBtn.disabled = true;
+    fpSendBtn.textContent = 'Sending…';
+    setTimeout(function () {
+      fpSentEmail.textContent = val;
+      fpStep1.style.display = 'none';
+      fpStep2.style.display = '';
+      fpSendBtn.disabled = false;
+      fpSendBtn.textContent = 'Send Reset Link';
+    }, 900);
+  });
+
+  fpEmailIn.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') fpSendBtn.click();
+  });
+
+  fpEmailIn.addEventListener('input', function () {
+    if (fpEmailIn.classList.contains('is-error')) {
+      fpEmailIn.classList.remove('is-error');
+      fpEmailErr.textContent = '';
+    }
+  });
 
 })();
 </script>

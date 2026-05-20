@@ -1183,3 +1183,43 @@ p, h1, h2, h3, h4, h5, h6, a, span, td, th, li {
     transition: none !important;
   }
 }
+
+/* ──────────────────────────────────────────────
+   31. ABOUT PAGE — fixed image heights → responsive on mobile
+   ────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .image-frame img { height: clamp(260px, 45vw, 400px); }
+}
+@media (max-width: 576px) {
+  .image-frame img { height: clamp(200px, 60vw, 320px); }
+  .category-card   { height: clamp(200px, 55vw, 300px); }
+  .leader-card img { height: 180px; }
+}
+@media (max-width: 400px) {
+  .image-frame img { height: clamp(180px, 65vw, 260px); }
+  .category-card   { height: clamp(180px, 60vw, 260px); }
+  .leader-card img { height: 160px; }
+}
+
+/* ──────────────────────────────────────────────
+   32. TEAMS PAGE — team card image height responsive
+   ────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .team-image img { height: clamp(200px, 50vw, 240px); }
+}
+@media (max-width: 400px) {
+  .team-image img { height: clamp(180px, 60vw, 220px); }
+}
+
+/* ──────────────────────────────────────────────
+   33. TOURNAMENT / CONTACT CTA BUTTONS — full-width on phone
+   ────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .btn-cta-primary,
+  .btn-cta-outline {
+    width: 100%;
+    max-width: 340px;
+    justify-content: center;
+  }
+  .podium-bar-wrap { width: 70px; }
+}

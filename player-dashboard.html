@@ -325,10 +325,49 @@
     .tag-spend{background:rgba(230,57,70,.14);color:var(--red)}
     .tag-bonus{background:rgba(245,158,11,.14);color:var(--gold)}
 
+    /* ── TOURNAMENT SECTION (player dashboard) ── */
+    .pt-overview{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+    .pt-ov-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 12px;text-align:center;transition:all .2s;cursor:pointer;position:relative;overflow:hidden}
+    .pt-ov-card:hover{transform:translateY(-2px);border-color:rgba(230,57,70,.3);box-shadow:0 6px 20px rgba(0,0,0,.35)}
+    .pt-ov-icon{font-size:22px;margin-bottom:8px}
+    .pt-ov-val{font-family:'Orbitron',sans-serif;font-size:clamp(16px,2.2vw,22px);font-weight:900;line-height:1;margin-bottom:4px}
+    .pt-ov-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+
+    .pt-cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .pt-tcard{background:var(--glass);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all .22s;cursor:pointer}
+    .pt-tcard:hover{transform:translateY(-3px);border-color:rgba(230,57,70,.32);box-shadow:0 8px 28px rgba(0,0,0,.42)}
+    .pt-tcard-cover{height:88px;display:flex;align-items:center;justify-content:center;font-size:42px;position:relative;flex-shrink:0}
+    .pt-tcard-badge{position:absolute;top:10px;right:10px;font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px}
+    .pt-tcard-body{padding:14px 15px}
+    .pt-tcard-name{font-weight:700;font-size:13px;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .pt-tcard-meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;align-items:center;font-size:11px;color:var(--muted)}
+    .pt-tcard-prize{font-family:'Orbitron',sans-serif;font-size:10px;padding:2px 6px;border-radius:5px;background:rgba(245,158,11,.14);color:var(--gold)}
+    .pt-prog-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:5px}
+    .pt-prog-fill{height:100%;border-radius:2px}
+    .pt-prog-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);font-family:'Orbitron',sans-serif;margin-bottom:11px}
+    .pt-action-btn{width:100%;padding:8px 0;border-radius:9px;font-family:'Orbitron',sans-serif;font-weight:700;font-size:10px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s;text-align:center;display:block;text-decoration:none;line-height:1.5}
+    .pt-btn-register{background:linear-gradient(135deg,var(--red),#c0392b);color:#fff;box-shadow:0 3px 12px rgba(230,57,70,.35)}
+    .pt-btn-register:hover{box-shadow:0 5px 18px rgba(230,57,70,.5)}
+    .pt-btn-registered{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.3);cursor:default}
+    .pt-btn-live{background:linear-gradient(135deg,var(--red),var(--purple));color:#fff;box-shadow:0 3px 12px rgba(230,57,70,.3)}
+
+    .pt-reg-list{display:flex;flex-direction:column;gap:10px}
+    .pt-reg-item{display:flex;align-items:center;gap:13px;background:var(--glass);border:1px solid var(--border);border-radius:13px;padding:12px 15px;transition:all .18s;cursor:pointer}
+    .pt-reg-item:hover{border-color:rgba(230,57,70,.28);background:rgba(230,57,70,.03)}
+    .pt-reg-icon{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+    .pt-reg-info{flex:1;min-width:0}
+    .pt-reg-name{font-weight:700;font-size:14px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .pt-reg-meta{display:flex;gap:9px;flex-wrap:wrap;font-size:11px;color:var(--muted);align-items:center}
+    .pt-reg-prize{font-family:'Orbitron',sans-serif;font-size:10px;padding:2px 6px;border-radius:5px;background:rgba(245,158,11,.14);color:var(--gold)}
+    .pt-reg-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+    .pt-reg-status{font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 9px;border-radius:6px;white-space:nowrap}
+    .pt-reg-info-sub{font-family:'Orbitron',sans-serif;font-size:10px;color:var(--muted);text-align:right}
+
     /* ── RESPONSIVE ── */
     @media(max-width:1200px){
       .stats-grid{grid-template-columns:repeat(2,1fr)}
       .grid-3{grid-template-columns:1fr 1fr}
+      .pt-cards-grid{grid-template-columns:repeat(2,1fr)}
     }
     @media(max-width:900px){
       .sidebar{transform:translateX(-100%)}
@@ -337,16 +376,28 @@
       .tb-hamburger{display:flex}
       .grid-2,.grid-3{grid-template-columns:1fr}
       .welcome-stats{display:none}
+      .pt-overview{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:640px){
+      .pt-cards-grid{grid-template-columns:1fr 1fr}
     }
     @media(max-width:600px){
       .stats-grid{grid-template-columns:1fr 1fr}
       .page{padding:14px}
+    }
+    @media(max-width:520px){
+      .pt-cards-grid{grid-template-columns:1fr}
+      .pt-reg-item{flex-wrap:wrap;gap:10px}
+      .pt-reg-right{flex-direction:row;align-items:center;gap:10px;width:100%}
+      .pt-reg-info-sub{text-align:left}
     }
     @media(max-width:480px){
       .gs-toast{min-width:min(260px,calc(100vw - 40px));right:16px;bottom:16px}
       .page{padding:10px}
       .stat-val{font-size:20px}
       .mh-perf-grid,.rw-pts-grid,.agent-perf-grid,.rw-earn-grid{grid-template-columns:repeat(2,1fr)}
+      .pt-overview{grid-template-columns:repeat(2,1fr)}
+      .pt-ov-card{padding:12px 8px}
     }
     @media(max-width:400px){
       .stat-val{font-size:18px}
@@ -354,6 +405,8 @@
       .ach-grid{grid-template-columns:repeat(auto-fill,minmax(60px,1fr))}
       .rw-banner{padding:14px 16px}
       .rw-challenge-grid{grid-template-columns:1fr}
+      .pt-reg-meta{gap:6px;font-size:10px}
+      .pt-overview{gap:8px}
     }
     @media(max-width:360px){
       .stats-grid{grid-template-columns:1fr}
@@ -361,6 +414,8 @@
       .gs-toast{right:8px;bottom:8px;min-width:calc(100vw - 16px)}
       .page{padding:8px}
       .mh-perf-grid,.rw-pts-grid,.agent-perf-grid,.rw-earn-grid{grid-template-columns:1fr}
+      .pt-overview{grid-template-columns:1fr 1fr;gap:8px}
+      .pt-cards-grid{grid-template-columns:1fr}
     }
   </style>
   <link rel="stylesheet" href="css/responsive-fix.css">
@@ -388,6 +443,7 @@
     <a class="sb-item active" href="player-dashboard.html"><div class="sb-icon">🏠</div>Home</a>
     <a class="sb-item" href="#"><div class="sb-icon">👤</div>My Profile</a>
 
+    <a class="sb-item" href="#tournaments"><div class="sb-icon">🏆</div>Tournaments<span class="sb-badge">3</span></a>
     <a class="sb-item active" href="#match-history"><div class="sb-icon">⚔️</div>Match History</a>
     <a class="sb-item" href="#rewards"><div class="sb-icon">🎁</div>Rewards<span class="sb-badge">12</span></a>
   </nav>
@@ -587,6 +643,167 @@
       </div>
 
     </div><!-- /grid-2 left column closes here; match history is now full-width below -->
+
+    <!-- ══════════════════════════════════════
+         TOURNAMENTS — FULL SECTION
+    ══════════════════════════════════════ -->
+    <div id="tournaments" style="scroll-margin-top:80px;margin-bottom:22px">
+
+      <div class="section-title" style="margin-bottom:18px">🏆 Tournaments</div>
+
+      <!-- Overview mini-stats -->
+      <div class="pt-overview">
+        <div class="pt-ov-card">
+          <div class="pt-ov-icon">🎯</div>
+          <div class="pt-ov-val" style="color:var(--red)">3</div>
+          <div class="pt-ov-label">Registered</div>
+        </div>
+        <div class="pt-ov-card">
+          <div class="pt-ov-icon">🔴</div>
+          <div class="pt-ov-val" style="color:var(--green)">1</div>
+          <div class="pt-ov-label">Live Now</div>
+        </div>
+        <div class="pt-ov-card">
+          <div class="pt-ov-icon">✅</div>
+          <div class="pt-ov-val" style="color:var(--purple)">14</div>
+          <div class="pt-ov-label">Completed</div>
+        </div>
+        <div class="pt-ov-card">
+          <div class="pt-ov-icon">💰</div>
+          <div class="pt-ov-val" style="color:var(--gold)">$3,200</div>
+          <div class="pt-ov-label">Total Won</div>
+        </div>
+      </div>
+
+      <!-- Featured tournament cards -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>Featured Tournaments</div>
+          <a class="card-action" href="tournaments.html">Browse All →</a>
+        </div>
+        <div class="card-body" style="padding-bottom:20px">
+          <div class="pt-cards-grid">
+
+            <!-- Live -->
+            <div class="pt-tcard">
+              <div class="pt-tcard-cover" style="background:linear-gradient(135deg,rgba(230,57,70,.2),rgba(168,85,247,.12))">
+                🔫
+                <div class="pt-tcard-badge status-live">● LIVE</div>
+              </div>
+              <div class="pt-tcard-body">
+                <div class="pt-tcard-name">Valorant Champions Series</div>
+                <div class="pt-tcard-meta">
+                  <span>📅 Today</span><span>👥 240/256</span>
+                  <span class="pt-tcard-prize">$10,000</span>
+                </div>
+                <div class="pt-prog-bar"><div class="pt-prog-fill" style="width:94%;background:linear-gradient(90deg,var(--red),var(--purple))"></div></div>
+                <div class="pt-prog-labels"><span>240 / 256 players</span><span>94%</span></div>
+                <a href="tournaments.html" class="pt-action-btn pt-btn-live">▶ Watch Live</a>
+              </div>
+            </div>
+
+            <!-- Filling -->
+            <div class="pt-tcard">
+              <div class="pt-tcard-cover" style="background:linear-gradient(135deg,rgba(6,182,212,.14),rgba(59,130,246,.10))">
+                🧩
+                <div class="pt-tcard-badge status-fill">FILLING</div>
+              </div>
+              <div class="pt-tcard-body">
+                <div class="pt-tcard-name">CS2 Major Invitational</div>
+                <div class="pt-tcard-meta">
+                  <span>📅 Jun 1</span><span>👥 30/32</span>
+                  <span class="pt-tcard-prize">$25,000</span>
+                </div>
+                <div class="pt-prog-bar"><div class="pt-prog-fill" style="width:94%;background:linear-gradient(90deg,var(--gold),#f97316)"></div></div>
+                <div class="pt-prog-labels"><span>30 / 32 slots</span><span style="color:var(--gold)">ALMOST FULL</span></div>
+                <span class="pt-action-btn pt-btn-registered">✓ Registered</span>
+              </div>
+            </div>
+
+            <!-- Open -->
+            <div class="pt-tcard">
+              <div class="pt-tcard-cover" style="background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(6,182,212,.08))">
+                🎮
+                <div class="pt-tcard-badge status-open">OPEN</div>
+              </div>
+              <div class="pt-tcard-body">
+                <div class="pt-tcard-name">Apex Legends Open Cup</div>
+                <div class="pt-tcard-meta">
+                  <span>📅 Jun 8</span><span>👥 64/128</span>
+                  <span class="pt-tcard-prize">$5,000</span>
+                </div>
+                <div class="pt-prog-bar"><div class="pt-prog-fill" style="width:50%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+                <div class="pt-prog-labels"><span>64 / 128 players</span><span>50%</span></div>
+                <a href="tournaments.html" class="pt-action-btn pt-btn-register">Register Now</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- My registered tournaments list -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><div class="card-dot"></div>My Registered Tournaments</div>
+          <span style="font-size:11px;color:var(--muted)">3 active</span>
+        </div>
+        <div class="card-body">
+          <div class="pt-reg-list">
+
+            <div class="pt-reg-item">
+              <div class="pt-reg-icon" style="background:rgba(230,57,70,.12)">🔫</div>
+              <div class="pt-reg-info">
+                <div class="pt-reg-name">Valorant Champions Series</div>
+                <div class="pt-reg-meta">
+                  <span>📅 Today</span>
+                  <span>🏟 Online</span>
+                  <span class="pt-reg-prize">$10,000</span>
+                </div>
+              </div>
+              <div class="pt-reg-right">
+                <div class="pt-reg-status status-live">● LIVE</div>
+                <div class="pt-reg-info-sub">Round 2 of 6</div>
+              </div>
+            </div>
+
+            <div class="pt-reg-item">
+              <div class="pt-reg-icon" style="background:rgba(6,182,212,.10)">🧩</div>
+              <div class="pt-reg-info">
+                <div class="pt-reg-name">CS2 Major Invitational</div>
+                <div class="pt-reg-meta">
+                  <span>📅 Jun 1</span>
+                  <span>🏟 LAN — Bengaluru</span>
+                  <span class="pt-reg-prize">$25,000</span>
+                </div>
+              </div>
+              <div class="pt-reg-right">
+                <div class="pt-reg-status status-open">UPCOMING</div>
+                <div class="pt-reg-info-sub">12d 4h left</div>
+              </div>
+            </div>
+
+            <div class="pt-reg-item">
+              <div class="pt-reg-icon" style="background:rgba(245,158,11,.10)">🏹</div>
+              <div class="pt-reg-info">
+                <div class="pt-reg-name">Fortnite Friday Cup</div>
+                <div class="pt-reg-meta">
+                  <span>📅 May 24</span>
+                  <span>🏟 Online</span>
+                  <span class="pt-reg-prize">$2,500</span>
+                </div>
+              </div>
+              <div class="pt-reg-right">
+                <div class="pt-reg-status" style="background:rgba(245,158,11,.14);color:var(--gold)">UPCOMING</div>
+                <div class="pt-reg-info-sub">4d left</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tournaments section -->
 
     <!-- ══════════════════════════════════════
          MATCH HISTORY — FULL SECTION

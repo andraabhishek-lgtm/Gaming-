@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Player Dashboard — Gaming Stackly</title>
+  <title>Donor Dashboard — HopeRise Foundation</title>
   <link rel="icon" href="images/Logo.png" type="image/png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
@@ -419,6 +419,7 @@
     }
   </style>
   <link rel="stylesheet" href="css/responsive-fix.css">
+  <link rel="stylesheet" href="css/ngo-theme.css">
 </head>
 <body>
 
@@ -427,28 +428,28 @@
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <a href="index.html" class="sb-logo">
-    <img src="images/Logo.png" alt="Gaming Stackly"/>
-    <div class="sb-logo-text">Gaming <span>Stackly</span></div>
+    <img src="images/Logo.png" alt="HopeRise Foundation"/>
+    <div class="sb-logo-text">HopeRise <span>Foundation</span></div>
   </a>
   <div class="sb-user">
     <div class="sb-avatar js-player-initials">PL</div>
     <div class="sb-user-info">
       <div class="sb-user-name js-player-name">Player</div>
-      <div class="sb-user-rank">⚔️ Diamond II</div>
+      <div class="sb-user-rank">💎 Gold Supporter</div>
     </div>
     <div class="sb-online"></div>
   </div>
   <nav class="sb-nav">
-    <div class="sb-section">Player Menu</div>
+    <div class="sb-section">Donor Menu</div>
     <a class="sb-item active" href="player-dashboard.html"><div class="sb-icon">🏠</div>Home</a>
     <a class="sb-item" href="#"><div class="sb-icon">👤</div>My Profile</a>
 
-    <a class="sb-item" href="#tournaments"><div class="sb-icon">🏆</div>Tournaments<span class="sb-badge">3</span></a>
-    <a class="sb-item active" href="#match-history"><div class="sb-icon">⚔️</div>Match History</a>
-    <a class="sb-item" href="#rewards"><div class="sb-icon">🎁</div>Rewards<span class="sb-badge">12</span></a>
+    <a class="sb-item" href="#tournaments"><div class="sb-icon">❤️</div>My Programs<span class="sb-badge">3</span></a>
+    <a class="sb-item active" href="#match-history"><div class="sb-icon">📋</div>Donation History</a>
+    <a class="sb-item" href="#rewards"><div class="sb-icon">🎁</div>Impact Points<span class="sb-badge">12</span></a>
   </nav>
   <div class="sb-bottom">
-    <div class="xp-labels"><span>Level 42</span><b>72% → Lv.43</b></div>
+    <div class="xp-labels"><span>Donor Level 42</span><b>72% → Lv.43</b></div>
     <div class="xp-track"><div class="xp-fill" style="width:72%"></div></div>
     <a class="sb-logout" href="login.html">🚪 &nbsp;Logout</a>
   </div>
@@ -459,7 +460,7 @@
   <!-- TOPBAR -->
   <header class="topbar">
     <div class="tb-hamburger" id="hamburger" onclick="openSidebar()"><span></span><span></span><span></span></div>
-    <div class="topbar-title">Player <span>Dashboard</span></div>
+    <div class="topbar-title">Donor <span>Dashboard</span></div>
     <div class="tb-actions">
       <div class="tb-live"><div class="tb-live-dot"></div>LIVE</div>
 
@@ -477,30 +478,30 @@
             <button class="tb-dropdown-action" onclick="markAllRead()">Mark all read</button>
           </div>
           <div class="tb-notif-item tb-notif-unread">
-            <div class="tb-notif-icon" style="background:rgba(230,57,70,.14)">🏆</div>
+            <div class="tb-notif-icon" style="background:rgba(21,101,192,.14)">❤️</div>
             <div class="tb-notif-body">
-              <div class="tb-notif-text"><b>Tournament Starting</b> — CS2 Pro League begins in 30 min</div>
+              <div class="tb-notif-text"><b>Program Update</b> — Project Shiksha phase 2 begins this week</div>
               <div class="tb-notif-time">2 min ago</div>
             </div>
           </div>
           <div class="tb-notif-item tb-notif-unread">
             <div class="tb-notif-icon" style="background:rgba(34,197,94,.14)">✅</div>
             <div class="tb-notif-body">
-              <div class="tb-notif-text"><b>Match Won</b> — You beat Team Shadow <span style="color:var(--green)">+42 RR</span></div>
+              <div class="tb-notif-text"><b>Donation Confirmed</b> — ₹2,500 to Healthcare fund received</div>
               <div class="tb-notif-time">1 hr ago</div>
             </div>
           </div>
           <div class="tb-notif-item tb-notif-unread">
             <div class="tb-notif-icon" style="background:rgba(245,158,11,.14)">🎁</div>
             <div class="tb-notif-body">
-              <div class="tb-notif-text"><b>Reward Unlocked</b> — You reached Gold tier!</div>
+              <div class="tb-notif-text"><b>Impact Milestone</b> — You've helped 50 children this month!</div>
               <div class="tb-notif-time">3 hr ago</div>
             </div>
           </div>
           <div class="tb-notif-item">
-            <div class="tb-notif-icon" style="background:rgba(168,85,247,.14)">👥</div>
+            <div class="tb-notif-icon" style="background:rgba(46,125,50,.14)">🌱</div>
             <div class="tb-notif-body">
-              <div class="tb-notif-text"><b>Team Invite</b> — PhantomX invited you to join their roster</div>
+              <div class="tb-notif-text"><b>80G Receipt</b> — Tax certificate for Apr 2026 is ready</div>
               <div class="tb-notif-time">Yesterday</div>
             </div>
           </div>
@@ -516,26 +517,26 @@
             <button class="tb-dropdown-action" onclick="clearMsgs()">View all</button>
           </div>
           <div class="tb-msg-item">
-            <div class="tb-msg-av" style="background:linear-gradient(135deg,#e63946,#a855f7)">SX<div class="tb-msg-online"></div></div>
+            <div class="tb-msg-av" style="background:linear-gradient(135deg,#1565c0,#2e7d32)">SR<div class="tb-msg-online"></div></div>
             <div class="tb-msg-body">
-              <div class="tb-msg-name">ShadowX</div>
-              <div class="tb-msg-preview">GG bro, that clutch was insane! 🔥</div>
+              <div class="tb-msg-name">Sunita Rao</div>
+              <div class="tb-msg-preview">Thank you for your generous contribution! 🙏</div>
             </div>
             <div class="tb-msg-time">5m</div>
           </div>
           <div class="tb-msg-item">
-            <div class="tb-msg-av" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">NK<div class="tb-msg-online"></div></div>
+            <div class="tb-msg-av" style="background:linear-gradient(135deg,#2e7d32,#1565c0)">DN<div class="tb-msg-online"></div></div>
             <div class="tb-msg-body">
-              <div class="tb-msg-name">NeonKnight</div>
-              <div class="tb-msg-preview">Are you joining the scrim tonight?</div>
+              <div class="tb-msg-name">Deepa Nair</div>
+              <div class="tb-msg-preview">Field report from Project Shiksha is ready</div>
             </div>
             <div class="tb-msg-time">22m</div>
           </div>
           <div class="tb-msg-item">
-            <div class="tb-msg-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">TR</div>
+            <div class="tb-msg-av" style="background:linear-gradient(135deg,#e65100,#1565c0)">HF</div>
             <div class="tb-msg-body">
-              <div class="tb-msg-name">Team Manager</div>
-              <div class="tb-msg-preview">Practice rescheduled to 8PM today</div>
+              <div class="tb-msg-name">HopeRise Team</div>
+              <div class="tb-msg-preview">Your 80G certificate for Q1 is available</div>
             </div>
             <div class="tb-msg-time">1h</div>
           </div>
@@ -552,13 +553,13 @@
     <!-- Welcome -->
     <div class="welcome">
       <div>
-        <h1>Welcome Back, <span class="player-name-inline js-player-name">Player</span> 👋</h1>
-        <p>Here's your live gaming performance overview.</p>
+        <h1>Welcome Back, <span class="player-name-inline js-player-name">Donor</span> 👋</h1>
+        <p>Here's your live impact &amp; donation overview.</p>
       </div>
       <div class="welcome-stats">
-        <div class="w-stat"><div class="v" style="color:var(--red)">72%</div><div class="l">Win Rate</div></div>
-        <div class="w-stat"><div class="v" style="color:var(--gold)">#142</div><div class="l">Global Rank</div></div>
-        <div class="w-stat"><div class="v" style="color:var(--purple)">Diamond II</div><div class="l">Tier</div></div>
+        <div class="w-stat"><div class="v" style="color:var(--red)">₹24,500</div><div class="l">Total Donated</div></div>
+        <div class="w-stat"><div class="v" style="color:var(--gold)">#142</div><div class="l">Impact Rank</div></div>
+        <div class="w-stat"><div class="v" style="color:var(--purple)">Gold Supporter</div><div class="l">Tier</div></div>
       </div>
     </div>
 
@@ -566,35 +567,35 @@
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(230,57,70,.12)">🏆</div>
-          <div class="stat-change dn">-3</div>
+          <div class="stat-icon" style="background:rgba(21,101,192,.12)">❤️</div>
+          <div class="stat-change up">+₹2,500</div>
         </div>
-        <div class="stat-val" style="color:var(--red)">#142</div>
-        <div class="stat-lbl">Global Rank</div>
+        <div class="stat-val" style="color:var(--red)">₹24,500</div>
+        <div class="stat-lbl">Total Donated</div>
       </div>
       <div class="stat-card">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(34,197,94,.12)">📈</div>
-          <div class="stat-change up">+8%</div>
+          <div class="stat-icon" style="background:rgba(34,197,94,.12)">🌱</div>
+          <div class="stat-change up">+3</div>
         </div>
-        <div class="stat-val" style="color:var(--green)">72%</div>
-        <div class="stat-lbl">Win Rate</div>
+        <div class="stat-val" style="color:var(--green)">18</div>
+        <div class="stat-lbl">Programs Supported</div>
       </div>
       <div class="stat-card">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(168,85,247,.12)">⚔️</div>
-          <div class="stat-change up">+18</div>
+          <div class="stat-icon" style="background:rgba(168,85,247,.12)">👥</div>
+          <div class="stat-change up">+24</div>
         </div>
-        <div class="stat-val" style="color:var(--purple)">1,248</div>
-        <div class="stat-lbl">Total Matches</div>
+        <div class="stat-val" style="color:var(--purple)">312</div>
+        <div class="stat-lbl">Lives Impacted</div>
       </div>
       <div class="stat-card">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(245,158,11,.12)">💰</div>
-          <div class="stat-change up">+$420</div>
+          <div class="stat-icon" style="background:rgba(245,158,11,.12)">🏅</div>
+          <div class="stat-change up">+420</div>
         </div>
-        <div class="stat-val" style="color:var(--gold)">$3,200</div>
-        <div class="stat-lbl">Prize Earnings</div>
+        <div class="stat-val" style="color:var(--gold)">8,640</div>
+        <div class="stat-lbl">Impact Points</div>
       </div>
     </div>
 
@@ -603,39 +604,39 @@
       <!-- Tournaments -->
       <div class="card">
         <div class="card-head">
-          <div class="card-title"><div class="card-dot"></div>Active Tournaments</div>
+          <div class="card-title"><div class="card-dot"></div>Active Programs</div>
           <a class="card-action" href="tournaments.html">Browse All →</a>
         </div>
         <div class="card-body">
           <div class="tourn-item">
-            <div class="t-game">🔫</div>
+            <div class="t-game">📚</div>
             <div class="t-info">
-              <div class="t-name">Valorant Champions Series</div>
-              <div class="t-meta"><span>📅 May 22</span><span>👥 128/256</span><span class="t-prize">$10,000</span></div>
+              <div class="t-name">Project Shiksha — Education Drive</div>
+              <div class="t-meta"><span>📅 Ongoing</span><span>👥 8,400 students</span><span class="t-prize">₹35L goal</span></div>
             </div>
-            <div class="t-status status-open">OPEN</div>
+            <div class="t-status status-open">ACTIVE</div>
           </div>
           <div class="tourn-item">
-            <div class="t-game">🧩</div>
+            <div class="t-game">🏥</div>
             <div class="t-info">
-              <div class="t-name">CS2 Major Invitational</div>
-              <div class="t-meta"><span>📅 Jun 1</span><span>👥 30/32</span><span class="t-prize">$25,000</span></div>
+              <div class="t-name">HealthBridge Medical Camp</div>
+              <div class="t-meta"><span>📅 Jun 1</span><span>👥 12,000 patients</span><span class="t-prize">₹28L goal</span></div>
             </div>
-            <div class="t-status status-fill">FILLING</div>
+            <div class="t-status status-fill">URGENT</div>
           </div>
           <div class="tourn-item">
-            <div class="t-game">🏹</div>
+            <div class="t-game">🍱</div>
             <div class="t-info">
-              <div class="t-name">Fortnite Friday Cup</div>
-              <div class="t-meta"><span>📅 TODAY</span><span>👥 240/256</span><span class="t-prize">$2,500</span></div>
+              <div class="t-name">FeedHope — Mid-Day Meal Program</div>
+              <div class="t-meta"><span>📅 TODAY</span><span>👥 5,200 children</span><span class="t-prize">₹22L goal</span></div>
             </div>
             <div class="t-status status-live">● LIVE</div>
           </div>
           <div class="tourn-item">
-            <div class="t-game">🎮</div>
+            <div class="t-game">🌱</div>
             <div class="t-info">
-              <div class="t-name">Apex Legends Open Cup</div>
-              <div class="t-meta"><span>📅 Jun 8</span><span>👥 64/128</span><span class="t-prize">$5,000</span></div>
+              <div class="t-name">GreenEarth Tree Plantation Drive</div>
+              <div class="t-meta"><span>📅 Jun 8</span><span>👥 2M+ trees</span><span class="t-prize">₹15L goal</span></div>
             </div>
             <div class="t-status status-open">OPEN</div>
           </div>
@@ -649,14 +650,14 @@
     ══════════════════════════════════════ -->
     <div id="tournaments" style="scroll-margin-top:80px;margin-bottom:22px">
 
-      <div class="section-title" style="margin-bottom:18px">🏆 Tournaments</div>
+      <div class="section-title" style="margin-bottom:18px">❤️ My Programs</div>
 
       <!-- Overview mini-stats -->
       <div class="pt-overview">
         <div class="pt-ov-card">
           <div class="pt-ov-icon">🎯</div>
           <div class="pt-ov-val" style="color:var(--red)">3</div>
-          <div class="pt-ov-label">Registered</div>
+          <div class="pt-ov-label">Enrolled</div>
         </div>
         <div class="pt-ov-card">
           <div class="pt-ov-icon">🔴</div>
@@ -670,15 +671,15 @@
         </div>
         <div class="pt-ov-card">
           <div class="pt-ov-icon">💰</div>
-          <div class="pt-ov-val" style="color:var(--gold)">$3,200</div>
-          <div class="pt-ov-label">Total Won</div>
+          <div class="pt-ov-val" style="color:var(--gold)">₹24,500</div>
+          <div class="pt-ov-label">Total Donated</div>
         </div>
       </div>
 
       <!-- Featured tournament cards -->
       <div class="card" style="margin-bottom:16px">
         <div class="card-head">
-          <div class="card-title"><div class="card-dot"></div>Featured Tournaments</div>
+          <div class="card-title"><div class="card-dot"></div>Featured Programs</div>
           <a class="card-action" href="tournaments.html">Browse All →</a>
         </div>
         <div class="card-body" style="padding-bottom:20px">
@@ -686,55 +687,55 @@
 
             <!-- Live -->
             <div class="pt-tcard">
-              <div class="pt-tcard-cover" style="background:linear-gradient(135deg,rgba(230,57,70,.2),rgba(168,85,247,.12))">
-                🔫
+              <div class="pt-tcard-cover" style="background:linear-gradient(135deg,rgba(21,101,192,.2),rgba(46,125,50,.12))">
+                📚
                 <div class="pt-tcard-badge status-live">● LIVE</div>
               </div>
               <div class="pt-tcard-body">
-                <div class="pt-tcard-name">Valorant Champions Series</div>
+                <div class="pt-tcard-name">Project Shiksha — Education Drive</div>
                 <div class="pt-tcard-meta">
-                  <span>📅 Today</span><span>👥 240/256</span>
-                  <span class="pt-tcard-prize">$10,000</span>
+                  <span>📅 Ongoing</span><span>👥 8,400 students</span>
+                  <span class="pt-tcard-prize">₹35L</span>
                 </div>
-                <div class="pt-prog-bar"><div class="pt-prog-fill" style="width:94%;background:linear-gradient(90deg,var(--red),var(--purple))"></div></div>
-                <div class="pt-prog-labels"><span>240 / 256 players</span><span>94%</span></div>
-                <a href="tournaments.html" class="pt-action-btn pt-btn-live">▶ Watch Live</a>
+                <div class="pt-prog-bar"><div class="pt-prog-fill" style="width:72%;background:linear-gradient(90deg,#1565c0,#2e7d32)"></div></div>
+                <div class="pt-prog-labels"><span>₹25.2L / ₹35L raised</span><span>72%</span></div>
+                <a href="tournaments.html" class="pt-action-btn pt-btn-live">❤️ Donate Now</a>
               </div>
             </div>
 
-            <!-- Filling -->
+            <!-- Urgent -->
             <div class="pt-tcard">
-              <div class="pt-tcard-cover" style="background:linear-gradient(135deg,rgba(6,182,212,.14),rgba(59,130,246,.10))">
-                🧩
-                <div class="pt-tcard-badge status-fill">FILLING</div>
+              <div class="pt-tcard-cover" style="background:linear-gradient(135deg,rgba(46,125,50,.14),rgba(21,101,192,.10))">
+                🏥
+                <div class="pt-tcard-badge status-fill">URGENT</div>
               </div>
               <div class="pt-tcard-body">
-                <div class="pt-tcard-name">CS2 Major Invitational</div>
+                <div class="pt-tcard-name">HealthBridge Medical Camp</div>
                 <div class="pt-tcard-meta">
-                  <span>📅 Jun 1</span><span>👥 30/32</span>
-                  <span class="pt-tcard-prize">$25,000</span>
+                  <span>📅 Jun 1</span><span>👥 12,000 patients</span>
+                  <span class="pt-tcard-prize">₹28L</span>
                 </div>
-                <div class="pt-prog-bar"><div class="pt-prog-fill" style="width:94%;background:linear-gradient(90deg,var(--gold),#f97316)"></div></div>
-                <div class="pt-prog-labels"><span>30 / 32 slots</span><span style="color:var(--gold)">ALMOST FULL</span></div>
-                <span class="pt-action-btn pt-btn-registered">✓ Registered</span>
+                <div class="pt-prog-bar"><div class="pt-prog-fill" style="width:88%;background:linear-gradient(90deg,var(--gold),#f97316)"></div></div>
+                <div class="pt-prog-labels"><span>₹24.6L / ₹28L raised</span><span style="color:var(--gold)">ALMOST MET</span></div>
+                <span class="pt-action-btn pt-btn-registered">✓ Supported</span>
               </div>
             </div>
 
             <!-- Open -->
             <div class="pt-tcard">
-              <div class="pt-tcard-cover" style="background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(6,182,212,.08))">
-                🎮
+              <div class="pt-tcard-cover" style="background:linear-gradient(135deg,rgba(230,101,0,.12),rgba(21,101,192,.08))">
+                🌱
                 <div class="pt-tcard-badge status-open">OPEN</div>
               </div>
               <div class="pt-tcard-body">
-                <div class="pt-tcard-name">Apex Legends Open Cup</div>
+                <div class="pt-tcard-name">GreenEarth Tree Plantation Drive</div>
                 <div class="pt-tcard-meta">
-                  <span>📅 Jun 8</span><span>👥 64/128</span>
-                  <span class="pt-tcard-prize">$5,000</span>
+                  <span>📅 Jun 8</span><span>👥 2M+ trees</span>
+                  <span class="pt-tcard-prize">₹15L</span>
                 </div>
-                <div class="pt-prog-bar"><div class="pt-prog-fill" style="width:50%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-                <div class="pt-prog-labels"><span>64 / 128 players</span><span>50%</span></div>
-                <a href="tournaments.html" class="pt-action-btn pt-btn-register">Register Now</a>
+                <div class="pt-prog-bar"><div class="pt-prog-fill" style="width:50%;background:linear-gradient(90deg,#2e7d32,#1565c0)"></div></div>
+                <div class="pt-prog-labels"><span>₹7.5L / ₹15L raised</span><span>50%</span></div>
+                <a href="tournaments.html" class="pt-action-btn pt-btn-register">Support Now</a>
               </div>
             </div>
 
@@ -745,36 +746,36 @@
       <!-- My registered tournaments list -->
       <div class="card">
         <div class="card-head">
-          <div class="card-title"><div class="card-dot"></div>My Registered Tournaments</div>
+          <div class="card-title"><div class="card-dot"></div>My Supported Programs</div>
           <span style="font-size:11px;color:var(--muted)">3 active</span>
         </div>
         <div class="card-body">
           <div class="pt-reg-list">
 
             <div class="pt-reg-item">
-              <div class="pt-reg-icon" style="background:rgba(230,57,70,.12)">🔫</div>
+              <div class="pt-reg-icon" style="background:rgba(21,101,192,.12)">📚</div>
               <div class="pt-reg-info">
-                <div class="pt-reg-name">Valorant Champions Series</div>
+                <div class="pt-reg-name">Project Shiksha — Education Drive</div>
                 <div class="pt-reg-meta">
-                  <span>📅 Today</span>
-                  <span>🏟 Online</span>
-                  <span class="pt-reg-prize">$10,000</span>
+                  <span>📅 Ongoing</span>
+                  <span>📍 Rajasthan &amp; UP</span>
+                  <span class="pt-reg-prize">₹5,000 donated</span>
                 </div>
               </div>
               <div class="pt-reg-right">
                 <div class="pt-reg-status status-live">● LIVE</div>
-                <div class="pt-reg-info-sub">Round 2 of 6</div>
+                <div class="pt-reg-info-sub">Phase 2 of 3</div>
               </div>
             </div>
 
             <div class="pt-reg-item">
-              <div class="pt-reg-icon" style="background:rgba(6,182,212,.10)">🧩</div>
+              <div class="pt-reg-icon" style="background:rgba(46,125,50,.10)">🏥</div>
               <div class="pt-reg-info">
-                <div class="pt-reg-name">CS2 Major Invitational</div>
+                <div class="pt-reg-name">HealthBridge Medical Camp</div>
                 <div class="pt-reg-meta">
                   <span>📅 Jun 1</span>
-                  <span>🏟 LAN — Bengaluru</span>
-                  <span class="pt-reg-prize">$25,000</span>
+                  <span>📍 Jharkhand &amp; Bihar</span>
+                  <span class="pt-reg-prize">₹3,500 donated</span>
                 </div>
               </div>
               <div class="pt-reg-right">
@@ -784,13 +785,13 @@
             </div>
 
             <div class="pt-reg-item">
-              <div class="pt-reg-icon" style="background:rgba(245,158,11,.10)">🏹</div>
+              <div class="pt-reg-icon" style="background:rgba(230,101,0,.10)">🌱</div>
               <div class="pt-reg-info">
-                <div class="pt-reg-name">Fortnite Friday Cup</div>
+                <div class="pt-reg-name">GreenEarth Plantation Drive</div>
                 <div class="pt-reg-meta">
-                  <span>📅 May 24</span>
-                  <span>🏟 Online</span>
-                  <span class="pt-reg-prize">$2,500</span>
+                  <span>📅 Jun 8</span>
+                  <span>📍 Pan India</span>
+                  <span class="pt-reg-prize">₹2,000 donated</span>
                 </div>
               </div>
               <div class="pt-reg-right">
@@ -811,47 +812,47 @@
     <div id="match-history" style="scroll-margin-top:80px">
 
       <!-- Section header -->
-      <div class="section-title" style="margin-bottom:18px">⚔️ Match History</div>
+      <div class="section-title" style="margin-bottom:18px">📋 Donation History</div>
 
       <!-- 1. Performance summary cards -->
       <div class="mh-perf-grid">
-        <div class="mh-perf-card" data-icon="🏆">
-          <div class="mh-perf-label">Total Matches</div>
-          <div class="mh-perf-val" style="color:var(--red)">1,248</div>
-          <div class="mh-perf-sub">↑ 18 this week</div>
+        <div class="mh-perf-card" data-icon="💰">
+          <div class="mh-perf-label">Total Donated</div>
+          <div class="mh-perf-val" style="color:var(--red)">₹24,500</div>
+          <div class="mh-perf-sub">↑ ₹2,500 this month</div>
         </div>
         <div class="mh-perf-card" data-icon="📈">
-          <div class="mh-perf-label">Win Rate</div>
-          <div class="mh-perf-val" style="color:var(--green)">72%</div>
-          <div class="mh-perf-sub">↑ +4% vs last month</div>
+          <div class="mh-perf-label">Donations Made</div>
+          <div class="mh-perf-val" style="color:var(--green)">18</div>
+          <div class="mh-perf-sub">↑ 3 this month</div>
         </div>
-        <div class="mh-perf-card" data-icon="⚔️">
-          <div class="mh-perf-label">Avg K/D/A</div>
-          <div class="mh-perf-val" style="color:var(--purple)">18/7/9</div>
-          <div class="mh-perf-sub">K/D ratio 2.57</div>
+        <div class="mh-perf-card" data-icon="❤️">
+          <div class="mh-perf-label">Programs Helped</div>
+          <div class="mh-perf-val" style="color:var(--purple)">6</div>
+          <div class="mh-perf-sub">Across 4 causes</div>
         </div>
-        <div class="mh-perf-card" data-icon="🎯">
-          <div class="mh-perf-label">Avg HS%</div>
-          <div class="mh-perf-val" style="color:var(--gold)">38%</div>
-          <div class="mh-perf-sub">Top 12% globally</div>
+        <div class="mh-perf-card" data-icon="🌱">
+          <div class="mh-perf-label">Avg Donation</div>
+          <div class="mh-perf-val" style="color:var(--gold)">₹1,361</div>
+          <div class="mh-perf-sub">Per transaction</div>
         </div>
-        <div class="mh-perf-card" data-icon="💥">
-          <div class="mh-perf-label">Avg Damage</div>
-          <div class="mh-perf-val" style="color:var(--cyan)">168</div>
-          <div class="mh-perf-sub">ADR per round</div>
+        <div class="mh-perf-card" data-icon="👥">
+          <div class="mh-perf-label">Lives Impacted</div>
+          <div class="mh-perf-val" style="color:var(--cyan)">312</div>
+          <div class="mh-perf-sub">Est. direct impact</div>
         </div>
-        <div class="mh-perf-card" data-icon="🔥">
-          <div class="mh-perf-label">Win Streak</div>
-          <div class="mh-perf-val" style="color:var(--red)">5W</div>
-          <div class="mh-perf-sub">Current streak</div>
+        <div class="mh-perf-card" data-icon="🏅">
+          <div class="mh-perf-label">Donor Streak</div>
+          <div class="mh-perf-val" style="color:var(--red)">5mo</div>
+          <div class="mh-perf-sub">Consecutive months</div>
         </div>
       </div>
 
       <!-- 2. Recent result streak (last 10 games) -->
       <div class="card" style="margin-bottom:18px">
         <div class="card-head">
-          <div class="card-title"><div class="card-dot"></div>Last 10 Games Streak</div>
-          <span style="font-size:11px;color:var(--muted)">W = Win · L = Loss · D = Draw</span>
+          <div class="card-title"><div class="card-dot"></div>Last 10 Donations Streak</div>
+          <span style="font-size:11px;color:var(--muted)">S = Single · R = Recurring · G = Gift</span>
         </div>
         <div class="card-body" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
           <div class="mh-streak">
@@ -877,207 +878,195 @@
       <!-- 3. Full detailed match table -->
       <div class="card" style="margin-bottom:18px">
         <div class="card-head">
-          <div class="card-title"><div class="card-dot"></div>Detailed Match Log</div>
+          <div class="card-title"><div class="card-dot"></div>Detailed Donation Log</div>
           <a class="card-action" href="#">Export CSV →</a>
         </div>
         <div class="table-wrap">
           <table class="mh-full-table" style="min-width:680px">
             <thead>
               <tr>
-                <th>Game &amp; Agent</th>
-                <th>Map / Mode</th>
-                <th>Score</th>
-                <th>K / D / A</th>
-                <th>HS%</th>
-                <th>Damage</th>
-                <th>Result</th>
-                <th>RR</th>
+                <th>Program &amp; Cause</th>
+                <th>Location</th>
+                <th>Amount</th>
+                <th>Impact</th>
+                <th>Fund %</th>
+                <th>Receipt No.</th>
+                <th>Status</th>
+                <th>80G</th>
                 <th>Date</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><div class="agent-badge"><div class="agent-icon">🔫</div><div><div style="font-weight:700;font-size:13px">Valorant</div><div style="font-size:10px;color:var(--purple)">Jett</div></div></div></td>
-                <td><div style="font-weight:700">Ascent</div><div style="font-size:11px;color:var(--muted)">Ranked 5v5</div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">13–7</td>
-                <td><b>24 / 6 / 11</b></td>
-                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:48%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">48%</span></div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">212</td>
-                <td><span class="result-badge win">WIN</span></td>
-                <td><span class="rr-up">+24</span></td>
-                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Today, 2h ago</td>
+                <td><div class="agent-badge"><div class="agent-icon">📚</div><div><div style="font-weight:700;font-size:13px">Project Shiksha</div><div style="font-size:10px;color:var(--purple)">Education</div></div></div></td>
+                <td><div style="font-weight:700">Rajasthan</div><div style="font-size:11px;color:var(--muted)">Field Program</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">₹5,000</td>
+                <td><b>42 students</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:35%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">35%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">HR-2026-0042</td>
+                <td><span class="result-badge win">CONFIRMED</span></td>
+                <td><span class="rr-up">✓ Sent</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">May 22, 2026</td>
               </tr>
               <tr>
-                <td><div class="agent-badge"><div class="agent-icon">🧩</div><div><div style="font-weight:700;font-size:13px">CS2</div><div style="font-size:10px;color:var(--cyan)">Rifler</div></div></div></td>
-                <td><div style="font-weight:700">Dust II</div><div style="font-size:11px;color:var(--muted)">Competitive</div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--red)">10–16</td>
-                <td><b>18 / 14 / 7</b></td>
-                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:32%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">32%</span></div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">178</td>
-                <td><span class="result-badge loss">LOSS</span></td>
-                <td><span class="rr-dn">−18</span></td>
-                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Today, 5h ago</td>
-              </tr>
-              <tr>
-                <td><div class="agent-badge"><div class="agent-icon">🏹</div><div><div style="font-weight:700;font-size:13px">Valorant</div><div style="font-size:10px;color:var(--purple)">Sova</div></div></div></td>
-                <td><div style="font-weight:700">Haven</div><div style="font-size:11px;color:var(--muted)">Ranked 5v5</div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">13–4</td>
-                <td><b>21 / 5 / 14</b></td>
-                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:44%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">44%</span></div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">196</td>
-                <td><span class="result-badge win">WIN</span></td>
-                <td><span class="rr-up">+28</span></td>
-                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Yesterday</td>
-              </tr>
-              <tr>
-                <td><div class="agent-badge"><div class="agent-icon">🎮</div><div><div style="font-weight:700;font-size:13px">Apex</div><div style="font-size:10px;color:var(--gold)">Wraith</div></div></div></td>
-                <td><div style="font-weight:700">Storm Point</div><div style="font-size:11px;color:var(--muted)">Ranked Trio</div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">1st</td>
-                <td><b>8 / 2 / 5</b></td>
-                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:36%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">36%</span></div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">940</td>
-                <td><span class="result-badge win">WIN</span></td>
-                <td><span class="rr-up">+42</span></td>
-                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Yesterday</td>
-              </tr>
-              <tr>
-                <td><div class="agent-badge"><div class="agent-icon">🔫</div><div><div style="font-weight:700;font-size:13px">Valorant</div><div style="font-size:10px;color:var(--purple)">Omen</div></div></div></td>
-                <td><div style="font-weight:700">Bind</div><div style="font-size:11px;color:var(--muted)">Ranked 5v5</div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--red)">9–13</td>
-                <td><b>14 / 11 / 8</b></td>
+                <td><div class="agent-badge"><div class="agent-icon">🏥</div><div><div style="font-weight:700;font-size:13px">HealthBridge</div><div style="font-size:10px;color:var(--cyan)">Healthcare</div></div></div></td>
+                <td><div style="font-weight:700">Bihar</div><div style="font-size:11px;color:var(--muted)">Medical Camp</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">₹3,500</td>
+                <td><b>28 patients</b></td>
                 <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:28%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">28%</span></div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">142</td>
-                <td><span class="result-badge loss">LOSS</span></td>
-                <td><span class="rr-dn">−14</span></td>
-                <td style="color:var(--muted);font-size:11px;white-space:nowrap">2 days ago</td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">HR-2026-0039</td>
+                <td><span class="result-badge win">CONFIRMED</span></td>
+                <td><span class="rr-up">✓ Sent</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">May 10, 2026</td>
               </tr>
               <tr>
-                <td><div class="agent-badge"><div class="agent-icon">🧩</div><div><div style="font-weight:700;font-size:13px">CS2</div><div style="font-size:10px;color:var(--cyan)">AWPer</div></div></div></td>
-                <td><div style="font-weight:700">Mirage</div><div style="font-size:11px;color:var(--muted)">Competitive</div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">16–12</td>
-                <td><b>22 / 9 / 4</b></td>
-                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:55%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">55%</span></div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">204</td>
-                <td><span class="result-badge win">WIN</span></td>
-                <td><span class="rr-up">+20</span></td>
-                <td style="color:var(--muted);font-size:11px;white-space:nowrap">2 days ago</td>
+                <td><div class="agent-badge"><div class="agent-icon">🍱</div><div><div style="font-weight:700;font-size:13px">FeedHope</div><div style="font-size:10px;color:var(--purple)">Food Relief</div></div></div></td>
+                <td><div style="font-weight:700">Maharashtra</div><div style="font-size:11px;color:var(--muted)">Mid-Day Meal</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">₹2,500</td>
+                <td><b>60 children</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:22%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">22%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">HR-2026-0035</td>
+                <td><span class="result-badge win">CONFIRMED</span></td>
+                <td><span class="rr-up">✓ Sent</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Apr 28, 2026</td>
               </tr>
               <tr>
-                <td><div class="agent-badge"><div class="agent-icon">🔫</div><div><div style="font-weight:700;font-size:13px">Valorant</div><div style="font-size:10px;color:var(--purple)">Reyna</div></div></div></td>
-                <td><div style="font-weight:700">Pearl</div><div style="font-size:11px;color:var(--muted)">Ranked 5v5</div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--gold)">12–12</td>
-                <td><b>19 / 9 / 6</b></td>
-                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:40%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">40%</span></div></td>
-                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">158</td>
-                <td><span class="result-badge draw">DRAW</span></td>
-                <td><span class="rr-na">—</span></td>
-                <td style="color:var(--muted);font-size:11px;white-space:nowrap">3 days ago</td>
+                <td><div class="agent-badge"><div class="agent-icon">🌱</div><div><div style="font-weight:700;font-size:13px">GreenEarth</div><div style="font-size:10px;color:var(--gold)">Environment</div></div></div></td>
+                <td><div style="font-weight:700">Pan India</div><div style="font-size:11px;color:var(--muted)">Tree Plantation</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">₹2,000</td>
+                <td><b>500 trees</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:15%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">15%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">HR-2026-0031</td>
+                <td><span class="result-badge win">CONFIRMED</span></td>
+                <td><span class="rr-up">✓ Sent</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Apr 15, 2026</td>
+              </tr>
+              <tr>
+                <td><div class="agent-badge"><div class="agent-icon">👶</div><div><div style="font-weight:700;font-size:13px">ChildFirst</div><div style="font-size:10px;color:var(--purple)">Children</div></div></div></td>
+                <td><div style="font-weight:700">Delhi NCR</div><div style="font-size:11px;color:var(--muted)">Child Welfare</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">₹3,000</td>
+                <td><b>12 children</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:15%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">15%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">HR-2026-0026</td>
+                <td><span class="result-badge win">CONFIRMED</span></td>
+                <td><span class="rr-up">✓ Sent</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Mar 30, 2026</td>
+              </tr>
+              <tr>
+                <td><div class="agent-badge"><div class="agent-icon">📚</div><div><div style="font-weight:700;font-size:13px">Project Shiksha</div><div style="font-size:10px;color:var(--cyan)">Education</div></div></div></td>
+                <td><div style="font-weight:700">Uttar Pradesh</div><div style="font-size:11px;color:var(--muted)">Literacy Drive</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">₹4,500</td>
+                <td><b>38 students</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:35%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">35%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">HR-2026-0021</td>
+                <td><span class="result-badge win">CONFIRMED</span></td>
+                <td><span class="rr-up">✓ Sent</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Mar 15, 2026</td>
+              </tr>
+              <tr>
+                <td><div class="agent-badge"><div class="agent-icon">🏥</div><div><div style="font-weight:700;font-size:13px">HealthBridge</div><div style="font-size:10px;color:var(--purple)">Healthcare</div></div></div></td>
+                <td><div style="font-weight:700">Jharkhand</div><div style="font-size:11px;color:var(--muted)">Medical Camp</div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green)">₹4,000</td>
+                <td><b>34 patients</b></td>
+                <td><div class="hs-bar-wrap"><div class="hs-bar-bg"><div class="hs-bar" style="width:28%"></div></div><span style="font-size:11px;color:var(--gold);font-weight:700">28%</span></div></td>
+                <td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--cyan)">HR-2026-0017</td>
+                <td><span class="result-badge win">CONFIRMED</span></td>
+                <td><span class="rr-up">✓ Sent</span></td>
+                <td style="color:var(--muted);font-size:11px;white-space:nowrap">Feb 28, 2026</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- 4. Map Win Rate + Agent Performance side by side -->
+      <!-- 4. Fund Allocation + Program Performance side by side -->
       <div class="grid-2" style="grid-template-columns:340px 1fr">
 
-        <!-- Map Win Rates -->
+        <!-- Fund Allocation -->
         <div class="card">
           <div class="card-head">
-            <div class="card-title"><div class="card-dot"></div>Win Rate by Map</div>
-            <span style="font-size:10px;color:var(--muted)">Last 30 days</span>
+            <div class="card-title"><div class="card-dot"></div>Donations by Cause</div>
+            <span style="font-size:10px;color:var(--muted)">All time</span>
           </div>
           <div class="card-body">
             <div class="map-wr-grid">
               <div class="map-wr-row">
-                <div class="map-wr-name">Ascent</div>
-                <div class="map-wr-track"><div class="map-wr-fill" style="width:82%"></div></div>
-                <div class="map-wr-pct" style="color:var(--green)">82%</div>
-                <div class="map-wr-rec" style="color:var(--muted)">9W–2L</div>
+                <div class="map-wr-name">Education</div>
+                <div class="map-wr-track"><div class="map-wr-fill" style="width:35%"></div></div>
+                <div class="map-wr-pct" style="color:var(--green)">35%</div>
+                <div class="map-wr-rec" style="color:var(--muted)">₹8,575</div>
               </div>
               <div class="map-wr-row">
-                <div class="map-wr-name">Mirage</div>
-                <div class="map-wr-track"><div class="map-wr-fill" style="width:75%"></div></div>
-                <div class="map-wr-pct" style="color:var(--green)">75%</div>
-                <div class="map-wr-rec" style="color:var(--muted)">6W–2L</div>
+                <div class="map-wr-name">Healthcare</div>
+                <div class="map-wr-track"><div class="map-wr-fill" style="width:28%"></div></div>
+                <div class="map-wr-pct" style="color:var(--green)">28%</div>
+                <div class="map-wr-rec" style="color:var(--muted)">₹6,860</div>
               </div>
               <div class="map-wr-row">
-                <div class="map-wr-name">Haven</div>
-                <div class="map-wr-track"><div class="map-wr-fill" style="width:70%"></div></div>
-                <div class="map-wr-pct" style="color:var(--green)">70%</div>
-                <div class="map-wr-rec" style="color:var(--muted)">7W–3L</div>
+                <div class="map-wr-name">Food Relief</div>
+                <div class="map-wr-track"><div class="map-wr-fill" style="width:22%"></div></div>
+                <div class="map-wr-pct" style="color:var(--green)">22%</div>
+                <div class="map-wr-rec" style="color:var(--muted)">₹5,390</div>
               </div>
               <div class="map-wr-row">
-                <div class="map-wr-name">Pearl</div>
-                <div class="map-wr-track"><div class="map-wr-fill" style="width:60%;background:linear-gradient(90deg,var(--gold),var(--cyan))"></div></div>
-                <div class="map-wr-pct" style="color:var(--gold)">60%</div>
-                <div class="map-wr-rec" style="color:var(--muted)">6W–4L</div>
+                <div class="map-wr-name">Environment</div>
+                <div class="map-wr-track"><div class="map-wr-fill" style="width:10%;background:linear-gradient(90deg,var(--gold),var(--cyan))"></div></div>
+                <div class="map-wr-pct" style="color:var(--gold)">10%</div>
+                <div class="map-wr-rec" style="color:var(--muted)">₹2,450</div>
               </div>
               <div class="map-wr-row">
-                <div class="map-wr-name">Dust II</div>
-                <div class="map-wr-track"><div class="map-wr-fill" style="width:50%;background:linear-gradient(90deg,var(--gold),var(--red))"></div></div>
-                <div class="map-wr-pct" style="color:var(--gold)">50%</div>
-                <div class="map-wr-rec" style="color:var(--muted)">5W–5L</div>
-              </div>
-              <div class="map-wr-row">
-                <div class="map-wr-name">Bind</div>
-                <div class="map-wr-track"><div class="map-wr-fill" style="width:38%;background:linear-gradient(90deg,var(--red),#f97316)"></div></div>
-                <div class="map-wr-pct" style="color:var(--red)">38%</div>
-                <div class="map-wr-rec" style="color:var(--muted)">3W–5L</div>
-              </div>
-              <div class="map-wr-row">
-                <div class="map-wr-name">Fracture</div>
-                <div class="map-wr-track"><div class="map-wr-fill" style="width:33%;background:linear-gradient(90deg,var(--red),#f97316)"></div></div>
-                <div class="map-wr-pct" style="color:var(--red)">33%</div>
-                <div class="map-wr-rec" style="color:var(--muted)">2W–4L</div>
+                <div class="map-wr-name">Children</div>
+                <div class="map-wr-track"><div class="map-wr-fill" style="width:5%;background:linear-gradient(90deg,var(--gold),var(--red))"></div></div>
+                <div class="map-wr-pct" style="color:var(--gold)">5%</div>
+                <div class="map-wr-rec" style="color:var(--muted)">₹1,225</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Agent Performance -->
+        <!-- Program Performance -->
         <div class="card">
           <div class="card-head">
-            <div class="card-title"><div class="card-dot"></div>Performance by Agent</div>
-            <span style="font-size:10px;color:var(--muted)">Top agents this season</span>
+            <div class="card-title"><div class="card-dot"></div>Impact by Program</div>
+            <span style="font-size:10px;color:var(--muted)">All time contribution</span>
           </div>
           <div class="card-body">
             <div class="agent-perf-grid">
               <div class="agent-perf-card">
                 <div class="ap-top">
-                  <div class="ap-icon">🔫</div>
-                  <div><div class="ap-name">Jett</div><div class="ap-matches">42 matches</div></div>
+                  <div class="ap-icon">📚</div>
+                  <div><div class="ap-name">Project Shiksha</div><div class="ap-matches">5 donations</div></div>
                 </div>
-                <div class="ap-stat-row"><span class="ap-stat-k">WR</span><span class="ap-stat-v" style="color:var(--green)">79%</span></div>
-                <div class="ap-stat-row"><span class="ap-stat-k">KDA</span><span class="ap-stat-v" style="color:var(--purple)">2.8</span></div>
-                <div class="ap-stat-row"><span class="ap-stat-k">HS%</span><span class="ap-stat-v" style="color:var(--gold)">48%</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">Given</span><span class="ap-stat-v" style="color:var(--green)">₹9,500</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">Impact</span><span class="ap-stat-v" style="color:var(--purple)">80 students</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">80G</span><span class="ap-stat-v" style="color:var(--gold)">✓ All issued</span></div>
               </div>
               <div class="agent-perf-card">
                 <div class="ap-top">
-                  <div class="ap-icon">🏹</div>
-                  <div><div class="ap-name">Sova</div><div class="ap-matches">28 matches</div></div>
+                  <div class="ap-icon">🏥</div>
+                  <div><div class="ap-name">HealthBridge</div><div class="ap-matches">4 donations</div></div>
                 </div>
-                <div class="ap-stat-row"><span class="ap-stat-k">WR</span><span class="ap-stat-v" style="color:var(--green)">71%</span></div>
-                <div class="ap-stat-row"><span class="ap-stat-k">KDA</span><span class="ap-stat-v" style="color:var(--purple)">2.4</span></div>
-                <div class="ap-stat-row"><span class="ap-stat-k">HS%</span><span class="ap-stat-v" style="color:var(--gold)">41%</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">Given</span><span class="ap-stat-v" style="color:var(--green)">₹7,500</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">Impact</span><span class="ap-stat-v" style="color:var(--purple)">62 patients</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">80G</span><span class="ap-stat-v" style="color:var(--gold)">✓ All issued</span></div>
               </div>
               <div class="agent-perf-card">
                 <div class="ap-top">
-                  <div class="ap-icon">👻</div>
-                  <div><div class="ap-name">Omen</div><div class="ap-matches">19 matches</div></div>
+                  <div class="ap-icon">🍱</div>
+                  <div><div class="ap-name">FeedHope</div><div class="ap-matches">3 donations</div></div>
                 </div>
-                <div class="ap-stat-row"><span class="ap-stat-k">WR</span><span class="ap-stat-v" style="color:var(--gold)">63%</span></div>
-                <div class="ap-stat-row"><span class="ap-stat-k">KDA</span><span class="ap-stat-v" style="color:var(--purple)">1.9</span></div>
-                <div class="ap-stat-row"><span class="ap-stat-k">HS%</span><span class="ap-stat-v" style="color:var(--gold)">29%</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">Given</span><span class="ap-stat-v" style="color:var(--green)">₹5,000</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">Impact</span><span class="ap-stat-v" style="color:var(--purple)">120 children</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">80G</span><span class="ap-stat-v" style="color:var(--gold)">✓ All issued</span></div>
               </div>
               <div class="agent-perf-card">
                 <div class="ap-top">
-                  <div class="ap-icon">💀</div>
-                  <div><div class="ap-name">Reyna</div><div class="ap-matches">15 matches</div></div>
+                  <div class="ap-icon">🌱</div>
+                  <div><div class="ap-name">GreenEarth</div><div class="ap-matches">2 donations</div></div>
                 </div>
-                <div class="ap-stat-row"><span class="ap-stat-k">WR</span><span class="ap-stat-v" style="color:var(--red)">53%</span></div>
-                <div class="ap-stat-row"><span class="ap-stat-k">KDA</span><span class="ap-stat-v" style="color:var(--purple)">2.1</span></div>
-                <div class="ap-stat-row"><span class="ap-stat-k">HS%</span><span class="ap-stat-v" style="color:var(--gold)">38%</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">Given</span><span class="ap-stat-v" style="color:var(--green)">₹2,500</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">Impact</span><span class="ap-stat-v" style="color:var(--purple)">600 trees</span></div>
+                <div class="ap-stat-row"><span class="ap-stat-k">80G</span><span class="ap-stat-v" style="color:var(--gold)">✓ All issued</span></div>
               </div>
             </div>
           </div>
@@ -1092,13 +1081,13 @@
     <div id="rewards" style="scroll-margin-top:80px;margin-top:30px">
 
       <!-- Section header -->
-      <div class="section-title" style="margin-bottom:18px">🎁 Rewards</div>
+      <div class="section-title" style="margin-bottom:18px">🎁 Impact Points &amp; Rewards</div>
 
       <!-- 1. Points Banner -->
       <div class="rw-banner">
         <div>
           <h2>Your Points Balance: <span>2,580 pts</span></h2>
-          <p>Keep winning to earn more points and unlock exclusive rewards.</p>
+          <p>Keep donating and volunteering to earn impact points and unlock exclusive donor benefits.</p>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
           <div class="rw-tier-badge">🥇 Gold Member</div>
@@ -1416,14 +1405,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td style="color:var(--muted);font-size:11px">Today, 2h ago</td><td><b>Match Win</b> — Ascent, Ranked</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+10</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,580</td></tr>
-              <tr><td style="color:var(--muted);font-size:11px">Today, 2h ago</td><td><b>5-Win Streak Bonus</b></td><td><span class="rw-history-tag tag-bonus">Bonus</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+50</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,570</td></tr>
-              <tr><td style="color:var(--muted);font-size:11px">Today, 8h ago</td><td><b>Daily Challenge</b> — First Win</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+25</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,520</td></tr>
-              <tr><td style="color:var(--muted);font-size:11px">Yesterday</td><td><b>Neon Avatar Frame</b> redeemed</td><td><span class="rw-history-tag tag-spend">Spend</span></td><td style="color:var(--red);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">−1,200</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,495</td></tr>
-              <tr><td style="color:var(--muted);font-size:11px">Yesterday</td><td><b>Match Win</b> — Haven, Ranked</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+10</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">3,695</td></tr>
-              <tr><td style="color:var(--muted);font-size:11px">2 days ago</td><td><b>Tournament Runner-Up</b> — Valorant Cup</td><td><span class="rw-history-tag tag-bonus">Bonus</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+80</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">3,685</td></tr>
-              <tr><td style="color:var(--muted);font-size:11px">3 days ago</td><td><b>Weekly Challenge</b> — Win 5 Matches</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+75</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">3,605</td></tr>
-              <tr><td style="color:var(--muted);font-size:11px">4 days ago</td><td><b>Winner Trophy Badge</b> redeemed</td><td><span class="rw-history-tag tag-spend">Spend</span></td><td style="color:var(--red);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">−500</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">3,530</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">Today, 2h ago</td><td><b>Donation Made</b> — Project Shiksha ₹5,000</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+50</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,580</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">Today, 2h ago</td><td><b>5-Month Streak Bonus</b></td><td><span class="rw-history-tag tag-bonus">Bonus</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+100</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,530</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">Today, 8h ago</td><td><b>Impact Milestone</b> — 300 Lives Helped</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+50</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,430</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">Yesterday</td><td><b>Donor Badge — Gold</b> unlocked</td><td><span class="rw-history-tag tag-bonus">Bonus</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+200</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,380</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">Yesterday</td><td><b>Donation Made</b> — HealthBridge ₹3,500</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+35</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,180</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">2 days ago</td><td><b>Volunteer Event Participated</b> — Delhi Drive</td><td><span class="rw-history-tag tag-bonus">Bonus</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+80</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,145</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">3 days ago</td><td><b>Monthly Challenge</b> — Donate 3x This Month</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+75</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">2,065</td></tr>
+              <tr><td style="color:var(--muted);font-size:11px">4 days ago</td><td><b>Donation Made</b> — GreenEarth ₹2,000</td><td><span class="rw-history-tag tag-earn">Earn</span></td><td style="color:var(--green);font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700">+20</td><td style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold)">1,990</td></tr>
             </tbody>
           </table>
         </div>
@@ -1438,11 +1427,11 @@
   function getStoredPlayer() {
     var email = localStorage.getItem('gamingStacklyEmail') || '';
     var storedName = localStorage.getItem('gamingStacklyName') || '';
-    var rawName = storedName || (email ? email.split('@')[0] : 'Player');
+    var rawName = storedName || (email ? email.split('@')[0] : 'Donor');
     var cleanName = rawName
       .replace(/[._-]+/g, ' ')
       .replace(/[^a-zA-Z0-9 ]/g, '')
-      .trim() || 'Player';
+      .trim() || 'Donor';
     var displayName = cleanName.replace(/\b\w/g, function (char) {
       return char.toUpperCase();
     });

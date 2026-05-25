@@ -1,0 +1,1185 @@
+/* ========================================
+   HOPERISE FOUNDATION — NGO Theme Override
+   Converts gaming dark theme → professional NGO
+   Blue #1565c0 | Green #2e7d32 | Orange #e65100
+======================================== */
+
+/* ── 1. CSS Variable Override ──────────── */
+:root {
+  --primary:          #1565c0;
+  --primary-dark:     #0d47a1;
+  --primary-glow:     rgba(21, 101, 192, 0.25);
+  --secondary:        #e8f0fe;
+  --background:       #f8fafc;
+  --surface:          #ffffff;
+  --surface-light:    #f1f5f9;
+  --text-primary:     #1a2332;
+  --text-secondary:   #475569;
+  --text-muted:       #94a3b8;
+  --accent-cyan:      #0288d1;
+  --accent-purple:    #2e7d32;
+  --accent-pink:      #e65100;
+  --accent-orange:    #e65100;
+  --border-color:     #cbd5e1;
+  --success:          #2e7d32;
+  --warning:          #f59e0b;
+  --error:            #dc2626;
+  --primary-color:    var(--primary);
+  --secondary-color:  var(--accent-cyan);
+  --dark-bg:          var(--background);
+  --light-text:       var(--text-primary);
+  --gray-text:        var(--text-secondary);
+
+  /* NGO specific */
+  --ngo-blue:         #1565c0;
+  --ngo-blue-light:   #42a5f5;
+  --ngo-green:        #2e7d32;
+  --ngo-green-light:  #66bb6a;
+  --ngo-orange:       #e65100;
+  --ngo-orange-light: #ff8a65;
+  --ngo-bg:           #f8fafc;
+  --ngo-surface:      #ffffff;
+  --ngo-card:         #ffffff;
+  --ngo-border:       #e2e8f0;
+  --ngo-shadow:       0 2px 16px rgba(21,101,192,0.10);
+  --ngo-shadow-lg:    0 8px 40px rgba(21,101,192,0.15);
+}
+
+/* ── 2. Body & Base ─────────────────────── */
+body {
+  background-color: var(--ngo-bg) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', 'Inter', sans-serif !important;
+  color: var(--text-primary) !important;
+  letter-spacing: 0 !important;
+}
+
+/* ── 3. Navbar ──────────────────────────── */
+.navbar {
+  background: rgba(255,255,255,0.97) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 2px solid var(--ngo-border) !important;
+  box-shadow: 0 2px 12px rgba(21,101,192,0.08) !important;
+}
+
+.nav-logo .logo-text {
+  color: var(--ngo-blue) !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: var(--ngo-blue) !important;
+}
+
+.nav-logo .logo-icon {
+  background: linear-gradient(135deg, var(--ngo-blue), var(--ngo-green)) !important;
+  box-shadow: 0 0 12px rgba(21,101,192,0.3) !important;
+}
+
+.nav-link {
+  color: var(--text-secondary) !important;
+  font-weight: 500 !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--ngo-blue) !important;
+}
+
+.nav-link::after {
+  background: var(--ngo-blue) !important;
+}
+
+.nav-cta {
+  background: linear-gradient(135deg, var(--ngo-blue), var(--ngo-green)) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(21,101,192,0.35) !important;
+}
+
+.nav-cta:hover {
+  background: linear-gradient(135deg, var(--ngo-green), var(--ngo-blue)) !important;
+  box-shadow: 0 6px 20px rgba(21,101,192,0.45) !important;
+  transform: translateY(-2px) !important;
+}
+
+.mobile-menu-btn span {
+  background: var(--ngo-blue) !important;
+}
+
+/* ── 4. Hero Section ────────────────────── */
+.hero-section,
+.hero {
+  background: linear-gradient(135deg, #0d47a1 0%, #1565c0 40%, #1976d2 70%, #2e7d32 100%) !important;
+}
+
+.hero-slide {
+  background: linear-gradient(135deg, rgba(13,71,161,0.92) 0%, rgba(21,101,192,0.88) 50%, rgba(46,125,50,0.85) 100%) !important;
+}
+
+.hero-badge {
+  background: rgba(230,81,0,0.15) !important;
+  color: var(--ngo-orange-light) !important;
+  border-color: rgba(230,81,0,0.3) !important;
+}
+
+.hero-title {
+  color: #ffffff !important;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3) !important;
+}
+
+.hero-subtitle,
+.hero-description {
+  color: rgba(255,255,255,0.88) !important;
+}
+
+.hero-cta-primary,
+.btn-primary,
+.cta-primary {
+  background: var(--ngo-orange) !important;
+  color: #ffffff !important;
+  border: 2px solid var(--ngo-orange) !important;
+  box-shadow: 0 4px 20px rgba(230,81,0,0.4) !important;
+}
+
+.hero-cta-primary:hover,
+.btn-primary:hover,
+.cta-primary:hover {
+  background: var(--ngo-orange-light) !important;
+  border-color: var(--ngo-orange-light) !important;
+  box-shadow: 0 6px 25px rgba(230,81,0,0.5) !important;
+}
+
+.hero-cta-secondary,
+.btn-secondary,
+.cta-secondary {
+  background: transparent !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(255,255,255,0.6) !important;
+}
+
+.hero-cta-secondary:hover,
+.btn-secondary:hover,
+.cta-secondary:hover {
+  background: rgba(255,255,255,0.15) !important;
+  border-color: #ffffff !important;
+}
+
+/* ── 5. Ticker / Live Bar ───────────────── */
+.ticker-wrap,
+.live-ticker {
+  background: linear-gradient(90deg, var(--ngo-blue), #1976d2) !important;
+}
+
+.ticker-label {
+  background: var(--ngo-orange) !important;
+  color: #ffffff !important;
+}
+
+.ticker-content,
+.ticker-item {
+  color: rgba(255,255,255,0.9) !important;
+}
+
+.ticker-separator {
+  color: var(--ngo-orange-light) !important;
+}
+
+/* ── 6. Stats Strip ─────────────────────── */
+.stats-strip,
+.stats-section {
+  background: linear-gradient(135deg, var(--ngo-blue), #1976d2) !important;
+}
+
+.stat-number {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+
+.stat-label {
+  color: rgba(255,255,255,0.8) !important;
+}
+
+.stat-icon {
+  color: var(--ngo-orange-light) !important;
+}
+
+/* ── 7. Section headings ────────────────── */
+.section-header .section-title,
+.section-title {
+  color: var(--text-primary) !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+}
+
+.section-header .section-subtitle,
+.section-subtitle {
+  color: var(--text-secondary) !important;
+}
+
+.section-badge {
+  background: rgba(21,101,192,0.1) !important;
+  color: var(--ngo-blue) !important;
+  border-color: rgba(21,101,192,0.25) !important;
+}
+
+.section-header .title-accent,
+.title-accent {
+  color: var(--ngo-green) !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: var(--ngo-green) !important;
+}
+
+/* ── 8. Cards (generic) ─────────────────── */
+.card,
+.feature-card,
+.program-card,
+.cause-card,
+.team-card,
+.blog-card,
+.about-card {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow) !important;
+  color: var(--text-primary) !important;
+}
+
+.card:hover,
+.feature-card:hover,
+.program-card:hover,
+.cause-card:hover {
+  box-shadow: var(--ngo-shadow-lg) !important;
+  border-color: rgba(21,101,192,0.3) !important;
+}
+
+/* ── 9. Live Section (was Live Races) ────── */
+.live-section,
+.live-races {
+  background: var(--ngo-bg) !important;
+}
+
+.live-card,
+.race-card {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow) !important;
+}
+
+.live-badge,
+.race-status-live {
+  background: var(--ngo-orange) !important;
+  color: #ffffff !important;
+}
+
+.live-badge::before,
+.race-status-live::before {
+  background: #ffffff !important;
+}
+
+.card-title,
+.race-title {
+  color: var(--text-primary) !important;
+}
+
+.card-subtitle,
+.race-subtitle {
+  color: var(--text-secondary) !important;
+}
+
+/* ── 10. Programs / Categories Swiper ───── */
+.categories-section,
+.programs-section {
+  background: var(--surface-light) !important;
+}
+
+.category-card,
+.program-swiper-card {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow) !important;
+}
+
+.category-card:hover,
+.program-swiper-card:hover {
+  border-color: var(--ngo-blue) !important;
+  box-shadow: var(--ngo-shadow-lg) !important;
+}
+
+.category-icon,
+.program-icon {
+  background: linear-gradient(135deg, rgba(21,101,192,0.12), rgba(46,125,50,0.12)) !important;
+  color: var(--ngo-blue) !important;
+}
+
+.category-name,
+.program-name {
+  color: var(--text-primary) !important;
+}
+
+.category-count,
+.program-count {
+  color: var(--text-secondary) !important;
+}
+
+/* ── 11. Leaderboard / Top Donors ───────── */
+.leaderboard-section {
+  background: var(--ngo-surface) !important;
+}
+
+.leaderboard-table,
+.lb-table {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+}
+
+.lb-header {
+  background: linear-gradient(135deg, var(--ngo-blue), #1976d2) !important;
+  color: #ffffff !important;
+}
+
+.lb-row:hover {
+  background: rgba(21,101,192,0.05) !important;
+}
+
+.lb-rank-1 .lb-rank-badge,
+.rank-badge.rank-1 {
+  background: linear-gradient(135deg, #ffd700, #ffb300) !important;
+}
+
+.lb-rank-2 .lb-rank-badge,
+.rank-badge.rank-2 {
+  background: linear-gradient(135deg, #b0bec5, #90a4ae) !important;
+}
+
+.lb-rank-3 .lb-rank-badge,
+.rank-badge.rank-3 {
+  background: linear-gradient(135deg, #d7a060, #bf8040) !important;
+}
+
+/* ── 12. About Preview ──────────────────── */
+.about-preview,
+.about-section {
+  background: var(--ngo-bg) !important;
+}
+
+.about-text,
+.about-description {
+  color: var(--text-secondary) !important;
+}
+
+.about-highlight {
+  color: var(--ngo-blue) !important;
+}
+
+/* ── 13. Features / Impact Section ─────── */
+.features-section,
+.aurora-section {
+  background: linear-gradient(135deg, #0d47a1 0%, #1565c0 50%, #2e7d32 100%) !important;
+  position: relative !important;
+}
+
+.feature-item .feature-icon,
+.aurora-icon {
+  background: rgba(255,255,255,0.15) !important;
+  color: #ffffff !important;
+}
+
+.feature-item .feature-title,
+.aurora-title {
+  color: #ffffff !important;
+}
+
+.feature-item .feature-desc,
+.aurora-desc {
+  color: rgba(255,255,255,0.8) !important;
+}
+
+/* ── 14. Partners / Sponsors ───────────── */
+.sponsors-section,
+.partners-section {
+  background: var(--ngo-surface) !important;
+  border-top: 1px solid var(--ngo-border) !important;
+  border-bottom: 1px solid var(--ngo-border) !important;
+}
+
+.sponsor-item img,
+.partner-logo {
+  filter: grayscale(100%) opacity(0.5) !important;
+  transition: filter 0.3s ease !important;
+}
+
+.sponsor-item:hover img,
+.partner-logo:hover {
+  filter: grayscale(0%) opacity(1) !important;
+}
+
+/* ── 15. Teams / Volunteers Preview ─────── */
+.teams-section,
+.volunteers-section {
+  background: var(--surface-light) !important;
+}
+
+.team-card-preview {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow) !important;
+}
+
+.team-card-preview:hover {
+  border-color: var(--ngo-blue) !important;
+}
+
+/* ── 16. Blog / News Preview ────────────── */
+.blog-section,
+.news-section {
+  background: var(--ngo-bg) !important;
+}
+
+.blog-card {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow) !important;
+}
+
+.blog-card:hover {
+  box-shadow: var(--ngo-shadow-lg) !important;
+  border-color: rgba(21,101,192,0.25) !important;
+}
+
+.blog-category,
+.post-tag {
+  background: rgba(21,101,192,0.1) !important;
+  color: var(--ngo-blue) !important;
+}
+
+.blog-title,
+.post-title {
+  color: var(--text-primary) !important;
+}
+
+.blog-excerpt,
+.post-excerpt {
+  color: var(--text-secondary) !important;
+}
+
+.blog-read-more,
+.read-more-link {
+  color: var(--ngo-blue) !important;
+}
+
+/* ── 17. CTA Banner ─────────────────────── */
+.cta-section,
+.cta-banner {
+  background: linear-gradient(135deg, var(--ngo-green) 0%, #1b5e20 50%, var(--ngo-blue) 100%) !important;
+}
+
+.cta-title {
+  color: #ffffff !important;
+}
+
+.cta-desc,
+.cta-subtitle {
+  color: rgba(255,255,255,0.85) !important;
+}
+
+.cta-btn-primary {
+  background: var(--ngo-orange) !important;
+  color: #ffffff !important;
+  border: 2px solid var(--ngo-orange) !important;
+}
+
+.cta-btn-primary:hover {
+  background: var(--ngo-orange-light) !important;
+}
+
+.cta-btn-secondary {
+  background: transparent !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(255,255,255,0.6) !important;
+}
+
+/* ── 18. Footer ─────────────────────────── */
+.footer,
+footer {
+  background: #0d1b2a !important;
+  color: #cbd5e1 !important;
+  border-top: 3px solid var(--ngo-blue) !important;
+}
+
+.footer-logo .logo-text {
+  color: #ffffff !important;
+}
+
+.footer-desc,
+.footer-about {
+  color: #94a3b8 !important;
+}
+
+.footer-heading,
+.footer-title {
+  color: #ffffff !important;
+  border-bottom: 2px solid var(--ngo-blue) !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 16px !important;
+}
+
+.footer-link,
+.footer-nav a {
+  color: #94a3b8 !important;
+}
+
+.footer-link:hover,
+.footer-nav a:hover {
+  color: var(--ngo-blue-light) !important;
+}
+
+.footer-social a {
+  background: rgba(255,255,255,0.08) !important;
+  color: #94a3b8 !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+.footer-social a:hover {
+  background: var(--ngo-blue) !important;
+  color: #ffffff !important;
+  border-color: var(--ngo-blue) !important;
+}
+
+.footer-bottom {
+  background: rgba(0,0,0,0.3) !important;
+  color: #64748b !important;
+  border-top: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+/* ── 19. About page ─────────────────────── */
+.about-hero {
+  background: linear-gradient(135deg, #0d47a1, #1565c0, #2e7d32) !important;
+}
+
+.about-hero-title {
+  color: #ffffff !important;
+}
+
+.about-stat-card {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow) !important;
+}
+
+.about-stat-number {
+  color: var(--ngo-blue) !important;
+}
+
+.team-member-card {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+}
+
+.team-member-card:hover {
+  border-color: var(--ngo-blue) !important;
+}
+
+.member-role {
+  color: var(--ngo-blue) !important;
+}
+
+.value-card {
+  background: var(--ngo-surface) !important;
+  border-left: 4px solid var(--ngo-blue) !important;
+}
+
+/* ── 20. Tournaments → Programs page ─────── */
+.tournaments-hero,
+.programs-hero {
+  background: linear-gradient(135deg, #0d47a1, #1565c0) !important;
+}
+
+.tournament-card,
+.program-card {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow) !important;
+}
+
+.tournament-card:hover,
+.program-card:hover {
+  box-shadow: var(--ngo-shadow-lg) !important;
+  border-color: rgba(21,101,192,0.3) !important;
+}
+
+.tournament-status-active,
+.program-status-active {
+  background: rgba(46,125,50,0.15) !important;
+  color: var(--ngo-green) !important;
+}
+
+.tournament-status-upcoming,
+.program-status-upcoming {
+  background: rgba(21,101,192,0.12) !important;
+  color: var(--ngo-blue) !important;
+}
+
+.tournament-prize,
+.program-funding {
+  color: var(--ngo-orange) !important;
+}
+
+.filter-btn {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  color: var(--text-secondary) !important;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: var(--ngo-blue) !important;
+  border-color: var(--ngo-blue) !important;
+  color: #ffffff !important;
+}
+
+/* ── 21. Teams → Volunteers page ─────────── */
+.teams-hero,
+.volunteers-hero {
+  background: linear-gradient(135deg, #1b5e20, #2e7d32) !important;
+}
+
+.team-card,
+.volunteer-card {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow) !important;
+}
+
+.team-card:hover,
+.volunteer-card:hover {
+  border-color: var(--ngo-green) !important;
+  box-shadow: var(--ngo-shadow-lg) !important;
+}
+
+.team-tag,
+.volunteer-skill-tag {
+  background: rgba(46,125,50,0.12) !important;
+  color: var(--ngo-green) !important;
+  border: 1px solid rgba(46,125,50,0.25) !important;
+}
+
+.team-rank-badge,
+.volunteer-badge {
+  background: linear-gradient(135deg, var(--ngo-blue), var(--ngo-green)) !important;
+  color: #ffffff !important;
+}
+
+/* ── 22. Blog → News & Stories page ──────── */
+.blog-hero,
+.news-hero {
+  background: linear-gradient(135deg, #0d47a1, #1565c0, #2e7d32) !important;
+}
+
+.blog-post-card {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow) !important;
+}
+
+.blog-post-card:hover {
+  box-shadow: var(--ngo-shadow-lg) !important;
+}
+
+.blog-tag,
+.news-tag {
+  background: rgba(21,101,192,0.1) !important;
+  color: var(--ngo-blue) !important;
+}
+
+/* ── 23. Contact page ─────────────────────── */
+.contact-hero {
+  background: linear-gradient(135deg, var(--ngo-blue), #1976d2) !important;
+}
+
+.contact-card {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow) !important;
+}
+
+.contact-icon {
+  background: linear-gradient(135deg, rgba(21,101,192,0.12), rgba(46,125,50,0.12)) !important;
+  color: var(--ngo-blue) !important;
+}
+
+.contact-form {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow) !important;
+}
+
+.form-input,
+.form-textarea,
+.form-select,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+  background: var(--ngo-bg) !important;
+  border: 1.5px solid var(--ngo-border) !important;
+  color: var(--text-primary) !important;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--ngo-blue) !important;
+  box-shadow: 0 0 0 3px rgba(21,101,192,0.12) !important;
+  outline: none !important;
+}
+
+.form-label,
+label {
+  color: var(--text-secondary) !important;
+}
+
+.form-submit,
+button[type="submit"],
+.submit-btn {
+  background: linear-gradient(135deg, var(--ngo-blue), var(--ngo-green)) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(21,101,192,0.3) !important;
+}
+
+.form-submit:hover,
+button[type="submit"]:hover,
+.submit-btn:hover {
+  background: linear-gradient(135deg, var(--ngo-green), var(--ngo-blue)) !important;
+  box-shadow: 0 6px 20px rgba(21,101,192,0.4) !important;
+}
+
+/* ── 24. Login / Signup pages ─────────────── */
+.login-page,
+.signup-page,
+.auth-page {
+  background: linear-gradient(135deg, #f8fafc, #e8f0fe) !important;
+}
+
+.auth-card,
+.login-card,
+.signup-card {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow-lg) !important;
+}
+
+.auth-logo .logo-text {
+  color: var(--ngo-blue) !important;
+}
+
+.auth-title {
+  color: var(--text-primary) !important;
+}
+
+.auth-subtitle {
+  color: var(--text-secondary) !important;
+}
+
+.auth-link {
+  color: var(--ngo-blue) !important;
+}
+
+.auth-divider span {
+  background: var(--ngo-surface) !important;
+  color: var(--text-muted) !important;
+}
+
+.auth-divider::before {
+  background: var(--ngo-border) !important;
+}
+
+.social-auth-btn {
+  background: var(--ngo-bg) !important;
+  border: 1.5px solid var(--ngo-border) !important;
+  color: var(--text-secondary) !important;
+}
+
+.social-auth-btn:hover {
+  background: var(--surface-light) !important;
+  border-color: var(--ngo-blue) !important;
+}
+
+/* ── 25. 404 page ────────────────────────── */
+.error-page,
+.page-404 {
+  background: var(--ngo-bg) !important;
+}
+
+.error-code {
+  background: linear-gradient(135deg, var(--ngo-blue), var(--ngo-green)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.error-title {
+  color: var(--text-primary) !important;
+}
+
+.error-message {
+  color: var(--text-secondary) !important;
+}
+
+.error-back-btn {
+  background: var(--ngo-blue) !important;
+  color: #ffffff !important;
+}
+
+/* ── 26. Dashboard overrides ─────────────── */
+.dash-topbar,
+.topbar {
+  background: rgba(255,255,255,0.97) !important;
+  border-bottom: 2px solid var(--ngo-border) !important;
+  box-shadow: 0 2px 10px rgba(21,101,192,0.07) !important;
+}
+
+.tb-logo-text {
+  color: var(--ngo-blue) !important;
+}
+
+.tb-user-chip {
+  background: rgba(21,101,192,0.07) !important;
+  border: 1px solid rgba(21,101,192,0.2) !important;
+}
+
+.tb-user-chip-name {
+  color: var(--ngo-blue) !important;
+}
+
+.sidebar,
+.dash-sidebar {
+  background: #0d1b2a !important;
+  border-right: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+.sb-logo .logo-text {
+  color: #ffffff !important;
+}
+
+.sb-item {
+  color: #94a3b8 !important;
+}
+
+.sb-item:hover,
+.sb-item.active {
+  background: rgba(21,101,192,0.2) !important;
+  color: #ffffff !important;
+  border-left: 3px solid var(--ngo-blue) !important;
+}
+
+.sb-badge {
+  background: var(--ngo-blue) !important;
+  color: #ffffff !important;
+}
+
+.dash-content,
+.main-content {
+  background: var(--ngo-bg) !important;
+}
+
+/* Dashboard stat cards */
+.stat-card,
+.ds-stat,
+.overview-card {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+  box-shadow: var(--ngo-shadow) !important;
+}
+
+.stat-card-icon,
+.ds-icon {
+  background: linear-gradient(135deg, rgba(21,101,192,0.12), rgba(46,125,50,0.12)) !important;
+}
+
+.stat-card-value,
+.ds-value {
+  color: var(--text-primary) !important;
+}
+
+.stat-card-label,
+.ds-label {
+  color: var(--text-secondary) !important;
+}
+
+.stat-card-change.positive,
+.ds-change.up {
+  color: var(--ngo-green) !important;
+}
+
+.stat-card-change.negative,
+.ds-change.down {
+  color: var(--error) !important;
+}
+
+/* Dashboard tables */
+.dash-table,
+.data-table {
+  background: var(--ngo-surface) !important;
+  border: 1px solid var(--ngo-border) !important;
+}
+
+.dash-table th,
+.data-table th {
+  background: var(--surface-light) !important;
+  color: var(--text-secondary) !important;
+  border-bottom: 2px solid var(--ngo-border) !important;
+}
+
+.dash-table td,
+.data-table td {
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--ngo-border) !important;
+}
+
+.dash-table tr:hover,
+.data-table tr:hover {
+  background: rgba(21,101,192,0.04) !important;
+}
+
+/* ── 27. Swiper custom arrows / bullets ───── */
+.swiper-button-next,
+.swiper-button-prev {
+  background: rgba(21,101,192,0.85) !important;
+  color: #ffffff !important;
+  border-radius: 50% !important;
+  width: 44px !important;
+  height: 44px !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: var(--ngo-blue) !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+.swiper-pagination-bullet {
+  background: rgba(21,101,192,0.4) !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--ngo-blue) !important;
+}
+
+/* ── 28. Progress bars / donation meters ───── */
+.progress-bar,
+.prog-bar-fill {
+  background: linear-gradient(90deg, var(--ngo-blue), var(--ngo-green)) !important;
+}
+
+.progress-track,
+.prog-bar-track {
+  background: var(--ngo-border) !important;
+}
+
+/* ── 29. Badges & tags ──────────────────── */
+.badge-primary,
+.tag-primary {
+  background: rgba(21,101,192,0.12) !important;
+  color: var(--ngo-blue) !important;
+}
+
+.badge-success,
+.tag-success {
+  background: rgba(46,125,50,0.12) !important;
+  color: var(--ngo-green) !important;
+}
+
+.badge-warning,
+.tag-warning {
+  background: rgba(230,81,0,0.12) !important;
+  color: var(--ngo-orange) !important;
+}
+
+/* ── 30. Scrollbar ──────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ngo-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ngo-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ngo-blue-light);
+}
+
+/* ── 31. Text selection ─────────────────── */
+::selection {
+  background: rgba(21,101,192,0.25);
+  color: var(--text-primary);
+}
+
+/* ── 32. Focus outlines ─────────────────── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--ngo-blue) !important;
+  outline-offset: 2px !important;
+}
+
+/* ── 33. Utility: highlight text ─────────── */
+.text-primary-ngo  { color: var(--ngo-blue) !important; }
+.text-success-ngo  { color: var(--ngo-green) !important; }
+.text-warning-ngo  { color: var(--ngo-orange) !important; }
+.bg-primary-ngo    { background: var(--ngo-blue) !important; }
+.bg-success-ngo    { background: var(--ngo-green) !important; }
+.bg-warning-ngo    { background: var(--ngo-orange) !important; }
+
+/* ── 34. Glow / neon → soft shadow swap ───── */
+[class*="glow"],
+[style*="text-shadow"] {
+  text-shadow: none !important;
+}
+
+[class*="neon"] {
+  box-shadow: none !important;
+  border-color: var(--ngo-border) !important;
+}
+
+/* Disable gaming particle canvas */
+#particles-canvas,
+.particles-canvas {
+  display: none !important;
+}
+
+/* ── 35. Cursor override (remove custom) ─── */
+*, body {
+  cursor: auto !important;
+}
+
+.custom-cursor,
+#custom-cursor {
+  display: none !important;
+}
+
+/* ── 36. Aurora / animated background ──── */
+.aurora-bg,
+.bg-aurora {
+  background: linear-gradient(135deg, rgba(21,101,192,0.08), rgba(46,125,50,0.08)) !important;
+}
+
+.aurora-blob {
+  background: radial-gradient(circle, rgba(21,101,192,0.15), transparent 70%) !important;
+}
+
+/* ── 37. General link color ─────────────── */
+a {
+  color: var(--ngo-blue);
+}
+
+a:hover {
+  color: var(--ngo-blue-light);
+}
+
+/* ── 38. Mobile menu ─────────────────────── */
+.mobile-menu,
+.nav-mobile {
+  background: rgba(255,255,255,0.98) !important;
+  border-top: 2px solid var(--ngo-border) !important;
+  box-shadow: 0 8px 30px rgba(21,101,192,0.12) !important;
+}
+
+.mobile-menu .nav-link {
+  color: var(--text-secondary) !important;
+  border-bottom: 1px solid var(--ngo-border) !important;
+}
+
+.mobile-menu .nav-link:hover {
+  color: var(--ngo-blue) !important;
+  background: rgba(21,101,192,0.05) !important;
+}
+
+.mobile-nav-cta {
+  background: var(--ngo-blue) !important;
+  color: #ffffff !important;
+}
+
+/* ── 39. Page hero backgrounds (all pages) ── */
+.page-hero,
+.inner-hero,
+[class$="-hero"] {
+  background: linear-gradient(135deg, #0d47a1 0%, #1565c0 60%, #1976d2 100%) !important;
+  color: #ffffff !important;
+}
+
+.page-hero h1,
+.inner-hero h1,
+[class$="-hero"] h1,
+.page-hero h2,
+[class$="-hero"] h2 {
+  color: #ffffff !important;
+}
+
+.page-hero p,
+.inner-hero p,
+[class$="-hero"] p {
+  color: rgba(255,255,255,0.85) !important;
+}
+
+/* ── 40. Donation specific ──────────────── */
+.donate-btn,
+.btn-donate {
+  background: var(--ngo-orange) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(230,81,0,0.35) !important;
+  border-radius: 8px !important;
+  padding: 12px 28px !important;
+  transition: all 0.3s ease !important;
+}
+
+.donate-btn:hover,
+.btn-donate:hover {
+  background: #bf360c !important;
+  box-shadow: 0 6px 20px rgba(230,81,0,0.5) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ── 41. Impact numbers animation ─────────── */
+.impact-number,
+.counter-value {
+  color: var(--ngo-blue) !important;
+  font-weight: 800 !important;
+}
+
+/* ── Responsive: ensure no dark leftover on mobile ── */
+@media (max-width: 768px) {
+  .navbar {
+    background: rgba(255,255,255,0.99) !important;
+  }
+  .hero-section,
+  .hero {
+    background: linear-gradient(180deg, #0d47a1, #1565c0) !important;
+  }
+  .features-section,
+  .aurora-section {
+    background: linear-gradient(180deg, #0d47a1, #2e7d32) !important;
+  }
+}

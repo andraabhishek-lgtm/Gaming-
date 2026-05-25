@@ -1336,3 +1336,792 @@ img {
     padding-right: 12px;
   }
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   35. FULL-SITE RESPONSIVE POLISH
+       Fills intermediate gaps across all 13 pages.
+       Breakpoints: 1440px | 1200px | 1024px | 900px | 768px |
+                    640px  | 560px  | 480px  | 400px | 360px | 320px
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── ULTRA-WIDE CONSTRAINT (1440px+) ──
+   Prevent extreme line lengths and oversized cards on 4K screens */
+@media (min-width: 1440px) {
+  .container,
+  .nav-container,
+  .footer-container {
+    max-width: min(1400px, 94vw);
+  }
+  .hero-content {
+    max-width: min(1400px, 90vw);
+  }
+}
+
+
+/* ─────────────────────────────────────
+   NAVBAR — all public pages
+   ───────────────────────────────────── */
+
+/* Prevent logo image from shrinking on small screens */
+.logo img {
+  height: clamp(30px, 5vw, 40px);
+  width: auto;
+  flex-shrink: 0;
+}
+
+/* Logo text — graceful truncation */
+.logo span, .sb-logo-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: clamp(100px, 30vw, 200px);
+}
+
+/* Nav CTA button — prevent overflow on 768px–900px */
+@media (max-width: 900px) {
+  .nav-cta {
+    font-size: 0.82rem;
+    padding: 8px 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .logo span {
+    display: none;
+  }
+  .nav-cta {
+    display: none;
+  }
+}
+
+
+/* ─────────────────────────────────────
+   HERO SECTION (home.css hero)
+   ───────────────────────────────────── */
+
+/* Stack the 2-column hero at tablet */
+@media (max-width: 900px) {
+  .hero-content {
+    grid-template-columns: 1fr !important;
+    gap: 2rem;
+    text-align: center;
+  }
+  .hero-image {
+    display: none;
+  }
+  .hero-buttons {
+    justify-content: center;
+  }
+  .hero-glow {
+    width: min(400px, 80vw);
+    height: min(400px, 80vw);
+  }
+}
+
+/* Hero CTA buttons full-width on small phones */
+@media (max-width: 480px) {
+  .hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .hero-buttons .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+
+/* ─────────────────────────────────────
+   ABOUT PAGE
+   ───────────────────────────────────── */
+
+/* Reduce massive gap on 1fr 1fr grids at mid-tablets */
+@media (max-width: 992px) {
+  .about-story-grid,
+  .mission-grid,
+  .apg {
+    gap: clamp(24px, 4vw, 36px);
+  }
+}
+
+/* Badge inside image frame — prevent overflow */
+@media (max-width: 576px) {
+  .experience-badge,
+  .exp-badge {
+    right: 8px !important;
+    bottom: 8px !important;
+    padding: 10px 14px !important;
+    font-size: 0.8rem !important;
+  }
+  /* Category cards grid — single column on small phones */
+  .categories-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* About story section padding on mobile */
+@media (max-width: 640px) {
+  .about-story {
+    padding: 50px 0 60px;
+  }
+  .about-story-content h2 {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+  }
+}
+
+
+/* ─────────────────────────────────────
+   CONTACT PAGE
+   ───────────────────────────────────── */
+
+/* Contact info cards — prevent icon + text overflow */
+@media (max-width: 480px) {
+  .contact-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .map-placeholder {
+    height: clamp(200px, 50vw, 280px);
+  }
+}
+
+/* FAQ items — reduce padding on very small screens */
+@media (max-width: 400px) {
+  .faq-item {
+    padding: 18px 14px;
+  }
+  .faq-question {
+    font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+  }
+}
+
+
+/* ─────────────────────────────────────
+   TEAMS PAGE
+   ───────────────────────────────────── */
+
+/* Rankings table — wrap in scrollable div if not already */
+.rankings-table {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  display: block;
+}
+
+/* Team filter/search bar — stack on mobile */
+@media (max-width: 640px) {
+  .team-search-bar,
+  .team-filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .team-search-bar input,
+  .team-filters select {
+    width: 100%;
+  }
+}
+
+/* Team card image height */
+@media (max-width: 480px) {
+  .team-card img,
+  .team-image img {
+    height: clamp(180px, 50vw, 240px);
+  }
+  /* Team stats — wrap tighter */
+  .team-stats {
+    gap: 8px;
+  }
+  .stat {
+    padding: 10px 12px;
+  }
+}
+
+/* Rankings table cells — tighten on small phones */
+@media (max-width: 480px) {
+  .rankings-table th,
+  .rankings-table td {
+    padding: 10px 8px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 360px) {
+  .rankings-table th,
+  .rankings-table td {
+    padding: 8px 6px;
+    font-size: 0.72rem;
+  }
+}
+
+
+/* ─────────────────────────────────────
+   TOURNAMENTS PAGE
+   ───────────────────────────────────── */
+
+/* Tournament card cover image — responsive height */
+.tournament-card .t-cover,
+.tournament-card .cover,
+.tournament-card img:first-child {
+  height: clamp(160px, 25vw, 220px);
+  object-fit: cover;
+}
+
+/* Tournament card info section */
+@media (max-width: 480px) {
+  .tournament-card {
+    border-radius: 12px;
+  }
+  .tournament-info,
+  .t-info-body {
+    padding: 14px;
+  }
+  .t-prize,
+  .prize-pool {
+    font-size: 0.82rem;
+  }
+}
+
+/* Filter bar — ensure wraps cleanly on all phones */
+@media (max-width: 560px) {
+  .filter-bar {
+    gap: 6px;
+    padding: 0 10px;
+  }
+  .filter-btn {
+    padding: 7px 11px;
+    font-size: 0.75rem;
+    min-height: 36px;
+  }
+}
+
+/* Discipline spotlight section — gap reduction on tablets */
+@media (max-width: 900px) {
+  .discipline-section {
+    padding: 60px 0 40px;
+  }
+}
+@media (max-width: 640px) {
+  .disc-body {
+    padding: 12px;
+  }
+  .disc-name {
+    font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+  }
+  .disc-panel-head {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+/* Registration modal — full-screen on phone */
+@media (max-width: 560px) {
+  .reg-card,
+  #regModal .reg-card {
+    width: min(94vw, 460px);
+    padding: 28px 20px;
+    border-radius: 16px;
+  }
+}
+
+
+/* ─────────────────────────────────────
+   BLOG PAGE
+   ───────────────────────────────────── */
+
+/* Blog post grid — 3 col on desktop, 2 on tablet, 1 on phone */
+@media (max-width: 900px) {
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 560px) {
+  .blog-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Blog post card image */
+.blog-post img,
+.blog-card img {
+  height: clamp(160px, 25vw, 220px);
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Newsletter form within blog — better mobile */
+@media (max-width: 480px) {
+  .newsletter-inner,
+  .newsletter-content {
+    padding: 30px 18px;
+  }
+  .newsletter h2 {
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
+  }
+}
+
+
+/* ─────────────────────────────────────
+   LOGIN & SIGNUP PAGES
+   ───────────────────────────────────── */
+
+/* Auth page — ensure form fields don't overflow on 320px */
+@media (max-width: 360px) {
+  .login-card,
+  .signup-card,
+  .auth-card {
+    padding: 20px 14px !important;
+    margin: 0 10px;
+  }
+  .form-toggle,
+  .auth-switch {
+    font-size: 0.82rem;
+  }
+}
+
+/* Social login buttons — stack on very small screens */
+@media (max-width: 400px) {
+  .social-login,
+  .auth-social {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .social-login button,
+  .auth-social button {
+    width: 100%;
+  }
+}
+
+
+/* ─────────────────────────────────────
+   404 PAGE
+   ───────────────────────────────────── */
+@media (max-width: 480px) {
+  .nf-title {
+    font-size: clamp(1.3rem, 6vw, 2rem);
+  }
+  .nf-desc {
+    font-size: clamp(0.88rem, 3.5vw, 1rem);
+  }
+}
+
+
+/* ─────────────────────────────────────
+   PLAYER DASHBOARD
+   ───────────────────────────────────── */
+
+/* Stats cards — 2-col at 768px–1200px, not just at 1200px */
+@media (max-width: 1100px) and (min-width: 901px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Welcome banner — prevent name overflow on narrow screens */
+@media (max-width: 360px) {
+  .welcome h1 {
+    font-size: 13px;
+  }
+  .player-name-inline {
+    max-width: 110px;
+  }
+  .welcome-stats {
+    display: none;
+  }
+}
+
+/* Match history full table — ensure scrollable on all phones */
+.mh-full-table,
+.table-wrap table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Achievement grid — comfortable on small phones */
+@media (max-width: 400px) {
+  .ach-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .ach-emoji {
+    font-size: 22px;
+  }
+}
+
+/* XP bar section padding */
+@media (max-width: 360px) {
+  .sb-bottom {
+    padding: 12px 14px;
+  }
+}
+
+
+/* ─────────────────────────────────────
+   TEAM DASHBOARD
+   ───────────────────────────────────── */
+
+/* Roster table — scrollable */
+.roster-wrap,
+.schedule-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Availability calendar (min-width:480px is intentional — parent has overflow-x:auto) */
+/* No change needed; verify parent .card-body has overflow-x:auto */
+
+/* Team banner stats on small phones */
+@media (max-width: 560px) {
+  .team-banner-stats,
+  .t-stats-row {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .t-stat-item {
+    min-width: 70px;
+  }
+}
+
+
+/* ─────────────────────────────────────
+   ADMIN DASHBOARD
+   ───────────────────────────────────── */
+
+/* Analytics grid — single column on tablets */
+@media (max-width: 1024px) {
+  .analytics-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* User management table — scrollable */
+.user-table-wrap,
+.um-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Admin stats at 768px — 2×2 grid */
+@media (max-width: 768px) {
+  .mini-row,
+  .um-stats-row {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+}
+
+/* Tournament create form (tc-form) — full column on mobile */
+@media (max-width: 560px) {
+  .tc-form {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* ─────────────────────────────────────
+   GAMING APP (Tailwind-based)
+   ───────────────────────────────────── */
+
+/* Force main content area to full width when sidebar is hidden */
+@media (max-width: 768px) {
+  [class*="lg:ml-60"],
+  [class*="lg:pl-60"],
+  main.flex-1 {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Stat cards grid — 2-col on tablets */
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-cols-4,
+  .grid-cols-3,
+  .grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* ─────────────────────────────────────
+   GLOBAL — TOUCH DEVICE IMPROVEMENTS
+   ───────────────────────────────────── */
+
+/* Disable complex hover effects on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .tournament-card:hover,
+  .team-card:hover,
+  .blog-card:hover,
+  .rw-shop-card:hover,
+  .pt-tcard:hover,
+  .disc-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  /* Keep border highlight for touch feedback */
+  .tournament-card:active,
+  .team-card:active,
+  .blog-card:active {
+    border-color: rgba(230, 57, 70, 0.4);
+  }
+}
+
+
+/* ─────────────────────────────────────
+   GLOBAL — SCROLL PERFORMANCE
+   ───────────────────────────────────── */
+
+/* Smooth scrollable containers */
+[data-scroll],
+.overflow-x-auto,
+.table-wrap,
+.table-wrapper,
+.roster-wrap,
+.user-table-wrap,
+.rankings-table {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* Hide scrollbar on mobile for aesthetic overflow-x scroll areas */
+@media (max-width: 768px) {
+  .filter-bar,
+  .tabs-scroll-wrap,
+  .sb-nav {
+    scrollbar-width: none;
+  }
+  .filter-bar::-webkit-scrollbar,
+  .tabs-scroll-wrap::-webkit-scrollbar,
+  .sb-nav::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+/* ─────────────────────────────────────
+   GLOBAL — TYPOGRAPHY SCALING
+   ───────────────────────────────────── */
+
+/* Card titles and section headers */
+.card-title,
+.section-header h2,
+.section-title-main {
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
+}
+
+/* Body text — never smaller than 13px */
+@media (max-width: 400px) {
+  body {
+    font-size: clamp(13px, 3.5vw, 15px);
+  }
+}
+
+/* Prevent long email addresses in chips from breaking layout */
+.tb-user-chip-name,
+.tb-user-chip-email {
+  max-width: clamp(100px, 18vw, 240px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .tb-user-chip-name,
+  .tb-user-chip-email {
+    max-width: clamp(90px, 22vw, 180px);
+  }
+}
+
+
+/* ─────────────────────────────────────
+   GLOBAL — FORM IMPROVEMENTS
+   ───────────────────────────────────── */
+
+/* Prevent number inputs from showing spin buttons */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Select dropdown — consistent height */
+select {
+  height: auto;
+  min-height: 44px;
+}
+
+/* Textarea — prevent horizontal resize overflow */
+textarea {
+  resize: vertical;
+  max-width: 100%;
+}
+
+
+/* ─────────────────────────────────────
+   GLOBAL — FOOTER (all pages)
+   ───────────────────────────────────── */
+
+/* Footer brand description — don't overflow on mobile */
+@media (max-width: 640px) {
+  .footer-brand p,
+  .footer-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .footer-social a {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+}
+
+/* Footer links — touch-friendly spacing */
+@media (max-width: 480px) {
+  .footer-section ul {
+    gap: 0.5rem;
+  }
+  .footer-section a {
+    display: block;
+    padding: 4px 0;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+
+/* ─────────────────────────────────────
+   GLOBAL — CARD GRIDS (public pages)
+   ───────────────────────────────────── */
+
+/* Auto-fit grids — ensure minmax floor never exceeds viewport */
+.game-slider,
+.teams-grid,
+.blog-grid,
+.tournaments-grid,
+.tourn-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+}
+
+/* Ensure these don't fight each other at edge cases */
+@media (max-width: 560px) {
+  .game-slider,
+  .teams-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 400px) {
+  .game-slider,
+  .teams-grid,
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ─────────────────────────────────────
+   GLOBAL — IMAGE ASPECT RATIO SAFETY
+   ───────────────────────────────────── */
+
+/* Game cards — prevent broken tall images */
+.game-card img {
+  height: clamp(160px, 20vw, 220px);
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Blog post featured image */
+.blog-post-hero img,
+.article-hero img {
+  height: clamp(200px, 35vw, 420px);
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Team card cover */
+.team-image,
+.team-card-image {
+  overflow: hidden;
+}
+.team-image img,
+.team-card-image img {
+  object-fit: cover;
+  width: 100%;
+}
+
+
+/* ─────────────────────────────────────
+   GLOBAL — Z-INDEX STACKING SAFETY
+   ───────────────────────────────────── */
+
+/* Ensure mobile menu overlays everything */
+.mobile-menu {
+  z-index: 999;
+}
+
+/* Ensure sidebar overlays correctly on mobile */
+.sb-overlay {
+  z-index: 99;
+}
+.sidebar {
+  z-index: 100;
+}
+
+/* Topbar stays above page content */
+.topbar {
+  z-index: 50;
+}
+
+
+/* ─────────────────────────────────────
+   320px MINIMUM WIDTH SAFETY NET
+   ───────────────────────────────────── */
+@media (max-width: 320px) {
+  /* Force very tight layout on 320px devices */
+  .container,
+  .page {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .card-body {
+    padding: 12px 10px;
+  }
+
+  h1 { font-size: 1.1rem; }
+  h2 { font-size: 1rem; }
+  h3 { font-size: 0.95rem; }
+
+  .btn, .filter-btn {
+    font-size: 0.78rem;
+    padding: 8px 12px;
+  }
+
+  /* Sidebar nav items — tighten */
+  .sb-item {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  /* Stats grid — always 1 column at 320px */
+  .stats-grid,
+  .pt-overview,
+  .mh-perf-grid,
+  .rw-pts-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

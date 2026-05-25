@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Team Dashboard — Gaming Stackly</title>
+  <title>Volunteer Squad Dashboard — HopeRise Foundation</title>
   <link rel="icon" href="images/Logo.png" type="image/png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
@@ -308,6 +308,7 @@
     }
   </style>
   <link rel="stylesheet" href="css/responsive-fix.css">
+  <link rel="stylesheet" href="css/ngo-theme.css">
 </head>
 <body>
 
@@ -316,23 +317,23 @@
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <a href="index.html" class="sb-logo">
-    <img src="images/Logo.png" alt="Gaming Stackly"/>
-    <div class="sb-logo-text">Gaming <span>Stackly</span></div>
+    <img src="images/Logo.png" alt="HopeRise Foundation"/>
+    <div class="sb-logo-text">HopeRise <span>Foundation</span></div>
   </a>
   <div class="sb-user">
-    <div class="sb-avatar">SB</div>
+    <div class="sb-avatar">HR</div>
     <div class="sb-user-info">
-      <div class="sb-user-name">StormBreakers</div>
-      <div class="sb-user-rank">🛡️ Elite Team</div>
+      <div class="sb-user-name">HopeRise Squad</div>
+      <div class="sb-user-rank">🌟 Core Volunteers</div>
     </div>
     <div class="sb-online"></div>
   </div>
   <nav class="sb-nav">
-    <div class="sb-section">Team Menu</div>
-    <a class="sb-item active" href="#team-overview"><div class="sb-icon">🛡️</div>Team Overview</a>
-    <a class="sb-item" href="#roster"><div class="sb-icon">👥</div>Roster Management<span class="sb-badge">5</span></a>
-    <a class="sb-item" href="#schedule"><div class="sb-icon">📅</div>Schedule</a>
-    <a class="sb-item" href="#scrims"><div class="sb-icon">⚔️</div>Scrims<span class="sb-badge">3</span></a>
+    <div class="sb-section">Squad Menu</div>
+    <a class="sb-item active" href="#team-overview"><div class="sb-icon">🌍</div>Squad Overview</a>
+    <a class="sb-item" href="#roster"><div class="sb-icon">👥</div>Volunteer Management<span class="sb-badge">5</span></a>
+    <a class="sb-item" href="#schedule"><div class="sb-icon">📅</div>Event Schedule</a>
+    <a class="sb-item" href="#scrims"><div class="sb-icon">🤝</div>Collaborations<span class="sb-badge">3</span></a>
   </nav>
   <div class="sb-bottom">
     <a class="sb-logout" href="login.html">🚪 &nbsp;Logout</a>
@@ -343,7 +344,7 @@
 <div class="main">
   <header class="topbar">
     <div class="tb-hamburger" id="hamburger" onclick="openSidebar()"><span></span><span></span><span></span></div>
-    <div class="topbar-title">Team <span>Dashboard</span></div>
+    <div class="topbar-title">Volunteer Squad <span>Dashboard</span></div>
     <div class="tb-actions">
       <div class="tb-live"><div class="tb-live-dot"></div>ONLINE</div>
       <div class="tb-user-chip">
@@ -351,7 +352,7 @@
       </div>
       <a class="tb-btn" href="#">🔔<div class="tb-notif-dot"></div></a>
       <a class="tb-btn" href="#">💬</a>
-      <div class="tb-avatar js-team-initials">SB</div>
+      <div class="tb-avatar js-team-initials">HR</div>
     </div>
   </header>
 
@@ -361,105 +362,105 @@
     <div id="team-overview" style="scroll-margin-top:80px">
 
       <div class="team-banner">
-        <div class="team-logo">SB</div>
+        <div class="team-logo">HR</div>
         <div class="team-info">
-          <h1>StormBreakers <span class="team-badge">ELITE TEAM</span></h1>
-          <p>Est. 2023 · Valorant & CS2 Specialists · 5 Active Members</p>
+          <h1>HopeRise Squad <span class="team-badge">CORE VOLUNTEERS</span></h1>
+          <p>Est. 2021 · Education, Healthcare &amp; Relief · 5 Active Volunteers</p>
           <div class="team-tags">
-            <span class="tag">Valorant</span>
-            <span class="tag">CS2</span>
-            <span class="tag">Apex Legends</span>
+            <span class="tag">Education</span>
+            <span class="tag">Healthcare</span>
+            <span class="tag">Food Relief</span>
           </div>
         </div>
         <div class="team-stats">
-          <div class="ts"><div class="v" style="color:var(--purple)">#38</div><div class="l">Team Rank</div></div>
-          <div class="ts"><div class="v" style="color:var(--green)">68%</div><div class="l">Win Rate</div></div>
-          <div class="ts"><div class="v" style="color:var(--gold)">$8,400</div><div class="l">Earnings</div></div>
+          <div class="ts"><div class="v" style="color:var(--purple)">#12</div><div class="l">Impact Rank</div></div>
+          <div class="ts"><div class="v" style="color:var(--green)">91%</div><div class="l">Success Rate</div></div>
+          <div class="ts"><div class="v" style="color:var(--gold)">₹1.2L</div><div class="l">Funds Raised</div></div>
         </div>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-top"><div class="stat-icon" style="background:rgba(168,85,247,.12)">🛡️</div><div class="stat-change up">+5</div></div>
-          <div class="stat-val" style="color:var(--purple)">#38</div>
-          <div class="stat-lbl">Team Ranking</div>
+          <div class="stat-top"><div class="stat-icon" style="background:rgba(168,85,247,.12)">🌍</div><div class="stat-change up">+3</div></div>
+          <div class="stat-val" style="color:var(--purple)">#12</div>
+          <div class="stat-lbl">Impact Ranking</div>
         </div>
         <div class="stat-card">
-          <div class="stat-top"><div class="stat-icon" style="background:rgba(34,197,94,.12)">📈</div><div class="stat-change up">+4%</div></div>
-          <div class="stat-val" style="color:var(--green)">68%</div>
-          <div class="stat-lbl">Win Rate</div>
+          <div class="stat-top"><div class="stat-icon" style="background:rgba(34,197,94,.12)">✅</div><div class="stat-change up">+6%</div></div>
+          <div class="stat-val" style="color:var(--green)">91%</div>
+          <div class="stat-lbl">Success Rate</div>
         </div>
         <div class="stat-card">
-          <div class="stat-top"><div class="stat-icon" style="background:rgba(6,182,212,.12)">⚔️</div><div class="stat-change up">+12</div></div>
-          <div class="stat-val" style="color:var(--cyan)">284</div>
-          <div class="stat-lbl">Matches Played</div>
+          <div class="stat-top"><div class="stat-icon" style="background:rgba(6,182,212,.12)">❤️</div><div class="stat-change up">+8</div></div>
+          <div class="stat-val" style="color:var(--cyan)">142</div>
+          <div class="stat-lbl">Events Completed</div>
         </div>
         <div class="stat-card">
-          <div class="stat-top"><div class="stat-icon" style="background:rgba(245,158,11,.12)">💰</div><div class="stat-change up">+$1.2k</div></div>
-          <div class="stat-val" style="color:var(--gold)">$8,400</div>
-          <div class="stat-lbl">Prize Earned</div>
+          <div class="stat-top"><div class="stat-icon" style="background:rgba(245,158,11,.12)">💛</div><div class="stat-change up">+₹18k</div></div>
+          <div class="stat-val" style="color:var(--gold)">₹1.2L</div>
+          <div class="stat-lbl">Funds Raised</div>
         </div>
       </div>
 
       <div class="ov-grid">
         <div class="card">
           <div class="card-head">
-            <div class="card-title"><div class="card-dot"></div>Active Roster</div>
-            <a class="card-action" href="#roster">Full Roster →</a>
+            <div class="card-title"><div class="card-dot"></div>Active Volunteers</div>
+            <a class="card-action" href="#roster">Full Team →</a>
           </div>
           <div class="card-body">
             <div class="roster-mini-item">
-              <div class="r-avatar" style="background:linear-gradient(135deg,var(--red),#b01010)">FX<div class="r-dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div></div>
-              <div class="r-info"><div class="r-name">Fxhgjhh</div><div class="r-role">IGL / Fragger</div></div>
-              <div class="r-stats"><div class="r-rank">Diamond II</div><div class="r-kda">KDA 3.8</div></div>
+              <div class="r-avatar" style="background:linear-gradient(135deg,var(--red),#b01010)">AR<div class="r-dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div></div>
+              <div class="r-info"><div class="r-name">Arjun Rao</div><div class="r-role">Squad Lead</div></div>
+              <div class="r-stats"><div class="r-rank">New Delhi</div><div class="r-kda">24 Programs</div></div>
             </div>
             <div class="roster-mini-item">
               <div class="r-avatar" style="background:linear-gradient(135deg,var(--cyan),#0284c7)">SK<div class="r-dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div></div>
-              <div class="r-info"><div class="r-name">SkyKiller</div><div class="r-role">Support</div></div>
-              <div class="r-stats"><div class="r-rank">Diamond III</div><div class="r-kda">KDA 2.9</div></div>
+              <div class="r-info"><div class="r-name">Sunita Kumar</div><div class="r-role">Field Coordinator</div></div>
+              <div class="r-stats"><div class="r-rank">Mumbai</div><div class="r-kda">18 Programs</div></div>
             </div>
             <div class="roster-mini-item">
-              <div class="r-avatar" style="background:linear-gradient(135deg,var(--gold),#d97706)">ZR<div class="r-dot" style="background:rgba(240,240,245,.3)"></div></div>
-              <div class="r-info"><div class="r-name">ZeroRush</div><div class="r-role">Entry Fragger</div></div>
-              <div class="r-stats"><div class="r-rank">Platinum I</div><div class="r-kda">KDA 4.2</div></div>
+              <div class="r-avatar" style="background:linear-gradient(135deg,var(--gold),#d97706)">ZN<div class="r-dot" style="background:rgba(240,240,245,.3)"></div></div>
+              <div class="r-info"><div class="r-name">Zara Nair</div><div class="r-role">Healthcare Lead</div></div>
+              <div class="r-stats"><div class="r-rank">Bangalore</div><div class="r-kda">12 Programs</div></div>
             </div>
             <div class="roster-mini-item">
-              <div class="r-avatar" style="background:linear-gradient(135deg,var(--green),#15803d)">NX<div class="r-dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div></div>
-              <div class="r-info"><div class="r-name">NightXero</div><div class="r-role">Sniper / AWP</div></div>
-              <div class="r-stats"><div class="r-rank">Diamond I</div><div class="r-kda">KDA 5.1</div></div>
+              <div class="r-avatar" style="background:linear-gradient(135deg,var(--green),#15803d)">NM<div class="r-dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div></div>
+              <div class="r-info"><div class="r-name">Nikhil Mehta</div><div class="r-role">Education Lead</div></div>
+              <div class="r-stats"><div class="r-rank">Chennai</div><div class="r-kda">21 Programs</div></div>
             </div>
             <div class="roster-mini-item">
-              <div class="r-avatar" style="background:linear-gradient(135deg,var(--purple),#7c3aed)">VX<div class="r-dot" style="background:rgba(240,240,245,.3)"></div></div>
-              <div class="r-info"><div class="r-name">VortexGG</div><div class="r-role">Lurker</div></div>
-              <div class="r-stats"><div class="r-rank">Platinum II</div><div class="r-kda">KDA 3.3</div></div>
+              <div class="r-avatar" style="background:linear-gradient(135deg,var(--purple),#7c3aed)">PG<div class="r-dot" style="background:rgba(240,240,245,.3)"></div></div>
+              <div class="r-info"><div class="r-name">Priya Gupta</div><div class="r-role">Outreach Lead</div></div>
+              <div class="r-stats"><div class="r-rank">Hyderabad</div><div class="r-kda">9 Programs</div></div>
             </div>
           </div>
         </div>
         <div class="card">
           <div class="card-head">
-            <div class="card-title"><div class="card-dot"></div>Match Schedule</div>
-            <a class="card-action" href="#schedule">Full Calendar →</a>
+            <div class="card-title"><div class="card-dot"></div>Upcoming Events</div>
+            <a class="card-action" href="#schedule">Full Schedule →</a>
           </div>
           <div class="card-body">
             <div class="sched-mini">
-              <div class="s-game">🔫</div>
-              <div class="s-info"><div class="s-opp">vs NightRaiders</div><div class="s-meta">📅 May 20 · 🕗 8:00 PM</div><div class="s-type">Ranked Match</div></div>
+              <div class="s-game">📚</div>
+              <div class="s-info"><div class="s-opp">Education Drive — Delhi</div><div class="s-meta">📅 May 20 · 🕗 8:00 AM</div><div class="s-type">Volunteer Event</div></div>
               <div class="s-status soon">SOON</div>
             </div>
             <div class="sched-mini">
-              <div class="s-game">🧩</div>
-              <div class="s-info"><div class="s-opp">vs EchoForce</div><div class="s-meta">📅 May 22 · 🕕 6:00 PM</div><div class="s-type">Tournament Round</div></div>
+              <div class="s-game">🏥</div>
+              <div class="s-info"><div class="s-opp">Medical Camp — Mumbai</div><div class="s-meta">📅 May 22 · 🕕 9:00 AM</div><div class="s-type">Healthcare</div></div>
               <div class="s-status soon">SOON</div>
             </div>
             <div class="sched-mini past">
-              <div class="s-game">⚡</div>
-              <div class="s-info"><div class="s-opp">vs BlazeFive</div><div class="s-meta">📅 May 18 · 🕘 9:00 PM</div><div class="s-type">Scrim</div></div>
-              <div class="s-status won">WON</div>
+              <div class="s-game">🍱</div>
+              <div class="s-info"><div class="s-opp">Food Distribution — Delhi</div><div class="s-meta">📅 May 18 · 🕘 7:00 AM</div><div class="s-type">Food Relief</div></div>
+              <div class="s-status won">DONE</div>
             </div>
             <div class="sched-mini past">
-              <div class="s-game">🎮</div>
-              <div class="s-info"><div class="s-opp">vs ShadowTeam</div><div class="s-meta">📅 May 17 · 🕖 7:30 PM</div><div class="s-type">Ranked Match</div></div>
-              <div class="s-status lost">LOST</div>
+              <div class="s-game">🌳</div>
+              <div class="s-info"><div class="s-opp">Tree Plantation — Pune</div><div class="s-meta">📅 May 17 · 🕖 6:00 AM</div><div class="s-type">Environment</div></div>
+              <div class="s-status won">DONE</div>
             </div>
           </div>
         </div>
@@ -467,39 +468,39 @@
 
       <div class="ov-bottom">
         <div class="card">
-          <div class="card-head"><div class="card-title"><div class="card-dot"></div>Recent Scrims</div><a class="card-action" href="#scrims">All Scrims →</a></div>
+          <div class="card-head"><div class="card-title"><div class="card-dot"></div>Recent Activities</div><a class="card-action" href="#scrims">All Activities →</a></div>
           <div class="card-body">
             <div class="scrim-row">
-              <div style="flex:1"><div style="font-weight:700;font-size:13px">vs EchoForce</div><div style="font-size:11px;color:var(--muted)">Valorant · Ascent · 3 days ago</div></div>
-              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(34,197,94,.14);color:var(--green)">13–7 WIN</span>
+              <div style="flex:1"><div style="font-weight:700;font-size:13px">Medical Camp — Mumbai</div><div style="font-size:11px;color:var(--muted)">Healthcare · 142 Helped · 3 days ago</div></div>
+              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(34,197,94,.14);color:var(--green)">SUCCESS</span>
             </div>
             <div class="scrim-row">
-              <div style="flex:1"><div style="font-weight:700;font-size:13px">vs ProGamingX</div><div style="font-size:11px;color:var(--muted)">CS2 · Mirage · 5 days ago</div></div>
-              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(230,57,70,.14);color:var(--red)">8–16 LOSS</span>
+              <div style="flex:1"><div style="font-weight:700;font-size:13px">Flood Relief — Bihar</div><div style="font-size:11px;color:var(--muted)">Relief · 89 Helped · 5 days ago</div></div>
+              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(245,158,11,.14);color:var(--gold)">PARTIAL</span>
             </div>
             <div class="scrim-row">
-              <div style="flex:1"><div style="font-weight:700;font-size:13px">vs NightRaiders</div><div style="font-size:11px;color:var(--muted)">Valorant · Bind · 1 week ago</div></div>
-              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(34,197,94,.14);color:var(--green)">13–10 WIN</span>
+              <div style="flex:1"><div style="font-weight:700;font-size:13px">School Supplies — Kolkata</div><div style="font-size:11px;color:var(--muted)">Education · 203 Helped · 1 week ago</div></div>
+              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(34,197,94,.14);color:var(--green)">SUCCESS</span>
             </div>
           </div>
         </div>
         <div class="card">
-          <div class="card-head"><div class="card-title"><div class="card-dot"></div>Tournament History</div><a class="card-action" href="#">Browse →</a></div>
+          <div class="card-head"><div class="card-title"><div class="card-dot"></div>Impact Highlights</div><a class="card-action" href="#">Browse →</a></div>
           <div class="card-body">
             <div class="scrim-row">
-              <div style="font-size:20px;margin-right:4px">🔫</div>
-              <div style="flex:1"><div style="font-weight:700;font-size:13px">Valorant Spring Cup</div><div style="font-size:11px;color:var(--muted)">Apr 2024 · 64 Teams</div></div>
-              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(245,158,11,.14);color:var(--gold)">🥈 2nd</span>
+              <div style="font-size:20px;margin-right:4px">📚</div>
+              <div style="flex:1"><div style="font-weight:700;font-size:13px">Project Shiksha</div><div style="font-size:11px;color:var(--muted)">Jan–Mar 2026 · 100 Children</div></div>
+              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(245,158,11,.14);color:var(--gold)">🏆 Top Squad</span>
             </div>
             <div class="scrim-row">
-              <div style="font-size:20px;margin-right:4px">🧩</div>
-              <div style="flex:1"><div style="font-weight:700;font-size:13px">CS2 Winter Series</div><div style="font-size:11px;color:var(--muted)">Feb 2024 · 32 Teams</div></div>
-              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(34,197,94,.14);color:var(--green)">🥇 1st</span>
+              <div style="font-size:20px;margin-right:4px">🏥</div>
+              <div style="flex:1"><div style="font-weight:700;font-size:13px">HealthBridge Camp</div><div style="font-size:11px;color:var(--muted)">Nov 2025 · 500+ Patients</div></div>
+              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(34,197,94,.14);color:var(--green)">🥇 Best Team</span>
             </div>
             <div class="scrim-row">
-              <div style="font-size:20px;margin-right:4px">⚡</div>
-              <div style="flex:1"><div style="font-weight:700;font-size:13px">Apex Regional Cup</div><div style="font-size:11px;color:var(--muted)">Jan 2024 · 128 Teams</div></div>
-              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(168,85,247,.14);color:var(--purple)">Top 8</span>
+              <div style="font-size:20px;margin-right:4px">🍱</div>
+              <div style="flex:1"><div style="font-weight:700;font-size:13px">Annual Food Drive</div><div style="font-size:11px;color:var(--muted)">Oct 2025 · 1,200 Families</div></div>
+              <span style="font-size:10px;font-weight:700;font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:6px;background:rgba(168,85,247,.14);color:var(--purple)">🌟 Top 5</span>
             </div>
           </div>
         </div>
@@ -513,57 +514,57 @@
     <div id="roster" style="scroll-margin-top:80px;margin-top:10px">
 
       <div class="section-head">
-        <div class="section-title">Roster Management</div>
+        <div class="section-title">Volunteer Management</div>
         <div style="display:flex;gap:10px">
-          <button class="btn-outline">📋 Export Roster</button>
-          <button class="btn-purple">+ Invite Player</button>
+          <button class="btn-outline">📋 Export Volunteers</button>
+          <button class="btn-purple">+ Invite Volunteer</button>
         </div>
       </div>
 
-      <!-- Player Performance Cards -->
-      <div style="margin-bottom:8px;font-size:11px;font-family:'Orbitron',sans-serif;color:var(--muted);letter-spacing:.1em">PLAYER PERFORMANCE</div>
+      <!-- Volunteer Performance Cards -->
+      <div style="margin-bottom:8px;font-size:11px;font-family:'Orbitron',sans-serif;color:var(--muted);letter-spacing:.1em">VOLUNTEER PERFORMANCE</div>
       <div class="roster-perf-grid">
 
-        <!-- Fxhgjhh -->
+        <!-- Arjun Rao -->
         <div class="rp-card">
           <div class="rp-top">
             <div class="rp-avatar" style="background:linear-gradient(135deg,var(--red),#b01010)">
-              FX<div class="online-ring" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div>
+              AR<div class="online-ring" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div>
             </div>
             <div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                <div class="rp-name">Fxhgjhh</div>
+                <div class="rp-name">Arjun Rao</div>
                 <span class="rp-status-badge status-active">ACTIVE</span>
               </div>
-              <div class="rp-role-tag">IGL / FRAGGER</div>
-              <div class="rp-rank-line">Diamond II · 847 RR</div>
+              <div class="rp-role-tag">SQUAD LEAD</div>
+              <div class="rp-rank-line">New Delhi · 4 yrs experience</div>
             </div>
           </div>
           <div class="rp-bars">
             <div class="rp-bar-row">
-              <span class="rp-bar-label">KDA</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:76%;background:linear-gradient(90deg,var(--red),var(--purple))"></div></div>
-              <span class="rp-bar-val" style="color:var(--red)">3.8</span>
+              <span class="rp-bar-label">Programs</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:96%;background:linear-gradient(90deg,var(--red),var(--purple))"></div></div>
+              <span class="rp-bar-val" style="color:var(--red)">24</span>
             </div>
             <div class="rp-bar-row">
-              <span class="rp-bar-label">HS%</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:68%;background:linear-gradient(90deg,var(--cyan),var(--purple))"></div></div>
-              <span class="rp-bar-val" style="color:var(--cyan)">68%</span>
+              <span class="rp-bar-label">Attend%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:94%;background:linear-gradient(90deg,var(--cyan),var(--purple))"></div></div>
+              <span class="rp-bar-val" style="color:var(--cyan)">94%</span>
             </div>
             <div class="rp-bar-row">
-              <span class="rp-bar-label">Win%</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:72%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-              <span class="rp-bar-val" style="color:var(--green)">72%</span>
+              <span class="rp-bar-label">Impact%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:91%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">91%</span>
             </div>
           </div>
           <div class="rp-footer">
-            <div class="rp-stat"><div class="v" style="color:var(--gold)">186</div><div class="l">Matches</div></div>
-            <div class="rp-stat"><div class="v" style="color:var(--cyan)">24.3</div><div class="l">Avg DMG</div></div>
-            <div class="rp-stat"><div class="v" style="color:var(--purple)">1.22</div><div class="l">KAST%</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--gold)">24</div><div class="l">Events</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--cyan)">186</div><div class="l">Avg Helped</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--purple)">98%</div><div class="l">Consistency</div></div>
           </div>
         </div>
 
-        <!-- SkyKiller -->
+        <!-- Sunita Kumar -->
         <div class="rp-card">
           <div class="rp-top">
             <div class="rp-avatar" style="background:linear-gradient(135deg,var(--cyan),#0284c7)">
@@ -571,151 +572,151 @@
             </div>
             <div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                <div class="rp-name">SkyKiller</div>
+                <div class="rp-name">Sunita Kumar</div>
                 <span class="rp-status-badge status-active">ACTIVE</span>
               </div>
-              <div class="rp-role-tag">SUPPORT</div>
-              <div class="rp-rank-line">Diamond III · 712 RR</div>
+              <div class="rp-role-tag">FIELD COORD.</div>
+              <div class="rp-rank-line">Mumbai · 3 yrs experience</div>
             </div>
           </div>
           <div class="rp-bars">
             <div class="rp-bar-row">
-              <span class="rp-bar-label">KDA</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:58%;background:linear-gradient(90deg,var(--cyan),var(--purple))"></div></div>
-              <span class="rp-bar-val" style="color:var(--cyan)">2.9</span>
+              <span class="rp-bar-label">Programs</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:72%;background:linear-gradient(90deg,var(--cyan),var(--purple))"></div></div>
+              <span class="rp-bar-val" style="color:var(--cyan)">18</span>
             </div>
             <div class="rp-bar-row">
-              <span class="rp-bar-label">HS%</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:54%;background:linear-gradient(90deg,var(--cyan),var(--purple))"></div></div>
-              <span class="rp-bar-val" style="color:var(--cyan)">54%</span>
+              <span class="rp-bar-label">Attend%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:88%;background:linear-gradient(90deg,var(--cyan),var(--purple))"></div></div>
+              <span class="rp-bar-val" style="color:var(--cyan)">88%</span>
             </div>
             <div class="rp-bar-row">
-              <span class="rp-bar-label">Win%</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:69%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-              <span class="rp-bar-val" style="color:var(--green)">69%</span>
+              <span class="rp-bar-label">Impact%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:84%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">84%</span>
             </div>
           </div>
           <div class="rp-footer">
-            <div class="rp-stat"><div class="v" style="color:var(--gold)">171</div><div class="l">Matches</div></div>
-            <div class="rp-stat"><div class="v" style="color:var(--cyan)">18.7</div><div class="l">Avg DMG</div></div>
-            <div class="rp-stat"><div class="v" style="color:var(--purple)">1.18</div><div class="l">KAST%</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--gold)">18</div><div class="l">Events</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--cyan)">142</div><div class="l">Avg Helped</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--purple)">92%</div><div class="l">Consistency</div></div>
           </div>
         </div>
 
-        <!-- ZeroRush -->
+        <!-- Zara Nair -->
         <div class="rp-card">
           <div class="rp-top">
             <div class="rp-avatar" style="background:linear-gradient(135deg,var(--gold),#d97706)">
-              ZR<div class="online-ring" style="background:rgba(240,240,245,.3)"></div>
+              ZN<div class="online-ring" style="background:rgba(240,240,245,.3)"></div>
             </div>
             <div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                <div class="rp-name">ZeroRush</div>
+                <div class="rp-name">Zara Nair</div>
                 <span class="rp-status-badge status-away">AWAY</span>
               </div>
-              <div class="rp-role-tag" style="color:var(--gold);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.12)">ENTRY FRAGGER</div>
-              <div class="rp-rank-line">Platinum I · 622 RR</div>
+              <div class="rp-role-tag" style="color:var(--gold);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.12)">HEALTHCARE LEAD</div>
+              <div class="rp-rank-line">Bangalore · 2 yrs experience</div>
             </div>
           </div>
           <div class="rp-bars">
             <div class="rp-bar-row">
-              <span class="rp-bar-label">KDA</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:84%;background:linear-gradient(90deg,var(--gold),var(--red))"></div></div>
-              <span class="rp-bar-val" style="color:var(--gold)">4.2</span>
+              <span class="rp-bar-label">Programs</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:48%;background:linear-gradient(90deg,var(--gold),var(--red))"></div></div>
+              <span class="rp-bar-val" style="color:var(--gold)">12</span>
             </div>
             <div class="rp-bar-row">
-              <span class="rp-bar-label">HS%</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:73%;background:linear-gradient(90deg,var(--gold),var(--red))"></div></div>
-              <span class="rp-bar-val" style="color:var(--gold)">73%</span>
+              <span class="rp-bar-label">Attend%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:79%;background:linear-gradient(90deg,var(--gold),var(--red))"></div></div>
+              <span class="rp-bar-val" style="color:var(--gold)">79%</span>
             </div>
             <div class="rp-bar-row">
-              <span class="rp-bar-label">Win%</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:64%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-              <span class="rp-bar-val" style="color:var(--green)">64%</span>
+              <span class="rp-bar-label">Impact%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:76%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">76%</span>
             </div>
           </div>
           <div class="rp-footer">
-            <div class="rp-stat"><div class="v" style="color:var(--gold)">158</div><div class="l">Matches</div></div>
-            <div class="rp-stat"><div class="v" style="color:var(--cyan)">27.1</div><div class="l">Avg DMG</div></div>
-            <div class="rp-stat"><div class="v" style="color:var(--purple)">1.09</div><div class="l">KAST%</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--gold)">12</div><div class="l">Events</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--cyan)">218</div><div class="l">Avg Helped</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--purple)">85%</div><div class="l">Consistency</div></div>
           </div>
         </div>
 
-        <!-- NightXero -->
+        <!-- Nikhil Mehta -->
         <div class="rp-card">
           <div class="rp-top">
             <div class="rp-avatar" style="background:linear-gradient(135deg,var(--green),#15803d)">
-              NX<div class="online-ring" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div>
+              NM<div class="online-ring" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div>
             </div>
             <div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                <div class="rp-name">NightXero</div>
+                <div class="rp-name">Nikhil Mehta</div>
                 <span class="rp-status-badge status-active">ACTIVE</span>
               </div>
-              <div class="rp-role-tag" style="color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.12)">SNIPER / AWP</div>
-              <div class="rp-rank-line">Diamond I · 912 RR</div>
+              <div class="rp-role-tag" style="color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.12)">EDUCATION LEAD</div>
+              <div class="rp-rank-line">Chennai · 5 yrs experience</div>
             </div>
           </div>
           <div class="rp-bars">
             <div class="rp-bar-row">
-              <span class="rp-bar-label">KDA</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:100%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-              <span class="rp-bar-val" style="color:var(--green)">5.1</span>
+              <span class="rp-bar-label">Programs</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:84%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">21</span>
             </div>
             <div class="rp-bar-row">
-              <span class="rp-bar-label">HS%</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:81%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-              <span class="rp-bar-val" style="color:var(--green)">81%</span>
+              <span class="rp-bar-label">Attend%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:96%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">96%</span>
             </div>
             <div class="rp-bar-row">
-              <span class="rp-bar-label">Win%</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:75%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-              <span class="rp-bar-val" style="color:var(--green)">75%</span>
+              <span class="rp-bar-label">Impact%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:93%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">93%</span>
             </div>
           </div>
           <div class="rp-footer">
-            <div class="rp-stat"><div class="v" style="color:var(--gold)">203</div><div class="l">Matches</div></div>
-            <div class="rp-stat"><div class="v" style="color:var(--cyan)">29.4</div><div class="l">Avg DMG</div></div>
-            <div class="rp-stat"><div class="v" style="color:var(--purple)">1.31</div><div class="l">KAST%</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--gold)">21</div><div class="l">Events</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--cyan)">164</div><div class="l">Avg Helped</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--purple)">97%</div><div class="l">Consistency</div></div>
           </div>
         </div>
 
-        <!-- VortexGG -->
+        <!-- Priya Gupta -->
         <div class="rp-card">
           <div class="rp-top">
             <div class="rp-avatar" style="background:linear-gradient(135deg,var(--purple),#7c3aed)">
-              VX<div class="online-ring" style="background:rgba(240,240,245,.3)"></div>
+              PG<div class="online-ring" style="background:rgba(240,240,245,.3)"></div>
             </div>
             <div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                <div class="rp-name">VortexGG</div>
+                <div class="rp-name">Priya Gupta</div>
                 <span class="rp-status-badge status-inactive">OFFLINE</span>
               </div>
-              <div class="rp-role-tag">LURKER</div>
-              <div class="rp-rank-line">Platinum II · 558 RR</div>
+              <div class="rp-role-tag">OUTREACH LEAD</div>
+              <div class="rp-rank-line">Hyderabad · 1 yr experience</div>
             </div>
           </div>
           <div class="rp-bars">
             <div class="rp-bar-row">
-              <span class="rp-bar-label">KDA</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:66%;background:linear-gradient(90deg,var(--purple),var(--cyan))"></div></div>
-              <span class="rp-bar-val" style="color:var(--purple)">3.3</span>
+              <span class="rp-bar-label">Programs</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:36%;background:linear-gradient(90deg,var(--purple),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--purple)">9</span>
             </div>
             <div class="rp-bar-row">
-              <span class="rp-bar-label">HS%</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:62%;background:linear-gradient(90deg,var(--purple),var(--cyan))"></div></div>
-              <span class="rp-bar-val" style="color:var(--purple)">62%</span>
+              <span class="rp-bar-label">Attend%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:72%;background:linear-gradient(90deg,var(--purple),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--purple)">72%</span>
             </div>
             <div class="rp-bar-row">
-              <span class="rp-bar-label">Win%</span>
-              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:66%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-              <span class="rp-bar-val" style="color:var(--green)">66%</span>
+              <span class="rp-bar-label">Impact%</span>
+              <div class="rp-bar-track"><div class="rp-bar-fill" style="width:68%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+              <span class="rp-bar-val" style="color:var(--green)">68%</span>
             </div>
           </div>
           <div class="rp-footer">
-            <div class="rp-stat"><div class="v" style="color:var(--gold)">142</div><div class="l">Matches</div></div>
-            <div class="rp-stat"><div class="v" style="color:var(--cyan)">21.8</div><div class="l">Avg DMG</div></div>
-            <div class="rp-stat"><div class="v" style="color:var(--purple)">1.14</div><div class="l">KAST%</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--gold)">9</div><div class="l">Events</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--cyan)">98</div><div class="l">Avg Helped</div></div>
+            <div class="rp-stat"><div class="v" style="color:var(--purple)">78%</div><div class="l">Consistency</div></div>
           </div>
         </div>
 
@@ -735,27 +736,27 @@
               <div class="avail-day-head">THU</div><div class="avail-day-head">FRI</div><div class="avail-day-head">SAT</div><div class="avail-day-head">SUN</div>
             </div>
             <div class="avail-grid" style="grid-template-columns:100px repeat(7,1fr);margin-bottom:5px">
-              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">Fxhgjhh</div>
+              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">Arjun</div>
               <div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-no">✗</div>
               <div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-maybe">~</div>
             </div>
             <div class="avail-grid" style="grid-template-columns:100px repeat(7,1fr);margin-bottom:5px">
-              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">SkyKiller</div>
+              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">Sunita</div>
               <div class="avail-cell av-yes">✓</div><div class="avail-cell av-no">✗</div><div class="avail-cell av-yes">✓</div>
               <div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-maybe">~</div><div class="avail-cell av-yes">✓</div>
             </div>
             <div class="avail-grid" style="grid-template-columns:100px repeat(7,1fr);margin-bottom:5px">
-              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">ZeroRush</div>
+              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">Zara</div>
               <div class="avail-cell av-maybe">~</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div>
               <div class="avail-cell av-no">✗</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div>
             </div>
             <div class="avail-grid" style="grid-template-columns:100px repeat(7,1fr);margin-bottom:5px">
-              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">NightXero</div>
+              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">Nikhil</div>
               <div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div>
               <div class="avail-cell av-yes">✓</div><div class="avail-cell av-no">✗</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div>
             </div>
             <div class="avail-grid" style="grid-template-columns:100px repeat(7,1fr)">
-              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">VortexGG</div>
+              <div style="font-size:12px;font-weight:700;display:flex;align-items:center;padding-right:8px">Priya</div>
               <div class="avail-cell av-no">✗</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div>
               <div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-yes">✓</div><div class="avail-cell av-maybe">~</div>
             </div>
@@ -768,18 +769,18 @@
         </div>
       </div>
 
-      <!-- Tryout Queue -->
+      <!-- Volunteer Applications -->
       <div class="card">
         <div class="card-head">
-          <div class="card-title"><div class="card-dot"></div>Tryout Queue</div>
+          <div class="card-title"><div class="card-dot"></div>Volunteer Applications</div>
           <span style="font-size:11px;color:var(--muted)">3 pending applications</span>
         </div>
         <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
           <div class="tryout-card">
-            <div class="tryout-avatar">🎮</div>
+            <div class="tryout-avatar">🎓</div>
             <div class="tryout-info">
-              <div class="tryout-name">PhantomAce</div>
-              <div class="tryout-meta">Duelist · Diamond I · 4.6 KDA avg · 12 scrims played</div>
+              <div class="tryout-name">Rahul Sharma</div>
+              <div class="tryout-meta">Educator · 2 yrs exp · Field Ready · 8 programs completed</div>
             </div>
             <div class="tryout-actions">
               <button class="ta-btn ta-accept">✓ Accept</button>
@@ -787,10 +788,10 @@
             </div>
           </div>
           <div class="tryout-card">
-            <div class="tryout-avatar">⚡</div>
+            <div class="tryout-avatar">🏥</div>
             <div class="tryout-info">
-              <div class="tryout-name">BlitzStar99</div>
-              <div class="tryout-meta">Controller · Platinum I · 3.2 KDA avg · 8 scrims played</div>
+              <div class="tryout-name">Meera Patel</div>
+              <div class="tryout-meta">Healthcare Worker · 1 yr exp · Medical Training · 4 programs completed</div>
             </div>
             <div class="tryout-actions">
               <button class="ta-btn ta-accept">✓ Accept</button>
@@ -798,10 +799,10 @@
             </div>
           </div>
           <div class="tryout-card">
-            <div class="tryout-avatar">🔫</div>
+            <div class="tryout-avatar">🚛</div>
             <div class="tryout-info">
-              <div class="tryout-name">StealthOps</div>
-              <div class="tryout-meta">Initiator · Diamond III · 3.8 KDA avg · 5 scrims played</div>
+              <div class="tryout-name">Amit Singh</div>
+              <div class="tryout-meta">Logistics Lead · 3 yrs exp · Supply Chain · 6 programs completed</div>
             </div>
             <div class="tryout-actions">
               <button class="ta-btn ta-accept">✓ Accept</button>
@@ -819,28 +820,28 @@
     <div id="schedule" style="scroll-margin-top:80px;margin-top:10px">
 
       <div class="section-head">
-        <div class="section-title">Match Schedule</div>
-        <button class="btn-purple">+ Add Match</button>
+        <div class="section-title">Event Schedule</div>
+        <button class="btn-purple">+ Add Event</button>
       </div>
 
       <div class="sched-filter-tabs">
         <div class="sft active">All</div>
-        <div class="sft">Ranked</div>
-        <div class="sft">Tournament</div>
-        <div class="sft">Scrims</div>
+        <div class="sft">Volunteer Events</div>
+        <div class="sft">Medical Camps</div>
+        <div class="sft">Outreach</div>
       </div>
 
-      <!-- Upcoming highlighted matches -->
-      <div style="margin-bottom:8px;font-size:11px;font-family:'Orbitron',sans-serif;color:var(--muted);letter-spacing:.1em">UPCOMING MATCHES</div>
+      <!-- Upcoming Events -->
+      <div style="margin-bottom:8px;font-size:11px;font-family:'Orbitron',sans-serif;color:var(--muted);letter-spacing:.1em">UPCOMING EVENTS</div>
 
       <div class="upcoming-card">
         <div class="uc-countdown"><div class="days">1</div><div class="dlbl">DAY</div></div>
         <div class="uc-info">
-          <div class="uc-opp">🔫 vs NightRaiders <span class="uc-type-badge" style="background:rgba(230,57,70,.15);color:var(--red);border:1px solid rgba(230,57,70,.25)">RANKED</span></div>
-          <div class="uc-meta">📅 May 20, 2026 &nbsp;·&nbsp; 🕗 8:00 PM IST &nbsp;·&nbsp; 🗺️ Valorant — Split</div>
+          <div class="uc-opp">📚 Education Drive — New Delhi <span class="uc-type-badge" style="background:rgba(230,57,70,.15);color:var(--red);border:1px solid rgba(230,57,70,.25)">VOLUNTEER</span></div>
+          <div class="uc-meta">📅 May 20, 2026 &nbsp;·&nbsp; 🕗 8:00 AM IST &nbsp;·&nbsp; 📍 Delhi Public School, Sector 12</div>
         </div>
         <div class="uc-actions">
-          <button class="btn-outline" style="font-size:10px;padding:7px 13px">📋 Lineup</button>
+          <button class="btn-outline" style="font-size:10px;padding:7px 13px">📋 Squad</button>
           <button class="btn-purple" style="font-size:10px;padding:7px 13px">🔔 Remind</button>
         </div>
       </div>
@@ -848,11 +849,11 @@
       <div class="upcoming-card">
         <div class="uc-countdown"><div class="days">3</div><div class="dlbl">DAYS</div></div>
         <div class="uc-info">
-          <div class="uc-opp">🧩 vs EchoForce <span class="uc-type-badge" style="background:rgba(245,158,11,.15);color:var(--gold);border:1px solid rgba(245,158,11,.25)">TOURNAMENT</span></div>
-          <div class="uc-meta">📅 May 22, 2026 &nbsp;·&nbsp; 🕕 6:00 PM IST &nbsp;·&nbsp; 🗺️ Valorant — Lotus</div>
+          <div class="uc-opp">🏥 Medical Camp — Mumbai <span class="uc-type-badge" style="background:rgba(245,158,11,.15);color:var(--gold);border:1px solid rgba(245,158,11,.25)">HEALTHCARE</span></div>
+          <div class="uc-meta">📅 May 22, 2026 &nbsp;·&nbsp; 🕕 9:00 AM IST &nbsp;·&nbsp; 📍 Community Hall, Dharavi</div>
         </div>
         <div class="uc-actions">
-          <button class="btn-outline" style="font-size:10px;padding:7px 13px">📋 Lineup</button>
+          <button class="btn-outline" style="font-size:10px;padding:7px 13px">📋 Squad</button>
           <button class="btn-purple" style="font-size:10px;padding:7px 13px">🔔 Remind</button>
         </div>
       </div>
@@ -860,11 +861,11 @@
       <div class="upcoming-card">
         <div class="uc-countdown"><div class="days">5</div><div class="dlbl">DAYS</div></div>
         <div class="uc-info">
-          <div class="uc-opp">⚡ vs ProGamingX <span class="uc-type-badge" style="background:rgba(168,85,247,.15);color:var(--purple);border:1px solid rgba(168,85,247,.25)">SCRIM</span></div>
-          <div class="uc-meta">📅 May 24, 2026 &nbsp;·&nbsp; 🕙 10:00 AM IST &nbsp;·&nbsp; 🗺️ CS2 — Mirage</div>
+          <div class="uc-opp">🌳 Tree Plantation — Pune <span class="uc-type-badge" style="background:rgba(168,85,247,.15);color:var(--purple);border:1px solid rgba(168,85,247,.25)">OUTREACH</span></div>
+          <div class="uc-meta">📅 May 24, 2026 &nbsp;·&nbsp; 🕙 6:00 AM IST &nbsp;·&nbsp; 📍 Sinhagad Road, Pune</div>
         </div>
         <div class="uc-actions">
-          <button class="btn-outline" style="font-size:10px;padding:7px 13px">📋 Lineup</button>
+          <button class="btn-outline" style="font-size:10px;padding:7px 13px">📋 Squad</button>
           <button class="btn-purple" style="font-size:10px;padding:7px 13px">🔔 Remind</button>
         </div>
       </div>
